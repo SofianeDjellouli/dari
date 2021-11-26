@@ -44,8 +44,10 @@
   "private": true,
   "scripts": {
     "build": "blitz build",
-    "dev": "blitz dev",
+    "dev": "concurrently \"blitz dev\" \"rescript build -with-deps -w\"",
     "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
+    "prebuild": "rescript build -with-deps",
+    "predev": "rm -f .bsb.lock && docker compose up -d",
     "prepare": "husky install",
     "start": "blitz start",
     "studio": "blitz prisma studio",

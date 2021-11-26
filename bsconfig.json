@@ -1,0 +1,29 @@
+{
+  "bs-dependencies": ["@rescript/react", "bs-webapi", "rescript-material-ui"],
+  "gentypeconfig": {
+    "debug": {
+      "all": false,
+      "basic": false
+    },
+    "generatedFileExtension": ".gen.tsx",
+    "language": "typescript",
+    "shims": {}
+  },
+  "name": "dari",
+  "package-specs": [
+    {
+      "in-source": true,
+      "module": "es6"
+    }
+  ],
+  "reason": {
+    "react-jsx": 3
+  },
+  "sources": [
+    {
+      "dir": "app",
+      "subdirs": true
+    }
+  ],
+  "suffix": ".bs.js"
+}
