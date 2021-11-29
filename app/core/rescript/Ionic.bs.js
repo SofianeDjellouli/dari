@@ -2,15 +2,30 @@
 
 var IonContent = {}
 
+var IonApp = {}
+
+var Content = {
+  IonContent: IonContent,
+  IonApp: IonApp,
+}
+
 var IonHeader = {}
 
 var IonToolbar = {}
 
-var IonPage = {}
-
-var IonApp = {}
-
 var IonTitle = {}
 
-export { IonContent, IonHeader, IonToolbar, IonPage, IonApp, IonTitle }
+var Toolbar = {
+  IonHeader: IonHeader,
+  IonToolbar: IonToolbar,
+  IonTitle: IonTitle,
+}
+
+var IonPage = {}
+
+var Navigation = {
+  IonPage: IonPage,
+}
+
+export { Content, Toolbar, Navigation }
 /* No side effect */

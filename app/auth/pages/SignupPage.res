@@ -2,10 +2,12 @@ open Ionic
 
 @genType("SignupPage") @react.component
 let make = () => {
-  <IonPage>
-    <IonHeader>
-      <IonToolbar> <IonTitle> {React.string("Create account")} </IonTitle> </IonToolbar>
-    </IonHeader>
-    <IonContent> <SignupForm /> </IonContent>
-  </IonPage>
+  <Navigation.IonPage>
+    <Toolbar.IonHeader>
+      <Toolbar.IonToolbar>
+        <Toolbar.IonTitle> {React.string("Create account")} </Toolbar.IonTitle>
+      </Toolbar.IonToolbar>
+    </Toolbar.IonHeader>
+    <Content.IonContent> <SignupForm /> </Content.IonContent>
+  </Navigation.IonPage>
 }
