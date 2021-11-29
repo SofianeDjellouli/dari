@@ -6,10 +6,8 @@ import * as React$1 from "@ionic/react"
 
 function SignupPage(Props) {
   return React.createElement(
-    React$1.IonPage,
-    {
-      children: null,
-    },
+    React.Fragment,
+    undefined,
     React.createElement(React$1.IonHeader, {
       children: React.createElement(React$1.IonToolbar, {
         children: React.createElement(React$1.IonTitle, {
