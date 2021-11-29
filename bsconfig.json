@@ -1,5 +1,11 @@
 {
-  "bs-dependencies": ["@rescript/react", "bs-webapi", "rescript-material-ui"],
+  "bs-dependencies": [
+    "@rescript/react",
+    "bs-webapi",
+    "rescript-material-ui",
+    "@ryyppy/rescript-promise",
+    "re-formality"
+  ],
   "gentypeconfig": {
     "debug": {
       "all": false,
@@ -16,6 +22,7 @@
       "module": "es6"
     }
   ],
+  "ppx-flags": ["re-formality/ppx"],
   "reason": {
     "react-jsx": 3
   },
