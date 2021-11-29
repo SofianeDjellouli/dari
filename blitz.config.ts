@@ -16,4 +16,5 @@ const config: BlitzConfig = {
   },
   */
 }
+
 module.exports = config

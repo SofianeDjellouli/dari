@@ -12,6 +12,7 @@ import logo from "public/logo.png"
 
 const UserInfo = () => {
   const currentUser = useCurrentUser()
+
   const [logoutMutation] = useMutation(logout)
 
   if (currentUser) {
@@ -25,10 +26,17 @@ const UserInfo = () => {
         >
           Logout
         </button>
+
         <div>
-          User id: <code>{currentUser.id}</code>
+          {" User id: "}
+
+          <code>{currentUser.id}</code>
+
           <br />
-          User role: <code>{currentUser.role}</code>
+
+          {"User role: "}
+
+          <code>{currentUser.role}</code>
         </div>
       </>
     )
@@ -40,6 +48,7 @@ const UserInfo = () => {
             <strong>Sign Up</strong>
           </a>
         </Link>
+
         <Link href={Routes.LoginPage()}>
           <a className="button small">
             <strong>Login</strong>
@@ -57,41 +66,52 @@ const Home: BlitzPage = () => {
         <div className="logo">
           <Image src={logo} alt="blitzjs" />
         </div>
+
         <p>
           <strong>Congrats!</strong> Your app is ready, including user sign-up and log-in.
         </p>
+
         <div className="buttons" style={{ marginTop: "1rem", marginBottom: "1rem" }}>
           <Suspense fallback="Loading...">
             <UserInfo />
           </Suspense>
         </div>
+
         <p>
           <strong>
             To add a new model to your app, <br />
             run the following in your terminal:
           </strong>
         </p>
+
         <pre>
           <code>blitz generate all project name:string</code>
         </pre>
+
         <div style={{ marginBottom: "1rem" }}>(And select Yes to run prisma migrate)</div>
+
         <div>
           <p>
             Then <strong>restart the server</strong>
           </p>
+
           <pre>
             <code>Ctrl + c</code>
           </pre>
+
           <pre>
             <code>blitz dev</code>
           </pre>
+
           <p>
-            and go to{" "}
+            {"and go to "}
+
             <Link href="/projects">
-              <a>/projects</a>
+              <a>{"/projects"}</a>
             </Link>
           </p>
         </div>
+
         <div className="buttons" style={{ marginTop: "5rem" }}>
           <a
             className="button"
@@ -101,6 +121,7 @@ const Home: BlitzPage = () => {
           >
             Documentation
           </a>
+
           <a
             className="button-outline"
             href="https://github.com/blitz-js/blitz"
@@ -109,6 +130,7 @@ const Home: BlitzPage = () => {
           >
             Github Repo
           </a>
+
           <a
             className="button-outline"
             href="https://discord.blitzjs.com"
@@ -267,6 +289,7 @@ const Home: BlitzPage = () => {
 }
 
 Home.suppressFirstRenderFlicker = true
+
 Home.getLayout = (page) => <Layout title="Home">{page}</Layout>
 
 export default Home

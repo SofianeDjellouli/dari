@@ -11,8 +11,10 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <DocumentHead />
+
         <body>
           <Main />
+
           <BlitzScript />
         </body>
       </Html>

@@ -11,14 +11,18 @@ export default resolver.pipe(resolver.zod(ForgotPassword), async ({ email }) => 
 
   // 2. Generate the token and expiration date.
   const token = generateToken()
+
   const hashedToken = hash256(token)
+
   const expiresAt = new Date()
+
   expiresAt.setHours(expiresAt.getHours() + RESET_PASSWORD_TOKEN_EXPIRATION_IN_HOURS)
 
   // 3. If user with this email was found
   if (user) {
     // 4. Delete any existing password reset tokens
     await db.token.deleteMany({ where: { type: "RESET_PASSWORD", userId: user.id } })
+
     // 5. Save this new token in the database.
     await db.token.create({
       data: {
@@ -29,6 +33,7 @@ export default resolver.pipe(resolver.zod(ForgotPassword), async ({ email }) => 
         sentTo: user.email,
       },
     })
+
     // 6. Send the email
     await forgotPasswordMailer({ to: user.email, token }).send()
   } else {

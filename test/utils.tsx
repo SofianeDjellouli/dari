@@ -38,6 +38,7 @@ export function render(
       </BlitzProvider>
     )
   }
+
   return defaultRender(ui, { wrapper, ...options })
 }
 
@@ -66,6 +67,7 @@ export function renderHook(
       </BlitzProvider>
     )
   }
+
   return defaultRenderHook(hook, { wrapper, ...options })
 }
 
@@ -94,11 +96,15 @@ export const mockRouter: BlitzRouter = {
 }
 
 type DefaultParams = Parameters<typeof defaultRender>
+
 type RenderUI = DefaultParams[0]
+
 type RenderOptions = DefaultParams[1] & { router?: Partial<BlitzRouter>; dehydratedState?: unknown }
 
 type DefaultHookParams = Parameters<typeof defaultRenderHook>
+
 type RenderHook = DefaultHookParams[0]
+
 type RenderHookOptions = DefaultHookParams[1] & {
   router?: Partial<BlitzRouter>
   dehydratedState?: unknown

@@ -18,10 +18,15 @@ describe("resetPassword mutation", () => {
 
     // Create test user
     const goodToken = "randomPasswordResetToken"
+
     const expiredToken = "expiredRandomPasswordResetToken"
+
     const future = new Date()
+
     future.setHours(future.getHours() + 4)
+
     const past = new Date()
+
     past.setHours(past.getHours() - 4)
 
     const user = await db.user.create({
@@ -71,10 +76,12 @@ describe("resetPassword mutation", () => {
 
     // Delete's the token
     const numberOfTokens = await db.token.count({ where: { userId: user.id } })
+
     expect(numberOfTokens).toBe(0)
 
     // Updates user's password
     const updatedUser = await db.user.findFirst({ where: { id: user.id } })
+
     expect(await SecurePassword.verify(updatedUser!.hashedPassword, newPassword)).toBe(
       SecurePassword.VALID
     )

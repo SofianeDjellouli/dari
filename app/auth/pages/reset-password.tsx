@@ -7,6 +7,7 @@ import resetPassword from "app/auth/mutations/resetPassword"
 
 const ResetPasswordPage: BlitzPage = () => {
   const query = useRouterQuery()
+
   const [resetPasswordMutation, { isSuccess }] = useMutation(resetPassword)
 
   return (
@@ -16,6 +17,7 @@ const ResetPasswordPage: BlitzPage = () => {
       {isSuccess ? (
         <div>
           <h2>Password Reset Successfully</h2>
+
           <p>
             Go to the <Link href={Routes.Home()}>homepage</Link>
           </p>
@@ -42,6 +44,7 @@ const ResetPasswordPage: BlitzPage = () => {
           }}
         >
           <LabeledTextField name="password" label="New Password" type="password" />
+
           <LabeledTextField
             name="passwordConfirmation"
             label="Confirm New Password"
@@ -54,6 +57,7 @@ const ResetPasswordPage: BlitzPage = () => {
 }
 
 ResetPasswordPage.redirectAuthenticatedTo = "/"
+
 ResetPasswordPage.getLayout = (page) => <Layout title="Reset Your Password">{page}</Layout>
 
 export default ResetPasswordPage
