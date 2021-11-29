@@ -9,6 +9,10 @@ import {
 } from "blitz"
 import LoginForm from "app/auth/components/LoginForm"
 import { IonApp } from "@ionic/react"
+import "@ionic/react/css/core.css"
+/* import "@ionic/react/css/normalize.css"
+import "@ionic/react/css/structure.css"
+import "@ionic/react/css/typography.css" */
 
 export default function App({ Component, pageProps }: AppProps) {
   const getLayout = Component.getLayout || ((page) => page)
