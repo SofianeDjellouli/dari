@@ -27,5 +27,20 @@ var Navigation = {
   IonPage: IonPage,
 }
 
-export { Content, Toolbar, Navigation }
+var IonItem = {}
+
+var IonLabel = {}
+
+var Item = {
+  IonItem: IonItem,
+  IonLabel: IonLabel,
+}
+
+var IonInput = {}
+
+var Input = {
+  IonInput: IonInput,
+}
+
+export { Content, Toolbar, Navigation, Item, Input }
 /* No side effect */
