@@ -3,7 +3,7 @@ import Layout from "app/core/layouts/Layout"
 import { SignupForm } from "../components/SignupForm"
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from "@ionic/react"
 import React from "react"
-import { SignupPage } from "app/auth/pages/SignupPage.gen"
+import { make as SignupPage } from "app/auth/pages/SignupPage.bs"
 
 /* const SignupPage: BlitzPage = () => {
   return <SignupPage />
