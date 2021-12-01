@@ -8,11 +8,15 @@ let make = (
   ~error: option<string>=?,
   ~value: string,
   ~onChange: ReactEvent.Form.t => unit,
+  ~type_: option<[#email | #password]>=?,
+  ~autofocus: option<bool>=?,
 ) => {
   <>
     <Item.IonItem lines=#full>
       <Item.IonLabel position=#floating> {React.string(label)} </Item.IonLabel>
-      <Input.IonInput name ?placeholder value onChange />
+      <Spread props={"type": type_}>
+        <Input.IonInput name ?autofocus ?placeholder value onIonChange={onChange} />
+      </Spread>
     </Item.IonItem>
     {switch error {
     | Some(err) => <span className="ion-padding"> {React.string(err)} </span>
