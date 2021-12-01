@@ -1,5 +1,5 @@
 import { Routes, useMutation, useRouter } from "blitz"
-import { make as LabeledTextField } from "app/core/components/LabeledTextField.bs"
+import { make as TextField } from "app/core/components/TextField.bs"
 import { Form, FORM_ERROR } from "app/core/components/Form"
 import signup from "app/auth/mutations/signup"
 import { Signup } from "app/auth/validations"
@@ -32,9 +32,9 @@ export const SignupForm: FC = () => {
       initialValues={{ email: "", password: "" }}
       onSubmit={handleSubmit}
     >
-      <LabeledTextField name="email" label="Email" placeholder="Email" />
+      <TextField name="email" label="Email" placeholder="Email" />
 
-      <LabeledTextField name="password" label="Password" placeholder="Password" type="password" />
+      <TextField name="password" label="Password" placeholder="Password" type="password" />
     </Form>
   )
 }

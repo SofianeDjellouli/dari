@@ -1,18 +1,21 @@
 open Ionic
 
-module FormFields = %lenses(
+module Fields = %lenses(
   type state = {
     password: string,
     email: string,
   }
 )
 
-module UserForm = ReForm.Make(FormFields)
-module Validation = UserForm.Validation
+module FormApi = ReForm.Make(Fields)
+
+open FormApi
+
+type field<'a> = Fields.field<'a>
 
 @react.component
 let make = () => {
-  let form = UserForm.use(
+  let form = FormApi.use(
     ~validationStrategy=OnChange,
     ~onSubmit={
       data => {
@@ -30,16 +33,10 @@ let make = () => {
 
       let email = Validation.email(Email)
 
-      Schema(Belt.Array.concat(email, password))
+      Validation.Schema(Belt.Array.concat(email, password))
     },
     (),
   )
-
-  let handleField = (field: FormFields.field<'a>, e: ReactEvent.Form.t) => {
-    let value = ReactEvent.Form.target(e)["value"]
-
-    form.handleChange(field, value)
-  }
 
   let handleSubmit = (event: ReactEvent.Form.t) => {
     ReactEvent.Synthetic.preventDefault(event)
@@ -47,21 +44,32 @@ let make = () => {
     form.submit()
   }
 
-  <Form onSubmit={handleSubmit}>
-    <TextField
-      value={form.values.email}
+  let handleField = (field: field<'a>, e: ReactEvent.Form.t) => {
+    let value = ReactEvent.Form.target(e)["value"]
+
+    form.handleChange(field, value)
+  }
+
+  let getError = field => field->ReSchema.Field->form.getFieldError
+
+  Js.log(form.state)
+  <Form onSubmit=handleSubmit>
+    {<TextField
+      value=form.values.email
       onChange={handleField(Email)}
       name="Email"
       label="Email"
       type_=#email
-      autofocus={true}
-    />
+      autofocus=true
+      error={getError(Email)}
+    />}
     <TextField
-      value={form.values.password}
+      value=form.values.password
       onChange={handleField(Password)}
       name="password"
       label="Password"
       type_=#password
+      error={getError(Password)}
     />
     <Grid.IonRow>
       <Grid.IonCol>

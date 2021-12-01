@@ -31,26 +31,26 @@ function set(values, field, value) {
   }
 }
 
-var FormFields = {
+var Fields = {
   get: get,
   set: set,
 }
 
-var UserForm = ReForm.Make({
+var FormApi = ReForm.Make({
   set: set,
   get: get,
 })
 
 function SignupForm(Props) {
   var password = Curry._3(
-    UserForm.ReSchema.Validation.nonEmpty,
+    FormApi.ReSchema.Validation.nonEmpty,
     undefined,
     undefined,
     /* Password */ 0
   )
-  var email = Curry._3(UserForm.ReSchema.Validation.email, undefined, undefined, /* Email */ 1)
+  var email = Curry._3(FormApi.ReSchema.Validation.email, undefined, undefined, /* Email */ 1)
   var form = Curry._7(
-    UserForm.use,
+    FormApi.use,
     {
       password: "",
       email: "",
@@ -66,14 +66,15 @@ function SignupForm(Props) {
     /* OnChange */ 0,
     undefined
   )
-  var handleField = function (field, e) {
-    var value = e.target.value
-    return Curry._2(form.handleChange, field, value)
-  }
   var handleSubmit = function ($$event) {
     $$event.preventDefault()
     return Curry._1(form.submit, undefined)
   }
+  var handleField = function (field, e) {
+    var value = e.target.value
+    return Curry._2(form.handleChange, field, value)
+  }
+  console.log(form.state)
   return React.createElement(
     Ionic.Form.make,
     {
@@ -83,6 +84,12 @@ function SignupForm(Props) {
     React.createElement(TextField.make, {
       name: "Email",
       label: "Email",
+      error: Curry._1(
+        form.getFieldError,
+        /* Field */ {
+          _0: /* Email */ 1,
+        }
+      ),
       value: form.values.email,
       onChange: function (param) {
         return handleField(/* Email */ 1, param)
@@ -93,6 +100,12 @@ function SignupForm(Props) {
     React.createElement(TextField.make, {
       name: "password",
       label: "Password",
+      error: Curry._1(
+        form.getFieldError,
+        /* Field */ {
+          _0: /* Password */ 0,
+        }
+      ),
       value: form.values.password,
       onChange: function (param) {
         return handleField(/* Password */ 0, param)
@@ -116,9 +129,7 @@ function SignupForm(Props) {
   )
 }
 
-var Validation
-
 var make = SignupForm
 
-export { FormFields, UserForm, Validation, make }
-/* UserForm Not a pure module */
+export { Fields, FormApi, make }
+/* FormApi Not a pure module */

@@ -5,7 +5,7 @@ let make = (
   ~name: string,
   ~placeholder: option<string>=?,
   ~label: string,
-  ~error: option<string>=?,
+  ~error,
   ~value: string,
   ~onChange: ReactEvent.Form.t => unit,
   ~type_: option<[#email | #password]>=?,
