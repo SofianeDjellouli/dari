@@ -16,7 +16,17 @@ function SignupPage(Props) {
       }),
     }),
     React.createElement(React$1.IonContent, {
-      children: React.createElement(SignupForm.make, {}),
+      children: React.createElement(React$1.IonGrid, {
+        children: React.createElement(React$1.IonRow, {
+          children: React.createElement(React$1.IonCol, {
+            children: React.createElement(SignupForm.make, {}),
+            sizeMd: "5",
+            sizeLg: "4",
+          }),
+          className: "ion-justify-content-center",
+        }),
+      }),
+      className: "ion-padding",
     })
   )
 }
