@@ -15,8 +15,8 @@ let make = () => {
   let form = UserForm.use(
     ~validationStrategy=OnChange,
     ~onSubmit={
-      state => {
-        Js.log(state.state)
+      data => {
+        Js.log(data)
 
         None
       }
@@ -35,20 +35,33 @@ let make = () => {
     (),
   )
 
-  let handleField = (v, e) => form.handleChange(v, (e->ReactEvent.Form.target)["value"])
+  let handleField = (field: FormFields.field<'a>, e: ReactEvent.Form.t) => {
+    let value = ReactEvent.Form.target(e)["value"]
 
-  let handleSubmit = event => {
+    form.handleChange(field, value)
+  }
+
+  let handleSubmit = (event: ReactEvent.Form.t) => {
     ReactEvent.Synthetic.preventDefault(event)
-    Js.log(1)
+
     form.submit()
   }
 
-  <form onSubmit={handleSubmit}>
-    <LabeledTextField
-      value={form.values.email} onChange={handleField(Email)} name="Email" label="email"
+  <Form onSubmit={handleSubmit}>
+    <TextField
+      value={form.values.email}
+      onChange={handleField(Email)}
+      name="Email"
+      label="Email"
+      type_=#email
+      autofocus={true}
     />
-    <LabeledTextField
-      value={form.values.password} onChange={handleField(Password)} name="password" label="Password"
+    <TextField
+      value={form.values.password}
+      onChange={handleField(Password)}
+      name="password"
+      label="Password"
+      type_=#password
     />
     <Grid.IonRow>
       <Grid.IonCol>
@@ -59,5 +72,5 @@ let make = () => {
         </Spread>
       </Grid.IonCol>
     </Grid.IonRow>
-  </form>
+  </Form>
 }
