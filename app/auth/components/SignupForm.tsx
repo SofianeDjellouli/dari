@@ -1,5 +1,5 @@
 import { Routes, useMutation, useRouter } from "blitz"
-import { make as TextField } from "app/core/components/TextField.bs"
+import { make as TextField } from "app/core/components/textfield/TextField.bs"
 import { Form, FORM_ERROR } from "app/core/components/Form"
 import signup from "app/auth/mutations/signup"
 import { Signup } from "app/auth/validations"
