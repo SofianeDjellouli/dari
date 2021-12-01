@@ -42,5 +42,20 @@ var Input = {
   IonInput: IonInput,
 }
 
-export { Content, Toolbar, Navigation, Item, Input }
+var IonCol = {}
+
+var IonRow = {}
+
+var Grid = {
+  IonCol: IonCol,
+  IonRow: IonRow,
+}
+
+var IonButton = {}
+
+var Button = {
+  IonButton: IonButton,
+}
+
+export { Content, Toolbar, Navigation, Item, Input, Grid, Button }
 /* No side effect */

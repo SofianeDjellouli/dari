@@ -1,36 +1,36 @@
 module Content = {
   module IonContent = {
     @module("@ionic/react") @react.component
-    external make: (~children: option<React.element>=?) => React.element = "IonContent"
+    external make: (~children: React.element=?) => React.element = "IonContent"
   }
 
   module IonApp = {
     @module("@ionic/react") @react.component
-    external make: (~children: option<React.element>=?) => React.element = "IonApp"
+    external make: (~children: React.element=?) => React.element = "IonApp"
   }
 }
 
 module Toolbar = {
   module IonHeader = {
     @module("@ionic/react") @react.component
-    external make: (~children: option<React.element>=?) => React.element = "IonHeader"
+    external make: (~children: React.element=?) => React.element = "IonHeader"
   }
 
   module IonToolbar = {
     @module("@ionic/react") @react.component
-    external make: (~children: option<React.element>=?) => React.element = "IonToolbar"
+    external make: (~children: React.element=?) => React.element = "IonToolbar"
   }
 
   module IonTitle = {
     @module("@ionic/react") @react.component
-    external make: (~children: option<React.element>=?) => React.element = "IonTitle"
+    external make: (~children: React.element=?) => React.element = "IonTitle"
   }
 }
 
 module Navigation = {
   module IonPage = {
     @module("@ionic/react") @react.component
-    external make: (~children: option<React.element>=?) => React.element = "IonPage"
+    external make: (~children: React.element=?) => React.element = "IonPage"
   }
 }
 
@@ -38,16 +38,16 @@ module Item = {
   module IonItem = {
     @module("@ionic/react") @react.component
     external make: (
-      ~children: option<React.element>=?,
-      ~lines: option<[#full | #inset | #none]>=?,
+      ~children: React.element=?,
+      ~lines: [#full | #inset | #none]=?,
     ) => React.element = "IonItem"
   }
 
   module IonLabel = {
     @module("@ionic/react") @react.component
     external make: (
-      ~children: option<React.element>=?,
-      ~position: option<[#fixed | #floating | #stacked]>=?,
+      ~children: React.element=?,
+      ~position: [#fixed | #floating | #stacked]=?,
     ) => React.element = "IonLabel"
   }
 }
@@ -56,9 +56,45 @@ module Input = {
   module IonInput = {
     @module("@ionic/react") @react.component
     external make: (
-      ~children: option<React.element>=?,
+      ~children: React.element=?,
       ~name: string,
-      ~placeholder: option<string>=?,
+      ~placeholder: string=?,
+      ~value: string,
+      ~onChange: ReactEvent.Form.t => unit,
     ) => React.element = "IonInput"
+  }
+}
+
+module Grid = {
+  module IonCol = {
+    @module("@ionic/react") @react.component
+    external make: (~children: React.element=?) => React.element = "IonCol"
+  }
+
+  module IonRow = {
+    @module("@ionic/react") @react.component
+    external make: (~children: React.element=?) => React.element = "IonRow"
+  }
+}
+
+module Button = {
+  module IonButton = {
+    @module("@ionic/react") @react.component
+    external make: (
+      ~children: React.element=?,
+      ~color: [
+        | #primary
+        | #secondary
+        | #tertiary
+        | #success
+        | #warning
+        | #danger
+        | #light
+        | #medium
+        | #dark
+      ]=?,
+      ~type_: [#button | #reset | #submit]=?,
+      ~expand: [#block | #full]=?,
+    ) => React.element = "IonButton"
   }
 }
