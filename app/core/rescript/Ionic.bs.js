@@ -33,9 +33,12 @@ var IonItem = {}
 
 var IonLabel = {}
 
+var IonNote = {}
+
 var Item = {
   IonItem: IonItem,
   IonLabel: IonLabel,
+  IonNote: IonNote,
 }
 
 var IonInput = {}

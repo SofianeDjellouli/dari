@@ -5,6 +5,8 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from "@ionic/rea
 import React from "react"
 import dynamic from "next/dynamic"
 
+// TODO: use with SSR
+
 const SignupPage_ = dynamic(
   () => import("app/auth/components/signup/page/SignupPage.bs").then((e) => e.make),
   { ssr: false }

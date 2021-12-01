@@ -10,13 +10,13 @@ function TextField(Props) {
   var label = Props.label
   var error = Props.error
   var value = Props.value
-  var onChange = Props.onChange
+  var onIonChange = Props.onChange
   var type_ = Props.type_
   var autofocus = Props.autofocus
   var tmp = {
     name: name,
     value: value,
-    onIonChange: onChange,
+    onIonChange: onIonChange,
   }
   if (placeholder !== undefined) {
     tmp.placeholder = placeholder
@@ -44,15 +44,11 @@ function TextField(Props) {
         children: React.createElement(React$1.IonInput, tmp),
       })
     ),
-    error !== undefined
-      ? React.createElement(
-          "span",
-          {
-            className: "ion-padding",
-          },
-          error
-        )
-      : null
+    React.createElement(React$1.IonNote, {
+      children: error !== undefined ? error : null,
+      color: "danger",
+      className: "ion-padding",
+    })
   )
 }
 

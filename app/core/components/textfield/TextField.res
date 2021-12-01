@@ -7,7 +7,7 @@ let make = (
   ~label: string,
   ~error,
   ~value: string,
-  ~onChange: ReactEvent.Form.t => unit,
+  ~onChange as onIonChange: ReactEvent.Form.t => unit,
   ~type_: option<[#email | #password]>=?,
   ~autofocus: option<bool>=?,
 ) => {
@@ -15,12 +15,14 @@ let make = (
     <Item.IonItem lines=#full>
       <Item.IonLabel position=#floating> {React.string(label)} </Item.IonLabel>
       <Spread props={"type": type_}>
-        <Input.IonInput name ?autofocus ?placeholder value onIonChange={onChange} />
+        <Input.IonInput name ?autofocus ?placeholder value onIonChange />
       </Spread>
     </Item.IonItem>
-    {switch error {
-    | Some(err) => <span className="ion-padding"> {React.string(err)} </span>
-    | None => React.null
-    }}
+    <Item.IonNote className="ion-padding" color=#danger>
+      {switch error {
+      | Some(err) => React.string(err)
+      | None => React.null
+      }}
+    </Item.IonNote>
   </>
 }

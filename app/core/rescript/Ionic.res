@@ -1,3 +1,15 @@
+type color = [
+  | #primary
+  | #secondary
+  | #tertiary
+  | #success
+  | #warning
+  | #danger
+  | #light
+  | #medium
+  | #dark
+]
+
 module Content = {
   module IonContent = {
     @module("@ionic/react") @react.component
@@ -51,6 +63,15 @@ module Item = {
       ~position: [#fixed | #floating | #stacked]=?,
     ) => React.element = "IonLabel"
   }
+
+  module IonNote = {
+    @module("@ionic/react") @react.component
+    external make: (
+      ~children: React.element=?,
+      ~color: color=?,
+      ~className: string=?,
+    ) => React.element = "IonNote"
+  }
 }
 
 module Input = {
@@ -63,6 +84,7 @@ module Input = {
       ~value: string,
       ~onIonChange: ReactEvent.Form.t => unit,
       ~autofocus: bool=?,
+      ~color: [#warning]=?,
     ) => React.element = "IonInput"
   }
 }
@@ -93,17 +115,7 @@ module Button = {
     @module("@ionic/react") @react.component
     external make: (
       ~children: React.element=?,
-      ~color: [
-        | #primary
-        | #secondary
-        | #tertiary
-        | #success
-        | #warning
-        | #danger
-        | #light
-        | #medium
-        | #dark
-      ]=?,
+      ~color: color=?,
       ~expand: [#block | #full]=?,
     ) => React.element = "IonButton"
   }
