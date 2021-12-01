@@ -17,6 +17,8 @@ import "@ionic/react/css/typography.css" */
 export default function App({ Component, pageProps }: AppProps) {
   const getLayout = Component.getLayout || ((page) => page)
 
+  console.log(typeof window !== "undefined")
+
   return (
     <IonApp>
       <ErrorBoundary
