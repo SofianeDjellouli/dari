@@ -3,14 +3,19 @@ import Layout from "app/core/layouts/Layout"
 import { SignupForm } from "../components/SignupForm"
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from "@ionic/react"
 import React from "react"
-import { make as SignupPage } from "app/auth/pages/SignupPage.bs"
+import dynamic from "next/dynamic"
 
-/* const SignupPage: BlitzPage = () => {
-  return <SignupPage />
+const SignupPage_ = dynamic(
+  () => import("app/auth/components/signup/page/SignupPage.bs").then((e) => e.make),
+  { ssr: false }
+)
+
+const SignupPage: BlitzPage = () => {
+  return <SignupPage_ />
 }
 
-SignupPage.redirectAuthenticatedTo = "/"
+/* SignupPage.redirectAuthenticatedTo = "/"
 
-SignupPage.getLayout = (page) => <Layout title="Sign Up">{page}</Layout> */
+SignupPage.getLayout = (page) => <Layout title="Sign Up">{page}</Layout>  */
 
 export default SignupPage
