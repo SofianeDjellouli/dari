@@ -93,7 +93,6 @@ module Button = {
         | #medium
         | #dark
       ]=?,
-      ~type_: [#button | #reset | #submit]=?,
       ~expand: [#block | #full]=?,
     ) => React.element = "IonButton"
   }
