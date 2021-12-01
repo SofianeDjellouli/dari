@@ -52,7 +52,7 @@
   "scripts": {
     "blitz": "docker compose up -d && blitz dev -p 4000",
     "build": "blitz build",
-    "dev": "concurrently \"yarn rescript\" \"yarn blitz\"",
+    "dev": "concurrently \"yarn blitz\" \"yarn rescript\"",
     "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
     "prebuild": "rescript build -with-deps",
     "predev": "rm -f .bsb.lock && docker compose up -d",
