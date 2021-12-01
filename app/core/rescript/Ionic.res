@@ -60,7 +60,8 @@ module Input = {
       ~name: string,
       ~placeholder: string=?,
       ~value: string,
-      ~onChange: ReactEvent.Form.t => unit,
+      ~onIonChange: ReactEvent.Form.t => unit,
+      ~autofocus: bool=?,
     ) => React.element = "IonInput"
   }
 }
@@ -96,4 +97,12 @@ module Button = {
       ~expand: [#block | #full]=?,
     ) => React.element = "IonButton"
   }
+}
+
+module Form = {
+  @react.component
+  let make = (~onSubmit: ReactEvent.Form.t => unit, ~children: React.element) =>
+    <form onSubmit>
+      children <input type_="submit" style={ReactDOMStyle.make(~display="none", ())} />
+    </form>
 }
