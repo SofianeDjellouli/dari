@@ -58,6 +58,7 @@
     "predev": "rm -f .bsb.lock && docker compose up -d",
     "prepare": "husky install",
     "rescript": "rm -f .bsb.lock && rescript build -with-deps -w",
+    "rescript:clean": "rescript clean",
     "start": "blitz start",
     "studio": "blitz prisma studio",
     "test": "jest",
