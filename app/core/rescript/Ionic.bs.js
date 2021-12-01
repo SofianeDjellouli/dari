@@ -44,11 +44,14 @@ var Input = {
   IonInput: IonInput,
 }
 
+var IonGrid = {}
+
 var IonCol = {}
 
 var IonRow = {}
 
 var Grid = {
+  IonGrid: IonGrid,
   IonCol: IonCol,
   IonRow: IonRow,
 }

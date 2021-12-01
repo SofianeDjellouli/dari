@@ -1,7 +1,8 @@
 module Content = {
   module IonContent = {
     @module("@ionic/react") @react.component
-    external make: (~children: React.element=?) => React.element = "IonContent"
+    external make: (~children: React.element=?, ~className: string=?) => React.element =
+      "IonContent"
   }
 
   module IonApp = {
@@ -67,14 +68,23 @@ module Input = {
 }
 
 module Grid = {
+  module IonGrid = {
+    @module("@ionic/react") @react.component
+    external make: (~children: React.element=?) => React.element = "IonGrid"
+  }
+
   module IonCol = {
     @module("@ionic/react") @react.component
-    external make: (~children: React.element=?) => React.element = "IonCol"
+    external make: (
+      ~children: React.element=?,
+      ~sizeMd: string=?,
+      ~sizeLg: string=?,
+    ) => React.element = "IonCol"
   }
 
   module IonRow = {
     @module("@ionic/react") @react.component
-    external make: (~children: React.element=?) => React.element = "IonRow"
+    external make: (~children: React.element=?, ~className: string=?) => React.element = "IonRow"
   }
 }
 
