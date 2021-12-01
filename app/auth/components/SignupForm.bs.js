@@ -2,608 +2,118 @@
 
 import * as Curry from "rescript/lib/es6/curry.js"
 import * as React from "react"
-import * as Formality from "re-formality/src/Formality.bs.js"
-import * as Caml_option from "rescript/lib/es6/caml_option.js"
-import * as Formality__ReactUpdate from "re-formality/src/Formality__ReactUpdate.bs.js"
+import * as ReForm from "@rescriptbr/reform/src/ReForm.bs.js"
+import * as Spread from "../../core/components/Spread.bs.js"
+import * as Belt_Array from "rescript/lib/es6/belt_Array.js"
+import * as React$1 from "@ionic/react"
+import * as LabeledTextField from "../../core/components/LabeledTextField.bs.js"
 
-var validators_password = {
-  strategy: /* OnFirstBlur */ 0,
-  validate: function (input) {
-    var match = input.password
-    if (match === "") {
-      return {
-        TAG: /* Error */ 1,
-        _0: "Password is required",
-      }
-    } else {
-      return {
-        TAG: /* Ok */ 0,
-        _0: input.password,
-      }
-    }
-  },
-}
-
-var validators_email = {
-  strategy: /* OnFirstSuccessOrFirstBlur */ 3,
-  validate: function (input) {
-    var match = input.email
-    if (match === "") {
-      return {
-        TAG: /* Error */ 1,
-        _0: "Email is required",
-      }
-    } else {
-      return {
-        TAG: /* Ok */ 0,
-        _0: input.email,
-      }
-    }
-  },
-}
-
-var validators = {
-  password: validators_password,
-  email: validators_email,
-}
-
-function initialFieldsStatuses(_input) {
-  return {
-    password: /* Pristine */ 0,
-    email: /* Pristine */ 0,
-  }
-}
-
-function initialState(input) {
-  return {
-    input: input,
-    fieldsStatuses: {
-      password: /* Pristine */ 0,
-      email: /* Pristine */ 0,
-    },
-    collectionsStatuses: undefined,
-    formStatus: /* Editing */ 0,
-    submissionStatus: /* NeverSubmitted */ 0,
-  }
-}
-
-function validateForm(input, validators, fieldsStatuses) {
-  var match = fieldsStatuses.password
-  var match_0 = match ? match._0 : Curry._1(validators.password.validate, input)
-  var match$1 = fieldsStatuses.email
-  var match_0$1 = match$1 ? match$1._0 : Curry._1(validators.email.validate, input)
-  var passwordResult = match_0
-  var passwordResult$1
-  if (passwordResult.TAG === /* Ok */ 0) {
-    var emailResult = match_0$1
-    if (emailResult.TAG === /* Ok */ 0) {
-      return {
-        TAG: /* Valid */ 0,
-        output: {
-          email: emailResult._0,
-          password: passwordResult._0,
-        },
-        fieldsStatuses: {
-          password: /* Dirty */ {
-            _0: passwordResult,
-            _1: /* Shown */ 0,
-          },
-          email: /* Dirty */ {
-            _0: emailResult,
-            _1: /* Shown */ 0,
-          },
-        },
-        collectionsStatuses: undefined,
-      }
-    }
-    passwordResult$1 = passwordResult
+function get(values, field) {
+  if (field) {
+    return values.email
   } else {
-    passwordResult$1 = passwordResult
-  }
-  return {
-    TAG: /* Invalid */ 1,
-    fieldsStatuses: {
-      password: /* Dirty */ {
-        _0: passwordResult$1,
-        _1: /* Shown */ 0,
-      },
-      email: /* Dirty */ {
-        _0: match_0$1,
-        _1: /* Shown */ 0,
-      },
-    },
-    collectionsStatuses: undefined,
+    return values.password
   }
 }
 
-function useForm(initialInput, onSubmit) {
-  var memoizedInitialState = React.useMemo(
-    function () {
-      return initialState(initialInput)
-    },
-    [initialInput]
-  )
-  var match = Formality__ReactUpdate.useReducer(memoizedInitialState, function (state, action) {
-    if (typeof action === "number") {
-      switch (action) {
-        case /* BlurPasswordField */ 0:
-          var result = Formality.validateFieldOnBlurWithValidator(
-            state.input,
-            state.fieldsStatuses.password,
-            validators_password,
-            function (status) {
-              var init = state.fieldsStatuses
-              return {
-                password: status,
-                email: init.email,
-              }
-            }
-          )
-          if (result !== undefined) {
-            return {
-              TAG: /* Update */ 0,
-              _0: {
-                input: state.input,
-                fieldsStatuses: result,
-                collectionsStatuses: state.collectionsStatuses,
-                formStatus: state.formStatus,
-                submissionStatus: state.submissionStatus,
-              },
-            }
-          } else {
-            return /* NoUpdate */ 0
-          }
-        case /* BlurEmailField */ 1:
-          var result$1 = Formality.validateFieldOnBlurWithValidator(
-            state.input,
-            state.fieldsStatuses.email,
-            validators_email,
-            function (status) {
-              var init = state.fieldsStatuses
-              return {
-                password: init.password,
-                email: status,
-              }
-            }
-          )
-          if (result$1 !== undefined) {
-            return {
-              TAG: /* Update */ 0,
-              _0: {
-                input: state.input,
-                fieldsStatuses: result$1,
-                collectionsStatuses: state.collectionsStatuses,
-                formStatus: state.formStatus,
-                submissionStatus: state.submissionStatus,
-              },
-            }
-          } else {
-            return /* NoUpdate */ 0
-          }
-        case /* Submit */ 2:
-          var match = state.formStatus
-          if (typeof match !== "number" && match.TAG === /* Submitting */ 0) {
-            return /* NoUpdate */ 0
-          }
-          var match$1 = validateForm(state.input, validators, state.fieldsStatuses)
-          if (match$1.TAG !== /* Valid */ 0) {
-            return {
-              TAG: /* Update */ 0,
-              _0: {
-                input: state.input,
-                fieldsStatuses: match$1.fieldsStatuses,
-                collectionsStatuses: match$1.collectionsStatuses,
-                formStatus: /* Editing */ 0,
-                submissionStatus: /* AttemptedToSubmit */ 1,
-              },
-            }
-          }
-          var output = match$1.output
-          var error = state.formStatus
-          var tmp
-          tmp =
-            typeof error === "number" || error.TAG !== /* SubmissionFailed */ 1
-              ? undefined
-              : Caml_option.some(error._0)
-          return {
-            TAG: /* UpdateWithSideEffects */ 1,
-            _0: {
-              input: state.input,
-              fieldsStatuses: match$1.fieldsStatuses,
-              collectionsStatuses: match$1.collectionsStatuses,
-              formStatus: {
-                TAG: /* Submitting */ 0,
-                _0: tmp,
-              },
-              submissionStatus: /* AttemptedToSubmit */ 1,
-            },
-            _1: function (param) {
-              var dispatch = param.dispatch
-              return Curry._2(onSubmit, output, {
-                notifyOnSuccess: function (input) {
-                  return Curry._1(dispatch, {
-                    TAG: /* SetSubmittedStatus */ 2,
-                    _0: input,
-                  })
-                },
-                notifyOnFailure: function (error) {
-                  return Curry._1(dispatch, {
-                    TAG: /* SetSubmissionFailedStatus */ 3,
-                    _0: error,
-                  })
-                },
-                reset: function (param) {
-                  return Curry._1(dispatch, /* Reset */ 5)
-                },
-                dismissSubmissionResult: function (param) {
-                  return Curry._1(dispatch, /* DismissSubmissionResult */ 4)
-                },
-              })
-            },
-          }
-          break
-        case /* DismissSubmissionError */ 3:
-          var match$2 = state.formStatus
-          if (typeof match$2 === "number" || match$2.TAG !== /* SubmissionFailed */ 1) {
-            return /* NoUpdate */ 0
-          } else {
-            return {
-              TAG: /* Update */ 0,
-              _0: {
-                input: state.input,
-                fieldsStatuses: state.fieldsStatuses,
-                collectionsStatuses: state.collectionsStatuses,
-                formStatus: /* Editing */ 0,
-                submissionStatus: state.submissionStatus,
-              },
-            }
-          }
-        case /* DismissSubmissionResult */ 4:
-          var match$3 = state.formStatus
-          if (typeof match$3 === "number") {
-            if (match$3 === /* Editing */ 0) {
-              return /* NoUpdate */ 0
-            }
-          } else if (match$3.TAG === /* Submitting */ 0) {
-            return /* NoUpdate */ 0
-          }
-          return {
-            TAG: /* Update */ 0,
-            _0: {
-              input: state.input,
-              fieldsStatuses: state.fieldsStatuses,
-              collectionsStatuses: state.collectionsStatuses,
-              formStatus: /* Editing */ 0,
-              submissionStatus: state.submissionStatus,
-            },
-          }
-        case /* Reset */ 5:
-          return {
-            TAG: /* Update */ 0,
-            _0: initialState(initialInput),
-          }
-      }
-    } else {
-      switch (action.TAG | 0) {
-        case /* UpdatePasswordField */ 0:
-          var nextInput = Curry._1(action._0, state.input)
-          return {
-            TAG: /* Update */ 0,
-            _0: {
-              input: nextInput,
-              fieldsStatuses: Formality.validateFieldOnChangeWithValidator(
-                nextInput,
-                state.fieldsStatuses.password,
-                state.submissionStatus,
-                validators_password,
-                function (status) {
-                  var init = state.fieldsStatuses
-                  return {
-                    password: status,
-                    email: init.email,
-                  }
-                }
-              ),
-              collectionsStatuses: state.collectionsStatuses,
-              formStatus: state.formStatus,
-              submissionStatus: state.submissionStatus,
-            },
-          }
-        case /* UpdateEmailField */ 1:
-          var nextInput$1 = Curry._1(action._0, state.input)
-          return {
-            TAG: /* Update */ 0,
-            _0: {
-              input: nextInput$1,
-              fieldsStatuses: Formality.validateFieldOnChangeWithValidator(
-                nextInput$1,
-                state.fieldsStatuses.email,
-                state.submissionStatus,
-                validators_email,
-                function (status) {
-                  var init = state.fieldsStatuses
-                  return {
-                    password: init.password,
-                    email: status,
-                  }
-                }
-              ),
-              collectionsStatuses: state.collectionsStatuses,
-              formStatus: state.formStatus,
-              submissionStatus: state.submissionStatus,
-            },
-          }
-        case /* SetSubmittedStatus */ 2:
-          var input = action._0
-          if (input !== undefined) {
-            return {
-              TAG: /* Update */ 0,
-              _0: {
-                input: input,
-                fieldsStatuses: {
-                  password: /* Pristine */ 0,
-                  email: /* Pristine */ 0,
-                },
-                collectionsStatuses: state.collectionsStatuses,
-                formStatus: /* Submitted */ 1,
-                submissionStatus: state.submissionStatus,
-              },
-            }
-          } else {
-            return {
-              TAG: /* Update */ 0,
-              _0: {
-                input: state.input,
-                fieldsStatuses: {
-                  password: /* Pristine */ 0,
-                  email: /* Pristine */ 0,
-                },
-                collectionsStatuses: state.collectionsStatuses,
-                formStatus: /* Submitted */ 1,
-                submissionStatus: state.submissionStatus,
-              },
-            }
-          }
-        case /* SetSubmissionFailedStatus */ 3:
-          return {
-            TAG: /* Update */ 0,
-            _0: {
-              input: state.input,
-              fieldsStatuses: state.fieldsStatuses,
-              collectionsStatuses: state.collectionsStatuses,
-              formStatus: {
-                TAG: /* SubmissionFailed */ 1,
-                _0: action._0,
-              },
-              submissionStatus: state.submissionStatus,
-            },
-          }
-        case /* MapSubmissionError */ 4:
-          var map = action._0
-          var error$1 = state.formStatus
-          if (typeof error$1 === "number") {
-            return /* NoUpdate */ 0
-          }
-          if (error$1.TAG !== /* Submitting */ 0) {
-            return {
-              TAG: /* Update */ 0,
-              _0: {
-                input: state.input,
-                fieldsStatuses: state.fieldsStatuses,
-                collectionsStatuses: state.collectionsStatuses,
-                formStatus: {
-                  TAG: /* SubmissionFailed */ 1,
-                  _0: Curry._1(map, error$1._0),
-                },
-                submissionStatus: state.submissionStatus,
-              },
-            }
-          }
-          var error$2 = error$1._0
-          if (error$2 !== undefined) {
-            return {
-              TAG: /* Update */ 0,
-              _0: {
-                input: state.input,
-                fieldsStatuses: state.fieldsStatuses,
-                collectionsStatuses: state.collectionsStatuses,
-                formStatus: {
-                  TAG: /* Submitting */ 0,
-                  _0: Caml_option.some(Curry._1(map, Caml_option.valFromOption(error$2))),
-                },
-                submissionStatus: state.submissionStatus,
-              },
-            }
-          } else {
-            return /* NoUpdate */ 0
-          }
-      }
+function set(values, field, value) {
+  if (field) {
+    return {
+      password: values.password,
+      email: value,
     }
-  })
-  var dispatch = match[1]
-  var state = match[0]
-  var match$1 = state.formStatus
-  var tmp
-  tmp = typeof match$1 === "number" || match$1.TAG !== /* Submitting */ 0 ? false : true
-  return {
-    updatePassword: function (nextInputFn, nextValue) {
-      return Curry._1(dispatch, {
-        TAG: /* UpdatePasswordField */ 0,
-        _0: function (__x) {
-          return Curry._2(nextInputFn, __x, nextValue)
-        },
-      })
-    },
-    updateEmail: function (nextInputFn, nextValue) {
-      return Curry._1(dispatch, {
-        TAG: /* UpdateEmailField */ 1,
-        _0: function (__x) {
-          return Curry._2(nextInputFn, __x, nextValue)
-        },
-      })
-    },
-    blurPassword: function (param) {
-      return Curry._1(dispatch, /* BlurPasswordField */ 0)
-    },
-    blurEmail: function (param) {
-      return Curry._1(dispatch, /* BlurEmailField */ 1)
-    },
-    passwordResult: Formality.exposeFieldResult(state.fieldsStatuses.password),
-    emailResult: Formality.exposeFieldResult(state.fieldsStatuses.email),
-    input: state.input,
-    status: state.formStatus,
-    dirty: function (param) {
-      var match = state.fieldsStatuses
-      if (match.password || match.email) {
-        return true
-      } else {
-        return false
-      }
-    },
-    valid: function (param) {
-      var match = validateForm(state.input, validators, state.fieldsStatuses)
-      if (match.TAG === /* Valid */ 0) {
-        return true
-      } else {
-        return false
-      }
-    },
-    submitting: tmp,
-    submit: function (param) {
-      return Curry._1(dispatch, /* Submit */ 2)
-    },
-    dismissSubmissionError: function (param) {
-      return Curry._1(dispatch, /* DismissSubmissionError */ 3)
-    },
-    dismissSubmissionResult: function (param) {
-      return Curry._1(dispatch, /* DismissSubmissionResult */ 4)
-    },
-    mapSubmissionError: function (map) {
-      return Curry._1(dispatch, {
-        TAG: /* MapSubmissionError */ 4,
-        _0: map,
-      })
-    },
-    reset: function (param) {
-      return Curry._1(dispatch, /* Reset */ 5)
-    },
+  } else {
+    return {
+      password: value,
+      email: values.email,
+    }
   }
 }
 
-var LoginForm = {
-  validators: validators,
-  initialFieldsStatuses: initialFieldsStatuses,
-  initialCollectionsStatuses: undefined,
-  initialState: initialState,
-  validateForm: validateForm,
-  useForm: useForm,
+var FormFields = {
+  get: get,
+  set: set,
 }
+
+var UserForm = ReForm.Make({
+  set: set,
+  get: get,
+})
 
 function SignupForm(Props) {
-  var form = useForm(
-    {
-      email: "",
-      password: "",
-    },
-    function (output, cb) {
-      console.log(output, cb)
-    }
+  var password = Curry._3(
+    UserForm.ReSchema.Validation.nonEmpty,
+    undefined,
+    undefined,
+    /* Password */ 0
   )
-  var match = form.emailResult
-  var tmp
-  tmp =
-    match !== undefined && match.TAG !== /* Ok */ 0
-      ? React.createElement(
-          "div",
-          {
-            className: "error",
-          },
-          match._0
-        )
-      : null
-  var match$1 = form.passwordResult
-  var tmp$1
-  tmp$1 =
-    match$1 !== undefined && match$1.TAG !== /* Ok */ 0
-      ? React.createElement(
-          "div",
-          {
-            className: "error",
-          },
-          match$1._0
-        )
-      : null
-  var match$2 = form.status
-  var tmp$2
-  tmp$2 =
-    typeof match$2 === "number" || match$2.TAG !== /* SubmissionFailed */ 1
-      ? null
-      : React.createElement(
-          "div",
-          {
-            className: "error",
-          },
-          "Not logged in"
-        )
+  var email = Curry._3(UserForm.ReSchema.Validation.email, undefined, undefined, /* Email */ 1)
+  var form = Curry._7(
+    UserForm.use,
+    {
+      password: "",
+      email: "",
+    },
+    /* Schema */ {
+      _0: Belt_Array.concat(email, password),
+    },
+    function (state) {
+      console.log(state.state)
+    },
+    undefined,
+    undefined,
+    /* OnChange */ 0,
+    undefined
+  )
+  var handleField = function (v, e) {
+    return Curry._2(form.handleChange, v, e.target.value)
+  }
+  var handleSubmit = function ($$event) {
+    $$event.preventDefault()
+    console.log(1)
+    return Curry._1(form.submit, undefined)
+  }
   return React.createElement(
     "form",
     {
-      onSubmit: function (param) {
-        return Curry._1(form.submit, undefined)
-      },
+      onSubmit: handleSubmit,
     },
-    React.createElement("input", {
-      disabled: form.submitting,
-      value: form.input.email,
-      onBlur: function (param) {
-        return Curry._1(form.blurEmail, undefined)
-      },
-      onChange: function (e) {
-        return Curry._2(
-          form.updateEmail,
-          function (input, value) {
-            return {
-              email: value,
-              password: input.password,
-            }
-          },
-          Curry._1(e.target.value, e)
-        )
+    React.createElement(LabeledTextField.make, {
+      name: "Email",
+      label: "email",
+      value: form.values.email,
+      onChange: function (param) {
+        return handleField(/* Email */ 1, param)
       },
     }),
-    tmp,
-    React.createElement("input", {
-      disabled: form.submitting,
-      value: form.input.password,
-      onBlur: function (param) {
-        return Curry._1(form.blurPassword, undefined)
-      },
-      onChange: function (e) {
-        return Curry._2(
-          form.updatePassword,
-          function (input, value) {
-            return {
-              email: input.email,
-              password: value,
-            }
-          },
-          Curry._1(e.target.value, e)
-        )
+    React.createElement(LabeledTextField.make, {
+      name: "password",
+      label: "Password",
+      value: form.values.password,
+      onChange: function (param) {
+        return handleField(/* Password */ 0, param)
       },
     }),
-    tmp$1,
-    React.createElement(
-      "button",
-      {
-        disabled: form.submitting,
-      },
-      "Submit"
-    ),
-    tmp$2
+    React.createElement(React$1.IonRow, {
+      children: React.createElement(React$1.IonCol, {
+        children: React.createElement(Spread.make, {
+          props: {
+            type: "submit",
+          },
+          children: React.createElement(React$1.IonButton, {
+            children: "Submit",
+            color: "danger",
+            expand: "block",
+          }),
+        }),
+      }),
+    })
   )
 }
 
+var Validation
+
 var make = SignupForm
 
-export { LoginForm, make }
-/* react Not a pure module */
+export { FormFields, UserForm, Validation, make }
+/* UserForm Not a pure module */

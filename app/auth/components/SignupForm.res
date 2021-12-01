@@ -1,85 +1,63 @@
-module LoginForm = %form(
-  type input = {
-    email: string,
-    password: string,
-  }
+open Ionic
 
-  type output = {
-    email: string,
+module FormFields = %lenses(
+  type state = {
     password: string,
-  }
-
-  let validators = {
-    email: {
-      strategy: OnFirstSuccessOrFirstBlur,
-      validate: input =>
-        switch input.email {
-        | "" => Error("Email is required")
-        | _ => Ok(input.email)
-        },
-    },
-    password: {
-      strategy: OnFirstBlur,
-      validate: input =>
-        switch input.password {
-        | "" => Error("Password is required")
-        | _ => Ok(input.password)
-        },
-    },
+    email: string,
   }
 )
 
+module UserForm = ReForm.Make(FormFields)
+module Validation = UserForm.Validation
+
 @react.component
 let make = () => {
-  let form = LoginForm.useForm(~initialInput={email: "", password: ""}, ~onSubmit=(output, cb) => {
-    Js.log2(
-      output,
-      cb,
-    ) /* output->Api.loginUser(res =>
-      switch res {
-      | Ok(user) => user->AppShell.loginAndRedirect
-      | Error() => cb.notifyOnFailure()
-      }
-    ) */
-  })
+  let form = UserForm.use(
+    ~validationStrategy=OnChange,
+    ~onSubmit={
+      state => {
+        Js.log(state.state)
 
-  <form onSubmit={_ => form.submit()}>
-    <input
-      value={form.input.email}
-      disabled={form.submitting}
-      onBlur={_ => form.blurEmail()}
-      onChange={e =>
-        form.updateEmail(
-          (input, value) => {...input, email: value},
-          e->ReactEvent.Form.target(e)["value"],
-        )}
+        None
+      }
+    },
+    ~initialState={
+      password: "",
+      email: "",
+    },
+    ~schema={
+      let password = Validation.nonEmpty(Password)
+
+      let email = Validation.email(Email)
+
+      Schema(Belt.Array.concat(email, password))
+    },
+    (),
+  )
+
+  let handleField = (v, e) => form.handleChange(v, (e->ReactEvent.Form.target)["value"])
+
+  let handleSubmit = event => {
+    ReactEvent.Synthetic.preventDefault(event)
+    Js.log(1)
+    form.submit()
+  }
+
+  <form onSubmit={handleSubmit}>
+    <LabeledTextField
+      value={form.values.email} onChange={handleField(Email)} name="Email" label="email"
     />
-    {switch form.emailResult {
-    | Some(Error(message)) => <div className="error"> {message->React.string} </div>
-    | Some(Ok(_))
-    | None => React.null
-    }}
-    <input
-      value={form.input.password}
-      disabled={form.submitting}
-      onBlur={_ => form.blurPassword()}
-      onChange={e =>
-        form.updatePassword(
-          (input, value) => {...input, password: value},
-          e->ReactEvent.Form.target(e)["value"],
-        )}
+    <LabeledTextField
+      value={form.values.password} onChange={handleField(Password)} name="password" label="Password"
     />
-    {switch form.passwordResult {
-    | Some(Error(message)) => <div className="error"> {message->React.string} </div>
-    | Some(Ok(_))
-    | None => React.null
-    }}
-    <button disabled={form.submitting}> {"Submit"->React.string} </button>
-    {switch form.status {
-    | Editing
-    | Submitting(_)
-    | Submitted => React.null
-    | SubmissionFailed() => <div className="error"> {"Not logged in"->React.string} </div>
-    }}
+    <Grid.IonRow>
+      <Grid.IonCol>
+        <Spread props={"type": "submit"}>
+          <Button.IonButton color=#danger expand=#block>
+            {React.string("Submit")}
+          </Button.IonButton>
+        </Spread>
+      </Grid.IonCol>
+    </Grid.IonRow>
   </form>
 }
