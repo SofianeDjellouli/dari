@@ -43,8 +43,23 @@ var FormApi = ReForm.Make({
 
 function SignupForm(Props) {
   var password = Curry._3(
-    FormApi.ReSchema.Validation.nonEmpty,
-    undefined,
+    FormApi.ReSchema.Validation.custom,
+    function (state) {
+      var length = state.password.length
+      if (length < 8) {
+        return {
+          TAG: /* Error */ 1,
+          _0: "too small",
+        }
+      } else if (length > 11) {
+        return {
+          TAG: /* Error */ 1,
+          _0: "too big",
+        }
+      } else {
+        return /* Valid */ 0
+      }
+    },
     undefined,
     /* Password */ 0
   )
@@ -56,7 +71,7 @@ function SignupForm(Props) {
       email: "",
     },
     /* Schema */ {
-      _0: Belt_Array.concat(email, password),
+      _0: Belt_Array.concatMany([email, password]),
     },
     function (data) {
       console.log(data)
@@ -74,7 +89,6 @@ function SignupForm(Props) {
     var value = e.target.value
     return Curry._2(form.handleChange, field, value)
   }
-  console.log(form.state)
   return React.createElement(
     Ionic.Form.make,
     {
@@ -112,18 +126,14 @@ function SignupForm(Props) {
       },
       type_: "password",
     }),
-    React.createElement(React$1.IonRow, {
-      children: React.createElement(React$1.IonCol, {
-        children: React.createElement(Spread.make, {
-          props: {
-            type: "submit",
-          },
-          children: React.createElement(React$1.IonButton, {
-            children: "Submit",
-            color: "danger",
-            expand: "block",
-          }),
-        }),
+    React.createElement(Spread.make, {
+      props: {
+        type: "submit",
+      },
+      children: React.createElement(React$1.IonButton, {
+        children: "Submit",
+        color: "danger",
+        expand: "block",
       }),
     })
   )

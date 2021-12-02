@@ -29,11 +29,21 @@ let make = () => {
       email: "",
     },
     ~schema={
-      let password = Validation.nonEmpty(Password)
+      let password = Validation.custom(state => {
+        let length = Js.String2.length(state.password)
+
+        if length < 8 {
+          Error("too small")
+        } else if length > 11 {
+          Error("too big")
+        } else {
+          Valid
+        }
+      }, Password)
 
       let email = Validation.email(Email)
 
-      Validation.Schema(Belt.Array.concat(email, password))
+      [email, password]->Belt.Array.concatMany->Validation.Schema
     },
     (),
   )
@@ -52,9 +62,8 @@ let make = () => {
 
   let getError = field => field->ReSchema.Field->form.getFieldError
 
-  Js.log(form.state)
   <Form onSubmit=handleSubmit>
-    {<TextField
+    <TextField
       value=form.values.email
       onChange={handleField(Email)}
       name="Email"
@@ -62,7 +71,7 @@ let make = () => {
       type_=#email
       autofocus=true
       error={getError(Email)}
-    />}
+    />
     <TextField
       value=form.values.password
       onChange={handleField(Password)}
@@ -71,14 +80,8 @@ let make = () => {
       type_=#password
       error={getError(Password)}
     />
-    <Grid.IonRow>
-      <Grid.IonCol>
-        <Spread props={"type": "submit"}>
-          <Button.IonButton color=#danger expand=#block>
-            {React.string("Submit")}
-          </Button.IonButton>
-        </Spread>
-      </Grid.IonCol>
-    </Grid.IonRow>
+    <Spread props={"type": "submit"}>
+      <Button.IonButton color=#danger expand=#block> {React.string("Submit")} </Button.IonButton>
+    </Spread>
   </Form>
 }
