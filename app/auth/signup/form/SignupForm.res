@@ -13,16 +13,41 @@ open FormApi
 
 type field<'a> = Fields.field<'a>
 
+type user = {"email": string, "name": string, "role": string, "id": int}
+
+@module("app/auth/mutations/signup")
+external signup: 'a = "default"
+// The latter causes a Blitz error
+// external signup: (FormApi.state, Blitz.Ctx.t) => Promise.t<user> = "default"
+
 @react.component
 let make = () => {
+  let (signupMutation, _) = Blitz.ReactQuery.useMutation(signup)
+
   let form = FormApi.use(
     ~validationStrategy=OnChange,
-    ~onSubmit={
-      data => {
-        Js.log(data)
+    ~onSubmit=data => {
+      signupMutation(. data.state.values)
+      ->Promise.then(num => {
+        Js.log(num)
 
-        None
-      }
+        Promise.resolve(num)
+      })
+      ->Promise.catch(error => {
+        Js.log(error)
+
+        data.send(ResetForm)
+        /* if error["code"] === "P2002" && error["meta"]["target"] === "email" {
+          data.send(SetFieldsState)
+        } */
+
+        Promise.reject(error)
+      })
+      ->ignore
+
+      Js.log(1)
+
+      None
     },
     ~initialState={
       password: "",
@@ -62,6 +87,8 @@ let make = () => {
 
   let getError = field => field->ReSchema.Field->form.getFieldError
 
+  Js.log(getError(Email))
+
   <Form onSubmit=handleSubmit>
     <TextField
       value=form.values.email
@@ -80,8 +107,6 @@ let make = () => {
       type_=#password
       error={getError(Password)}
     />
-    <Spread props={"type": "submit"}>
-      <Button.IonButton color=#danger expand=#block> {React.string("Submit")} </Button.IonButton>
-    </Spread>
+    <Button.AsyncButton color=#danger expand=#block label="Submit" isLoading=form.isSubmitting />
   </Form>
 }

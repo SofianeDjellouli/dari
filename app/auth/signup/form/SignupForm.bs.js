@@ -4,10 +4,11 @@ import * as Curry from "rescript/lib/es6/curry.js"
 import * as Ionic from "../../../core/rescript/ionic/Ionic.bs.js"
 import * as React from "react"
 import * as ReForm from "@rescriptbr/reform/src/ReForm.bs.js"
-import * as Spread from "../../../core/components/spread/Spread.bs.js"
+import * as $$Promise from "@ryyppy/rescript-promise/src/Promise.bs.js"
 import * as TextField from "../../../core/components/textfield/TextField.bs.js"
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js"
-import * as React$1 from "@ionic/react"
+import * as DataClient from "next/data-client"
+import Signup from "app/auth/mutations/signup"
 
 function get(values, field) {
   if (field) {
@@ -42,6 +43,8 @@ var FormApi = ReForm.Make({
 })
 
 function SignupForm(Props) {
+  var match = DataClient.useMutation(Signup)
+  var signupMutation = match[0]
   var password = Curry._3(
     FormApi.ReSchema.Validation.custom,
     function (state) {
@@ -74,7 +77,18 @@ function SignupForm(Props) {
       _0: Belt_Array.concatMany([email, password]),
     },
     function (data) {
-      console.log(data)
+      $$Promise.$$catch(
+        signupMutation(data.state.values).then(function (num) {
+          console.log(num)
+          return Promise.resolve(num)
+        }),
+        function (error) {
+          console.log(error)
+          Curry._1(data.send, /* ResetForm */ 2)
+          return Promise.reject(error)
+        }
+      )
+      console.log(1)
     },
     undefined,
     undefined,
@@ -89,6 +103,14 @@ function SignupForm(Props) {
     var value = e.target.value
     return Curry._2(form.handleChange, field, value)
   }
+  console.log(
+    Curry._1(
+      form.getFieldError,
+      /* Field */ {
+        _0: /* Email */ 1,
+      }
+    )
+  )
   return React.createElement(
     Ionic.Form.make,
     {
@@ -126,15 +148,11 @@ function SignupForm(Props) {
       },
       type_: "password",
     }),
-    React.createElement(Spread.make, {
-      props: {
-        type: "submit",
-      },
-      children: React.createElement(React$1.IonButton, {
-        children: "Submit",
-        color: "danger",
-        expand: "block",
-      }),
+    React.createElement(Ionic.Button.AsyncButton.make, {
+      color: "danger",
+      expand: "block",
+      label: "Submit",
+      isLoading: form.isSubmitting,
     })
   )
 }

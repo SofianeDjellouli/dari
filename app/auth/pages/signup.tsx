@@ -8,7 +8,7 @@ import dynamic from "next/dynamic"
 // TODO: use with SSR
 
 const SignupPage_ = dynamic(
-  () => import("app/auth/components/signup/page/SignupPage.bs").then((e) => e.make),
+  () => import("app/auth/signup/page/SignupPage.bs").then((e) => e.make),
   { ssr: false }
 )
 
