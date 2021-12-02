@@ -8029,18 +8029,6 @@ raw-body@2.4.1:
     iconv-lite "0.4.24"
     unpipe "1.0.0"
 
-re-debouncer@2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/re-debouncer/-/re-debouncer-2.1.0.tgz#2eaf7994ba41590f4f80d4a363ae8905156b7dc1"
-  integrity sha512-Iy9BecWF9X4V6zXfL3ROZpKGkCnpzYdjG/j6NIBxQn7gEwO2DzED5BsbfRUiPeqr7C0tAD0HPHF6tYIcQFEnyA==
-
-re-formality@4.0.0-beta.16:
-  version "4.0.0-beta.16"
-  resolved "https://registry.yarnpkg.com/re-formality/-/re-formality-4.0.0-beta.16.tgz#9783700bca768a133b8f51054dd370fa6bf4085e"
-  integrity sha512-wwJDeiOglRtEJkBfxSg8Sz9aFM5PndR/OXepCVGgREgCvuv1JaWaPt5HHy4yf+7mqfOF9TBomCNHmvnoDYMzAg==
-  dependencies:
-    re-debouncer "2.1.0"
-
 react-devtools-core@^4.19.1:
   version "4.21.0"
   resolved "https://registry.yarnpkg.com/react-devtools-core/-/react-devtools-core-4.21.0.tgz#a54c9a0fd7261491e616d6c87d1869e011d8521d"
