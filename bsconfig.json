@@ -16,6 +16,9 @@
     "language": "typescript",
     "shims": {}
   },
+  "js-post-build": {
+    "cmd": "prettier -w"
+  },
   "name": "dari",
   "package-specs": [
     {
