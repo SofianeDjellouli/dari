@@ -23,6 +23,17 @@ module Content = {
   }
 }
 
+module ProgressIndicators = {
+  module IonSpinner = {
+    @module("@ionic/react") @react.component
+    external make: (
+      ~children: React.element=?,
+      ~color: color=?,
+      ~name: [#bubbles | #circles | #circular | #crescent | #dots | #lines]=?,
+    ) => React.element = "IonSpinner"
+  }
+}
+
 module Toolbar = {
   module IonHeader = {
     @module("@ionic/react") @react.component
@@ -118,6 +129,19 @@ module Button = {
       ~color: color=?,
       ~expand: [#block | #full]=?,
     ) => React.element = "IonButton"
+  }
+
+  module AsyncButton = {
+    @react.component
+    let make = (~color, ~expand, ~label: string, ~isLoading: bool=false) =>
+      <Spread props={"type": "submit"}>
+        <IonButton color expand>
+          {switch isLoading {
+          | true => <ProgressIndicators.IonSpinner />
+          | false => React.string(label)
+          }}
+        </IonButton>
+      </Spread>
   }
 }
 
