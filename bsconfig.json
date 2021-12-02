@@ -6,7 +6,8 @@
     "@ryyppy/rescript-promise",
     "@rescriptbr/reform",
     "reschema",
-    "rescript-next"
+    "rescript-next",
+    "@seamonster-studios/rescript-reactquery-v1"
   ],
   "gentypeconfig": {
     "debug": {

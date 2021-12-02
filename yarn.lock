@@ -438,7 +438,7 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.10.0", "@babel/runtime@^7.10.2", "@babel/runtime@^7.12.5", "@babel/runtime@^7.15.4", "@babel/runtime@^7.16.3", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.2", "@babel/runtime@^7.7.2", "@babel/runtime@^7.9.2":
+"@babel/runtime@^7.10.0", "@babel/runtime@^7.10.2", "@babel/runtime@^7.10.5", "@babel/runtime@^7.12.5", "@babel/runtime@^7.15.4", "@babel/runtime@^7.16.3", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.2", "@babel/runtime@^7.7.2", "@babel/runtime@^7.9.2":
   version "7.16.3"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.16.3.tgz#b86f0db02a04187a3c17caa77de69840165d42d5"
   integrity sha512-WBwekcqacdY2e9AF/Q7WLFUWmdJGJTkbjqTjoMDgXkVZ3ZRUvOPsLb5KdwISoQVsbP+DQzVZW4Zhci0DvpbNTQ==
@@ -1396,6 +1396,11 @@
   resolved "https://registry.yarnpkg.com/@rescript/react/-/react-0.10.3.tgz#a2a8bed6b017940ec26c2154764b350f50348889"
   integrity sha512-Lf9rzrR3bQPKJjOK3PBRa/B3xrJ7CqQ1HYr9VHPVxJidarIJJFZBhj0Dg1uZURX+Wg/xiP0PHFxXmdj2bK8Vxw==
 
+"@rescript/std@^9.1.3":
+  version "9.1.3"
+  resolved "https://registry.yarnpkg.com/@rescript/std/-/std-9.1.3.tgz#adbefc9beae13de4c1c95d4d376c2afec2952ee6"
+  integrity sha512-bvrCBz4vkBHcJFsKI6Bu81BX/jfAPXgSeN9uec6hI23gIVCr0JH7sDy3se4RlMG1klT6LqIjBI0aGCtcSksO2A==
+
 "@rescriptbr/reform@11.0.1":
   version "11.0.1"
   resolved "https://registry.yarnpkg.com/@rescriptbr/reform/-/reform-11.0.1.tgz#50a569c898f6d1015f6016cde38050679c417c0d"
@@ -1421,6 +1426,27 @@
   dependencies:
     debug "^3.2.6"
     tslib "^1.10.0"
+
+"@scarf/scarf@^1.0.6":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@scarf/scarf/-/scarf-1.1.1.tgz#d8b9f20037b3a37dbf8dcdc4b3b72f9285bfce35"
+  integrity sha512-VGbKDbk1RFIaSmdVb0cNjjWJoRWRI/Weo23AjRCC2nryO0iAS8pzsToJfPVPtVs74WHw4L1UTADNdIYRLkirZQ==
+
+"@seamonster-studios/rescript-reactquery-v1@1.1.8":
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/@seamonster-studios/rescript-reactquery-v1/-/rescript-reactquery-v1-1.1.8.tgz#d3b7e8d25a17264ae7a6bc12fd496ad2bcbcdc4f"
+  integrity sha512-4bjgV3qewZovloQidAEKGhCKlj3iwn4O31jBETMDMlVwbptQi+spwaXRMDDrm9LZYtSQzBaNPT8T37wBWNK4ow==
+  dependencies:
+    "@rescript/std" "^9.1.3"
+    react-query "1"
+    react-query-devtools "1"
+
+"@seamonster-studios/use-previous@1.1.8":
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/@seamonster-studios/use-previous/-/use-previous-1.1.8.tgz#d250bf6887876487fefd3cff4dcf517bf8c40541"
+  integrity sha512-oY1+vipbnsRlhkV1t/57QVSRRA0eEMmxuej0vOKB3hqxK/GYlPdWvHZd5RWB5Rn+DTxLmpIUi3vYo1NPfVZ25g==
+  dependencies:
+    "@rescript/std" "^9.1.3"
 
 "@selderee/plugin-htmlparser2@^0.6.0":
   version "0.6.0"
@@ -6590,6 +6616,14 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
+match-sorter@^4.1.0:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/match-sorter/-/match-sorter-4.2.1.tgz#575b4b3737185ba9518b67612b66877ea0b37358"
+  integrity sha512-s+3h9TiZU9U1pWhIERHf8/f4LmBN6IXaRgo2CI17+XGByGS1GvG5VvXK9pcGyCjGe3WM3mSYRC3ipGrd5UEVgw==
+  dependencies:
+    "@babel/runtime" "^7.10.5"
+    remove-accents "0.4.2"
+
 match-sorter@^6.0.2:
   version "6.3.1"
   resolved "https://registry.yarnpkg.com/match-sorter/-/match-sorter-6.3.1.tgz#98cc37fda756093424ddf3cbc62bfe9c75b92bda"
@@ -8072,6 +8106,21 @@ react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
+react-query-devtools@1:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/react-query-devtools/-/react-query-devtools-1.2.0.tgz#3b6cc2d6a1d3d976b51bf1860418908869544555"
+  integrity sha512-+5QtShHHItxwvmdrsSGVZSQb3C+O7pmaLvgXf6JjtK+ocVmIlpR0aaBlq+Unb30j+w4ZkytT6Njf9/XWk638yQ==
+  dependencies:
+    match-sorter "^4.1.0"
+
+react-query@1:
+  version "1.5.10"
+  resolved "https://registry.yarnpkg.com/react-query/-/react-query-1.5.10.tgz#9b23af061e8171e95503e1932cc07d0cebe806eb"
+  integrity sha512-Kjgii5rK1g9kpLCUGBeGIqFG0IoAMe/oRKzpIfNQUyegJ/Lh5o9lmbmpTPMBWbP3gZDFfAC3081llqxg7QiqCg==
+  dependencies:
+    "@scarf/scarf" "^1.0.6"
+    ts-toolbelt "^6.9.4"
+
 react-query@3.21.1:
   version "3.21.1"
   resolved "https://registry.yarnpkg.com/react-query/-/react-query-3.21.1.tgz#8fe4df90bf6c6a93e0552ea9baff211d1b28f6e0"
@@ -9455,6 +9504,11 @@ ts-pnp@^1.1.6:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/ts-pnp/-/ts-pnp-1.2.0.tgz#a500ad084b0798f1c3071af391e65912c86bca92"
   integrity sha512-csd+vJOb/gkzvcCHgTGSChYpy5f1/XKNsmvBGO4JXS+z1v2HobugDz4s1IeFXM3wZB44uczs+eazB5Q/ccdhQw==
+
+ts-toolbelt@^6.9.4:
+  version "6.15.5"
+  resolved "https://registry.yarnpkg.com/ts-toolbelt/-/ts-toolbelt-6.15.5.tgz#cb3b43ed725cb63644782c64fbcad7d8f28c0a83"
+  integrity sha512-FZIXf1ksVyLcfr7M317jbB67XFJhOO1YqdTcuGaq9q5jLUoTikukZ+98TPjKiP2jC5CgmYdWWYs0s2nLSU0/1A==
 
 tsconfig-paths@3.9.0:
   version "3.9.0"
