@@ -5,7 +5,8 @@
     "rescript-material-ui",
     "@ryyppy/rescript-promise",
     "@rescriptbr/reform",
-    "reschema"
+    "reschema",
+    "rescript-next"
   ],
   "gentypeconfig": {
     "debug": {

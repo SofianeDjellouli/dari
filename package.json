@@ -33,6 +33,7 @@
     "prisma": "3.5.0",
     "prisma-dbml-generator": "0.8.2",
     "rescript": "^9.1.4",
+    "rescript-next": "10.0.0-alpha.1",
     "typescript": "~4.4"
   },
   "lint-staged": {

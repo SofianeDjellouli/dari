@@ -8310,6 +8310,11 @@ rescript-material-ui@^2.1.2:
     react "^17.0.2"
     react-dom "^17.0.2"
 
+rescript-next@10.0.0-alpha.1:
+  version "10.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/rescript-next/-/rescript-next-10.0.0-alpha.1.tgz#c69a78f0ef05fb8d57332b01ef429c75a3287743"
+  integrity sha512-joJdMLkD9Gn8/dH5ZsxKj2KNz32FujAXIbN2fN3Cu9dyU/3UGSsXe16mPerksARYjbE++9dAmfU4s3zhxzO5Hg==
+
 rescript-react-update@^3.0.1:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/rescript-react-update/-/rescript-react-update-3.0.2.tgz#8efece4c578110a35fdb1389d890a186dcdf03c6"
