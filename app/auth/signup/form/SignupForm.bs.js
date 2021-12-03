@@ -7,6 +7,7 @@ import * as ReForm from "@rescriptbr/reform/src/ReForm.bs.js"
 import * as $$Promise from "@ryyppy/rescript-promise/src/Promise.bs.js"
 import * as TextField from "../../../core/components/textfield/TextField.bs.js"
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js"
+import * as ReSchemaI18n from "reschema/src/ReSchemaI18n.bs.js"
 import * as DataClient from "next/data-client"
 import Signup from "app/auth/mutations/signup"
 
@@ -49,7 +50,12 @@ function SignupForm(Props) {
     FormApi.ReSchema.Validation.custom,
     function (state) {
       var length = state.password.length
-      if (length < 8) {
+      if (length === 0) {
+        return {
+          TAG: /* Error */ 1,
+          _0: "required",
+        }
+      } else if (length < 8) {
         return {
           TAG: /* Error */ 1,
           _0: "too small",
@@ -66,7 +72,28 @@ function SignupForm(Props) {
     undefined,
     /* Password */ 0
   )
-  var email = Curry._3(FormApi.ReSchema.Validation.email, undefined, undefined, /* Email */ 1)
+  var email = Curry._3(
+    FormApi.ReSchema.Validation.custom,
+    function (state) {
+      var length = state.email.length
+      if (length === 0) {
+        return {
+          TAG: /* Error */ 1,
+          _0: "required",
+        }
+      }
+      if (FormApi.ReSchema.RegExps.email.test(state.email)) {
+        return /* Valid */ 0
+      }
+      var message = Curry._1(ReSchemaI18n.$$default.email, state.email)
+      return {
+        TAG: /* Error */ 1,
+        _0: message,
+      }
+    },
+    undefined,
+    /* Email */ 1
+  )
   var form = Curry._7(
     FormApi.use,
     {
@@ -103,14 +130,7 @@ function SignupForm(Props) {
     var value = e.target.value
     return Curry._2(form.handleChange, field, value)
   }
-  console.log(
-    Curry._1(
-      form.getFieldError,
-      /* Field */ {
-        _0: /* Email */ 1,
-      }
-    )
-  )
+  console.log(form)
   return React.createElement(
     Ionic.Form.make,
     {

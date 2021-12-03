@@ -57,7 +57,9 @@ let make = () => {
       let password = Validation.custom(state => {
         let length = Js.String2.length(state.password)
 
-        if length < 8 {
+        if length === 0 {
+          Error("required")
+        } else if length < 8 {
           Error("too small")
         } else if length > 11 {
           Error("too big")
@@ -66,7 +68,19 @@ let make = () => {
         }
       }, Password)
 
-      let email = Validation.email(Email)
+      let email = Validation.custom(state => {
+        let length = Js.String2.length(state.email)
+
+        if length === 0 {
+          Error("required")
+        } else if Js.Re.test_(ReSchema.RegExps.email, state.email) {
+          Valid
+        } else {
+          let message = ReSchemaI18n.default.email(~value=state.email)
+
+          Error(message)
+        }
+      }, Email)
 
       [email, password]->Belt.Array.concatMany->Validation.Schema
     },
@@ -87,7 +101,7 @@ let make = () => {
 
   let getError = field => field->ReSchema.Field->form.getFieldError
 
-  Js.log(getError(Email))
+  Js.log(form)
 
   <Form onSubmit=handleSubmit>
     <TextField
