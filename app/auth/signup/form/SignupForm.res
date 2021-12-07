@@ -34,12 +34,7 @@ let handleSignupFormSubmit = (signupMutation, data) => {
 let make = () => {
   let (signupMutation, _) = Blitz.ReactQuery.useMutation(signup)
 
-  let (state, dispatch) = React.useReducer(
-    SignupReducer.reducer,
-    SignupReducer.initialState,
-  )
-
-  Js.log(state)
+  let (state, dispatch) = React.useReducer(SignupReducer.reducer, SignupReducer.initialState)
 
   let handleSubmit = (event: ReactEvent.Form.t) => {
     ReactEvent.Synthetic.preventDefault(event)

@@ -18,7 +18,6 @@ function SignupForm(Props) {
   var match = React.useReducer(SignupReducer.reducer, SignupReducer.initialState)
   var dispatch = match[1]
   var state = match[0]
-  console.log(state)
   var handleSubmit = function ($$event) {
     $$event.preventDefault()
     var errors = SignupValidation.validate(state)
