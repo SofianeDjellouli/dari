@@ -1,4 +1,4 @@
-open SignupFormReducer
+open SignupReducer
 open Belt
 
 let validate: state => array<error> = state =>

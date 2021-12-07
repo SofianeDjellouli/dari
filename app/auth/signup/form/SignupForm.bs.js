@@ -4,23 +4,23 @@ import * as Curry from "rescript/lib/es6/curry.js"
 import * as Ionic from "../../../core/rescript/ionic/Ionic.bs.js"
 import * as React from "react"
 import * as TextField from "../../../core/components/textfield/TextField.bs.js"
+import * as SignupReducer from "./SignupReducer.bs.js"
 import * as Belt_MapString from "rescript/lib/es6/belt_MapString.js"
+import * as SignupValidation from "./SignupValidation.bs.js"
 import * as DataClient from "next/data-client"
-import * as SignupFormReducer from "./SignupFormReducer.bs.js"
-import * as SignupFormValidate from "./SignupFormValidate.bs.js"
 import Signup from "app/auth/mutations/signup"
 
 function handleSignupFormSubmit(signupMutation, data) {}
 
 function SignupForm(Props) {
   DataClient.useMutation(Signup)
-  var match = React.useReducer(SignupFormReducer.reducer, SignupFormReducer.initialState)
+  var match = React.useReducer(SignupReducer.reducer, SignupReducer.initialState)
   var dispatch = match[1]
   var state = match[0]
   console.log(state)
   var handleSubmit = function ($$event) {
     $$event.preventDefault()
-    var errors = SignupFormValidate.validate(state)
+    var errors = SignupValidation.validate(state)
     if (errors.length > 0) {
       return Curry._1(dispatch, {
         TAG: /* SetErrors */ 1,
@@ -47,8 +47,8 @@ function SignupForm(Props) {
     React.createElement(TextField.make, {
       name: "email",
       label: "Email",
-      error: Belt_MapString.getWithDefault(state, "email", SignupFormReducer.field).error,
-      value: Belt_MapString.getWithDefault(state, "email", SignupFormReducer.field).value,
+      error: Belt_MapString.getWithDefault(state, "email", SignupReducer.field).error,
+      value: Belt_MapString.getWithDefault(state, "email", SignupReducer.field).value,
       onChange: handleChange,
       type_: "email",
       autofocus: true,
@@ -56,8 +56,8 @@ function SignupForm(Props) {
     React.createElement(TextField.make, {
       name: "password",
       label: "Password",
-      error: Belt_MapString.getWithDefault(state, "password", SignupFormReducer.field).error,
-      value: Belt_MapString.getWithDefault(state, "password", SignupFormReducer.field).value,
+      error: Belt_MapString.getWithDefault(state, "password", SignupReducer.field).error,
+      value: Belt_MapString.getWithDefault(state, "password", SignupReducer.field).value,
       onChange: handleChange,
       type_: "password",
     }),

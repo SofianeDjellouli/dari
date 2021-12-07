@@ -35,8 +35,8 @@ let make = () => {
   let (signupMutation, _) = Blitz.ReactQuery.useMutation(signup)
 
   let (state, dispatch) = React.useReducer(
-    SignupFormReducer.reducer,
-    SignupFormReducer.initialState,
+    SignupReducer.reducer,
+    SignupReducer.initialState,
   )
 
   Js.log(state)
@@ -44,7 +44,7 @@ let make = () => {
   let handleSubmit = (event: ReactEvent.Form.t) => {
     ReactEvent.Synthetic.preventDefault(event)
 
-    let errors = SignupFormValidate.validate(state)
+    let errors = SignupValidation.validate(state)
 
     if Js.Array2.length(errors) > 0 {
       errors->SetErrors->dispatch
@@ -61,7 +61,7 @@ let make = () => {
     {name: name, value: value}->Change->dispatch
   }
 
-  let getField = field => Map.String.getWithDefault(state, field, SignupFormReducer.field)
+  let getField = field => Map.String.getWithDefault(state, field, SignupReducer.field)
 
   let getValue = field => getField(field).value
 
