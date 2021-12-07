@@ -1,17 +1,5 @@
 open Ionic
-
-module Fields = %lenses(
-  type state = {
-    password: string,
-    email: string,
-  }
-)
-
-module FormApi = ReForm.Make(Fields)
-
-open FormApi
-
-type field<'a> = Fields.field<'a>
+open Belt
 
 type user = {"email": string, "name": string, "role": string, "id": int}
 
@@ -20,107 +8,79 @@ external signup: 'a = "default"
 // The latter causes a Blitz error
 // external signup: (FormApi.state, Blitz.Ctx.t) => Promise.t<user> = "default"
 
+let handleSignupFormSubmit = (signupMutation, data) => {
+  /* signupMutation(. data.state.values)
+  ->Promise.then(num => {
+    Js.log(num)
+
+    Promise.resolve(num)
+  })
+  ->Promise.catch(error => {
+    Js.log(error)
+
+    data.send(ResetForm)
+    /* if error["code"] === "P2002" && error["meta"]["target"] === "email" {
+          data.send(SetFieldsState)
+        } */
+
+    Promise.reject(error)
+  })
+  ->ignore */
+
+  None
+}
+
 @react.component
 let make = () => {
   let (signupMutation, _) = Blitz.ReactQuery.useMutation(signup)
 
-  let form = FormApi.use(
-    ~validationStrategy=OnChange,
-    ~onSubmit=data => {
-      signupMutation(. data.state.values)
-      ->Promise.then(num => {
-        Js.log(num)
-
-        Promise.resolve(num)
-      })
-      ->Promise.catch(error => {
-        Js.log(error)
-
-        data.send(ResetForm)
-        /* if error["code"] === "P2002" && error["meta"]["target"] === "email" {
-          data.send(SetFieldsState)
-        } */
-
-        Promise.reject(error)
-      })
-      ->ignore
-
-      Js.log(1)
-
-      None
-    },
-    ~initialState={
-      password: "",
-      email: "",
-    },
-    ~schema={
-      let password = Validation.custom(state => {
-        let length = Js.String2.length(state.password)
-
-        if length === 0 {
-          Error("required")
-        } else if length < 8 {
-          Error("too small")
-        } else if length > 11 {
-          Error("too big")
-        } else {
-          Valid
-        }
-      }, Password)
-
-      let email = Validation.custom(state => {
-        let length = Js.String2.length(state.email)
-
-        if length === 0 {
-          Error("required")
-        } else if Js.Re.test_(ReSchema.RegExps.email, state.email) {
-          Valid
-        } else {
-          let message = ReSchemaI18n.default.email(~value=state.email)
-
-          Error(message)
-        }
-      }, Email)
-
-      [email, password]->Belt.Array.concatMany->Validation.Schema
-    },
-    (),
+  let (state, dispatch) = React.useReducer(
+    SignupFormReducer.reducer,
+    SignupFormReducer.initialState,
   )
+
+  Js.log(state)
 
   let handleSubmit = (event: ReactEvent.Form.t) => {
     ReactEvent.Synthetic.preventDefault(event)
 
-    form.submit()
+    // SignupFormValidate.validate(state)
   }
 
-  let handleField = (field: field<'a>, e: ReactEvent.Form.t) => {
-    let value = ReactEvent.Form.target(e)["value"]
+  let handleField = (field, e: ReactEvent.Form.t) => {
+    let event = ReactEvent.Form.target(e)
 
-    form.handleChange(field, value)
+    let value = event["value"]
+
+    let name = event["name"]
+
+    dispatch(Change({name: name, value: value}))
   }
 
-  let getError = field => field->ReSchema.Field->form.getFieldError
+  let getField = field => Map.String.getWithDefault(state, field, SignupFormReducer.field)
 
-  Js.log(form)
+  let getValue = field => getField(field).value
+
+  let getError = field => getField(field).error
 
   <Form onSubmit=handleSubmit>
     <TextField
-      value=form.values.email
-      onChange={handleField(Email)}
-      name="Email"
+      value={getValue("email")}
+      onChange={handleField("email")}
+      name="email"
       label="Email"
       type_=#email
       autofocus=true
-      error={getError(Email)}
+      error={getError("email")}
     />
     <TextField
-      value=form.values.password
-      onChange={handleField(Password)}
+      value={getValue("password")}
+      onChange={handleField("password")}
       name="password"
       label="Password"
       type_=#password
-      error={getError(Password)}
+      error={getError("password")}
     />
-    <Button.AsyncButton color=#danger expand=#block label="Submit" isLoading=form.isSubmitting />
+    <Button.AsyncButton color=#danger expand=#block label="Submit" isLoading=false />
   </Form>
 }

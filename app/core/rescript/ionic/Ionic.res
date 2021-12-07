@@ -95,7 +95,8 @@ module Input = {
       ~value: string,
       ~onIonChange: ReactEvent.Form.t => unit,
       ~autofocus: bool=?,
-      ~color: [#warning]=?,
+      ~color: color=?,
+      ~onIonBlur: ReactEvent.Form.t => unit=?,
     ) => React.element = "IonInput"
   }
 }

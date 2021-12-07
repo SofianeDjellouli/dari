@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import * as Spread from "../spread/Spread.bs.js"
+import * as Caml_option from "rescript/lib/es6/caml_option.js"
 import * as React$1 from "@ionic/react"
 
 function TextField(Props) {
@@ -11,6 +12,7 @@ function TextField(Props) {
   var error = Props.error
   var value = Props.value
   var onIonChange = Props.onChange
+  var onIonBlur = Props.onBlur
   var type_ = Props.type_
   var autofocus = Props.autofocus
   var tmp = {
@@ -23,6 +25,9 @@ function TextField(Props) {
   }
   if (autofocus !== undefined) {
     tmp.autofocus = autofocus
+  }
+  if (onIonBlur !== undefined) {
+    tmp.onIonBlur = Caml_option.valFromOption(onIonBlur)
   }
   return React.createElement(
     React.Fragment,
@@ -45,7 +50,7 @@ function TextField(Props) {
       })
     ),
     React.createElement(React$1.IonNote, {
-      children: error !== undefined ? error : null,
+      children: error,
       color: "danger",
       className: "ion-padding",
     })
