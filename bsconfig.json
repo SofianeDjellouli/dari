@@ -1,5 +1,6 @@
 {
   "bs-dependencies": ["@rescript/react", "bs-webapi", "@ryyppy/rescript-promise", "rescript-next"],
+  "bs-dev-dependencies": ["rescript-test"],
   "gentypeconfig": {
     "debug": {
       "all": false,
@@ -26,8 +27,14 @@
   "sources": [
     {
       "dir": "app",
-      "subdirs": true
+      "subdirs": true,
+      "type": "dev"
+    },
+    {
+      "dir": "tests",
+      "subdirs": true,
+      "type": "dev"
     }
   ],
-  "suffix": ".bs.js"
+  "suffix": ".mjs"
 }
