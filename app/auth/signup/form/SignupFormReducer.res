@@ -20,6 +20,17 @@ type action = Change({name: string, value: string}) | SetErrors(array<error>)
 let reducer = (state: state, action: action) => {
   switch action {
   | Change({name, value}) => Map.String.set(state, name, {value: value, error: ""})
-  | _ => initialState
+  | SetErrors(errors) => {
+      let findError = Js.Array2.find(errors)
+
+      Map.String.reduce(state, state, (acc, key, value) => {
+        let keyError = findError(e => e.name === key)
+
+        switch keyError {
+        | Some({error}) => Map.String.set(acc, key, {value: value.value, error: error})
+        | None => acc
+        }
+      })
+    }
   }
 }

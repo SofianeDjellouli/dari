@@ -44,17 +44,21 @@ let make = () => {
   let handleSubmit = (event: ReactEvent.Form.t) => {
     ReactEvent.Synthetic.preventDefault(event)
 
-    // SignupFormValidate.validate(state)
+    let errors = SignupFormValidate.validate(state)
+
+    if Js.Array2.length(errors) > 0 {
+      errors->SetErrors->dispatch
+    }
   }
 
-  let handleField = (field, e: ReactEvent.Form.t) => {
+  let handleChange = (e: ReactEvent.Form.t) => {
     let event = ReactEvent.Form.target(e)
 
     let value = event["value"]
 
     let name = event["name"]
 
-    dispatch(Change({name: name, value: value}))
+    {name: name, value: value}->Change->dispatch
   }
 
   let getField = field => Map.String.getWithDefault(state, field, SignupFormReducer.field)
@@ -66,7 +70,7 @@ let make = () => {
   <Form onSubmit=handleSubmit>
     <TextField
       value={getValue("email")}
-      onChange={handleField("email")}
+      onChange={handleChange}
       name="email"
       label="Email"
       type_=#email
@@ -75,7 +79,7 @@ let make = () => {
     />
     <TextField
       value={getValue("password")}
-      onChange={handleField("password")}
+      onChange={handleChange}
       name="password"
       label="Password"
       type_=#password

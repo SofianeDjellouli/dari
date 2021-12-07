@@ -7,6 +7,7 @@ import * as TextField from "../../../core/components/textfield/TextField.bs.js"
 import * as Belt_MapString from "rescript/lib/es6/belt_MapString.js"
 import * as DataClient from "next/data-client"
 import * as SignupFormReducer from "./SignupFormReducer.bs.js"
+import * as SignupFormValidate from "./SignupFormValidate.bs.js"
 import Signup from "app/auth/mutations/signup"
 
 function handleSignupFormSubmit(signupMutation, data) {}
@@ -19,8 +20,15 @@ function SignupForm(Props) {
   console.log(state)
   var handleSubmit = function ($$event) {
     $$event.preventDefault()
+    var errors = SignupFormValidate.validate(state)
+    if (errors.length > 0) {
+      return Curry._1(dispatch, {
+        TAG: /* SetErrors */ 1,
+        _0: errors,
+      })
+    }
   }
-  var handleField = function (field, e) {
+  var handleChange = function (e) {
     var $$event = e.target
     var value = $$event.value
     var name = $$event.name
@@ -41,9 +49,7 @@ function SignupForm(Props) {
       label: "Email",
       error: Belt_MapString.getWithDefault(state, "email", SignupFormReducer.field).error,
       value: Belt_MapString.getWithDefault(state, "email", SignupFormReducer.field).value,
-      onChange: function (param) {
-        return handleField("email", param)
-      },
+      onChange: handleChange,
       type_: "email",
       autofocus: true,
     }),
@@ -52,9 +58,7 @@ function SignupForm(Props) {
       label: "Password",
       error: Belt_MapString.getWithDefault(state, "password", SignupFormReducer.field).error,
       value: Belt_MapString.getWithDefault(state, "password", SignupFormReducer.field).value,
-      onChange: function (param) {
-        return handleField("password", param)
-      },
+      onChange: handleChange,
       type_: "password",
     }),
     React.createElement(Ionic.Button.AsyncButton.make, {
