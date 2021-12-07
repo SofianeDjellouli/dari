@@ -30,6 +30,11 @@ function assertMapEqual(result, expected) {
   )
 }
 
+function assertDeepEqual(result, expected) {
+  return Test.assertion(undefined, undefined, Caml_obj.caml_equal, result, expected)
+}
+
 exports.assertArrayEqual = assertArrayEqual
 exports.assertMapEqual = assertMapEqual
+exports.assertDeepEqual = assertDeepEqual
 /* Test Not a pure module */

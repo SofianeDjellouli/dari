@@ -1,4 +1,5 @@
 open SignupReducer
 open Belt
 
-let getOutput = state => Map.String.map(state, value => value.value)
+let getOutput = state =>
+  state->Map.String.map(value => value.value)->Map.String.toArray->Js.Dict.fromArray

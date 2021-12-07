@@ -14,9 +14,7 @@ test("Gets values from state", () => {
 
   let result = getOutput(state)
 
-  let expectedArray = [("email", "myemail@gmail.com"), ("password", "12345678")]
+  let expected = Js.Dict.fromArray([("email", "myemail@gmail.com"), ("password", "12345678")])
 
-  let expected = Map.String.fromArray(expectedArray)
-
-  assertMapEqual(result, expected)
+  assertDeepEqual(result, expected)
 })

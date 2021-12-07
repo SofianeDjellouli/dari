@@ -3,6 +3,7 @@
 
 var Test = require("rescript-test/src/Test.bs.js")
 var Assert = require("./Assert.bs.js")
+var Js_dict = require("rescript/lib/js/js_dict.js")
 var SignupOutput = require("../app/auth/signup/form/SignupOutput.bs.js")
 var Belt_MapString = require("rescript/lib/js/belt_MapString.js")
 
@@ -25,12 +26,11 @@ Test.test("Gets values from state", function (param) {
   ]
   var state = Belt_MapString.fromArray(stateArray)
   var result = SignupOutput.getOutput(state)
-  var expectedArray = [
+  var expected = Js_dict.fromArray([
     ["email", "myemail@gmail.com"],
     ["password", "12345678"],
-  ]
-  var expected = Belt_MapString.fromArray(expectedArray)
-  return Assert.assertMapEqual(result, expected)
+  ])
+  return Assert.assertDeepEqual(result, expected)
 })
 
 /*  Not a pure module */
