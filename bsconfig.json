@@ -17,7 +17,7 @@
   "package-specs": [
     {
       "in-source": true,
-      "module": "es6"
+      "module": "commonjs"
     }
   ],
   "ppx-flags": [],
@@ -36,5 +36,5 @@
       "type": "dev"
     }
   ],
-  "suffix": ".mjs"
+  "suffix": ".bs.js"
 }

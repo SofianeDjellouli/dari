@@ -31,7 +31,7 @@
     "rescript": "^9.1.4",
     "rescript-next": "10.0.0-alpha.1",
     "rescript-test": "3.2.0",
-    "typescript": "~4.4"
+    "typescript": "4.5.2"
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [
@@ -61,7 +61,7 @@
     "rescript:clean": "rescript clean",
     "start": "blitz start",
     "studio": "blitz prisma studio",
-    "test": "retest 'tests/*.mjs' 'tests/**/*.mjs'"
+    "test": "retest 'tests/*.bs.js' 'tests/**/*.bs.js'"
   },
   "version": "1.0.0"
 }
