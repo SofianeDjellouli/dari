@@ -1,5 +1,11 @@
 {
-  "bs-dependencies": ["@rescript/react", "bs-webapi", "@ryyppy/rescript-promise", "rescript-next"],
+  "bs-dependencies": [
+    "@rescript/react",
+    "bs-webapi",
+    "@ryyppy/rescript-promise",
+    "rescript-next",
+    "rescript-recoil"
+  ],
   "bs-dev-dependencies": ["rescript-test"],
   "gentypeconfig": {
     "debug": {

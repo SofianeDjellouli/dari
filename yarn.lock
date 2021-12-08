@@ -4858,6 +4858,11 @@ growly@^1.3.0:
   resolved "https://registry.yarnpkg.com/growly/-/growly-1.3.0.tgz#f10748cbe76af964b7c96c93c6bcc28af120c081"
   integrity sha1-8QdIy+dq+WS3yWyTxrzCivEgwIE=
 
+hamt_plus@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/hamt_plus/-/hamt_plus-1.0.2.tgz#e21c252968c7e33b20f6a1b094cd85787a265601"
+  integrity sha1-4hwlKWjH4zsg9qGwlM2FeHomVgE=
+
 har-schema@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/har-schema/-/har-schema-2.0.0.tgz#a94c2224ebcac04782a0d9035521f24735b7ec92"
@@ -8368,6 +8373,13 @@ recast@0.20.5, recast@^0.20.3, recast@^0.20.4:
     source-map "~0.6.1"
     tslib "^2.0.1"
 
+recoil@0.5.2:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/recoil/-/recoil-0.5.2.tgz#61fecce3b4dc91127a595586cf7369e2811ba024"
+  integrity sha512-Edibzpu3dbUMLy6QRg73WL8dvMl9Xqhp+kU+f2sJtXxsaXvAlxU/GcnDE8HXPkprXrhHF2e6SZozptNvjNF5fw==
+  dependencies:
+    hamt_plus "1.0.2"
+
 redent@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/redent/-/redent-3.0.0.tgz#e557b7998316bb53c9f1f56fa626352c6963059f"
@@ -8512,6 +8524,11 @@ rescript-next@10.0.0-alpha.1:
   version "10.0.0-alpha.1"
   resolved "https://registry.yarnpkg.com/rescript-next/-/rescript-next-10.0.0-alpha.1.tgz#c69a78f0ef05fb8d57332b01ef429c75a3287743"
   integrity sha512-joJdMLkD9Gn8/dH5ZsxKj2KNz32FujAXIbN2fN3Cu9dyU/3UGSsXe16mPerksARYjbE++9dAmfU4s3zhxzO5Hg==
+
+rescript-recoil@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/rescript-recoil/-/rescript-recoil-3.0.0.tgz#5b0f2c868efc684d5fe909f4d33a5c487c311b88"
+  integrity sha512-uR7zmQC4i+PCTyIWK+CHO6SpUmx1mP1XzgcG34u0lAAn1IRsln1eZbApBMCG6RrsFJ2f0dp3T+LG8HkqRioVEA==
 
 rescript-test@3.2.0:
   version "3.2.0"
