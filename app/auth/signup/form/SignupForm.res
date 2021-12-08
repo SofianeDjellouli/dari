@@ -13,7 +13,7 @@ external signup: 'a = "default"
 let make = () => {
   let setSnackbar = Snackbar.useSnackbar()
 
-  let (signupMutation, _) = Blitz.ReactQuery.useMutation(signup)
+  let (signupMutation, data) = Blitz.ReactQuery.useMutation(signup)
 
   let (state, dispatch) = React.useReducer(SignupReducer.reducer, SignupReducer.initialState)
 
@@ -83,6 +83,6 @@ let make = () => {
       type_=#password
       error={getError("password")}
     />
-    <Button.AsyncButton color=#danger expand=#block label="Submit" isLoading=false />
+    <Button.AsyncButton color=#danger expand=#block label="Submit" isLoading=data.isLoading />
   </Form>
 }

@@ -95,7 +95,7 @@ function SignupForm(Props) {
       color: "danger",
       expand: "block",
       label: "Submit",
-      isLoading: false,
+      isLoading: match[1].isLoading,
     })
   )
 }
