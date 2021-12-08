@@ -146,6 +146,19 @@ module Button = {
   }
 }
 
+module Toast = {
+  module IonToast = {
+    @module("@ionic/react") @react.component
+    external make: (
+      ~children: React.element=?,
+      ~color: color=?,
+      ~message: string=?,
+      ~isOpen: bool=?,
+      ~onDidPresent: unit => unit=?,
+    ) => React.element = "IonToast"
+  }
+}
+
 module Form = {
   @react.component
   let make = (~onSubmit: ReactEvent.Form.t => unit, ~children: React.element) =>

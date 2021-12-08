@@ -15,19 +15,28 @@ import "@ionic/react/css/structure.css"
 import "@ionic/react/css/typography.css"
 import "@ionic/react/css/padding.css"
 import "@ionic/react/css/flex-utils.css"
+import React from "react"
+import { RecoilRoot } from "recoil"
+import { make as Snackbar } from "app/core/components/snackbar/Snackbar.bs"
+
+// TODO: Implement this for recoil warnings: https://github.com/facebookexperimental/Recoil/issues/733#issuecomment-925072943
 
 export default function App({ Component, pageProps }: AppProps) {
   const getLayout = Component.getLayout || ((page) => page)
 
   return (
-    <IonApp>
-      <ErrorBoundary
-        FallbackComponent={RootErrorFallback}
-        onReset={useQueryErrorResetBoundary().reset}
-      >
-        {getLayout(<Component {...pageProps} />)}
-      </ErrorBoundary>
-    </IonApp>
+    <RecoilRoot>
+      <IonApp>
+        <ErrorBoundary
+          FallbackComponent={RootErrorFallback}
+          onReset={useQueryErrorResetBoundary().reset}
+        >
+          {getLayout(<Component {...pageProps} />)}
+
+          <Snackbar />
+        </ErrorBoundary>
+      </IonApp>
+    </RecoilRoot>
   )
 }
 

@@ -11,6 +11,8 @@ external signup: 'a = "default"
 
 @react.component
 let make = () => {
+  let setSnackbar = Snackbar.useSnackbar()
+
   let (signupMutation, _) = Blitz.ReactQuery.useMutation(signup)
 
   let (state, dispatch) = React.useReducer(SignupReducer.reducer, SignupReducer.initialState)
@@ -35,10 +37,10 @@ let make = () => {
         switch rawError {
         | JsError(error) =>
           switch Js.Exn.message(error) {
-          | Some(message) => Js.log(message)
-          | None => Js.log("Some unknown error")
+          | Some(message) => setSnackbar(_ => message)
+          | None => setSnackbar(_ => "Some unknown error")
           }
-        | _ => Js.log("Some unknown error")
+        | _ => setSnackbar(_ => "Some unknown error")
         }
 
         Promise.reject(rawError)

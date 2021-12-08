@@ -97,6 +97,12 @@ var Button = {
   AsyncButton: AsyncButton,
 }
 
+var IonToast = {}
+
+var Toast = {
+  IonToast: IonToast,
+}
+
 function Ionic$Form(Props) {
   var onSubmit = Props.onSubmit
   var children = Props.children
@@ -127,5 +133,6 @@ exports.Item = Item
 exports.Input = Input
 exports.Grid = Grid
 exports.Button = Button
+exports.Toast = Toast
 exports.Form = Form
 /* react Not a pure module */

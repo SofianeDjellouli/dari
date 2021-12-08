@@ -5,6 +5,7 @@ var Curry = require("rescript/lib/js/curry.js")
 var Ionic = require("../../../core/rescript/ionic/Ionic.bs.js")
 var React = require("react")
 var $$Promise = require("@ryyppy/rescript-promise/src/Promise.bs.js")
+var Snackbar = require("../../../core/components/snackbar/Snackbar.bs.js")
 var TextField = require("../../../core/components/textfield/TextField.bs.js")
 var SignupOutput = require("./SignupOutput.bs.js")
 var SignupReducer = require("./SignupReducer.bs.js")
@@ -14,6 +15,7 @@ var DataClient = require("next/data-client")
 var Signup = require("app/auth/mutations/signup").default
 
 function SignupForm(Props) {
+  var setSnackbar = Snackbar.useSnackbar(undefined)
   var match = DataClient.useMutation(Signup)
   var signupMutation = match[0]
   var match$1 = React.useReducer(SignupReducer.reducer, SignupReducer.initialState)
@@ -37,12 +39,18 @@ function SignupForm(Props) {
           if (rawError.RE_EXN_ID === $$Promise.JsError) {
             var message = rawError._1.message
             if (message !== undefined) {
-              console.log(message)
+              Curry._1(setSnackbar, function (param) {
+                return message
+              })
             } else {
-              console.log("Some unknown error")
+              Curry._1(setSnackbar, function (param) {
+                return "Some unknown error"
+              })
             }
           } else {
-            console.log("Some unknown error")
+            Curry._1(setSnackbar, function (param) {
+              return "Some unknown error"
+            })
           }
           return Promise.reject(rawError)
         }
