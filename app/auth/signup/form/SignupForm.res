@@ -1,5 +1,6 @@
 open Ionic
 open Belt
+open Promise
 
 type user = {"email": string, "name": string, "role": string, "id": int}
 
@@ -7,28 +8,6 @@ type user = {"email": string, "name": string, "role": string, "id": int}
 external signup: 'a = "default"
 // The latter causes a Blitz error
 // external signup: (FormApi.state, Blitz.Ctx.t) => Promise.t<user> = "default"
-
-let handleSignupFormSubmit = (signupMutation, data) => {
-  /* signupMutation(. data.state.values)
-  ->Promise.then(num => {
-    Js.log(num)
-
-    Promise.resolve(num)
-  })
-  ->Promise.catch(error => {
-    Js.log(error)
-
-    data.send(ResetForm)
-    /* if error["code"] === "P2002" && error["meta"]["target"] === "email" {
-          data.send(SetFieldsState)
-        } */
-
-    Promise.reject(error)
-  })
-  ->ignore */
-
-  None
-}
 
 @react.component
 let make = () => {
@@ -43,6 +22,28 @@ let make = () => {
 
     if Js.Array2.length(errors) > 0 {
       errors->SetErrors->dispatch
+    } else {
+      state
+      ->SignupOutput.getOutput
+      ->(e => signupMutation(. e))
+      ->Promise.then(num => {
+        Js.log(num)
+
+        Promise.resolve(num)
+      })
+      ->Promise.catch(rawError => {
+        switch rawError {
+        | JsError(error) =>
+          switch Js.Exn.message(error) {
+          | Some(message) => Js.log(message)
+          | None => Js.log("Some unknown error")
+          }
+        | _ => Js.log("Some unknown error")
+        }
+
+        Promise.reject(rawError)
+      })
+      ->ignore
     }
   }
 

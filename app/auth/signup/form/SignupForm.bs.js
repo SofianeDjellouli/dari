@@ -4,20 +4,21 @@
 var Curry = require("rescript/lib/js/curry.js")
 var Ionic = require("../../../core/rescript/ionic/Ionic.bs.js")
 var React = require("react")
+var $$Promise = require("@ryyppy/rescript-promise/src/Promise.bs.js")
 var TextField = require("../../../core/components/textfield/TextField.bs.js")
+var SignupOutput = require("./SignupOutput.bs.js")
 var SignupReducer = require("./SignupReducer.bs.js")
 var Belt_MapString = require("rescript/lib/js/belt_MapString.js")
 var SignupValidation = require("./SignupValidation.bs.js")
 var DataClient = require("next/data-client")
 var Signup = require("app/auth/mutations/signup").default
 
-function handleSignupFormSubmit(signupMutation, data) {}
-
 function SignupForm(Props) {
-  DataClient.useMutation(Signup)
-  var match = React.useReducer(SignupReducer.reducer, SignupReducer.initialState)
-  var dispatch = match[1]
-  var state = match[0]
+  var match = DataClient.useMutation(Signup)
+  var signupMutation = match[0]
+  var match$1 = React.useReducer(SignupReducer.reducer, SignupReducer.initialState)
+  var dispatch = match$1[1]
+  var state = match$1[0]
   var handleSubmit = function ($$event) {
     $$event.preventDefault()
     var errors = SignupValidation.validate(state)
@@ -26,6 +27,27 @@ function SignupForm(Props) {
         TAG: /* SetErrors */ 1,
         _0: errors,
       })
+    } else {
+      $$Promise.$$catch(
+        signupMutation(SignupOutput.getOutput(state)).then(function (num) {
+          console.log(num)
+          return Promise.resolve(num)
+        }),
+        function (rawError) {
+          if (rawError.RE_EXN_ID === $$Promise.JsError) {
+            var message = rawError._1.message
+            if (message !== undefined) {
+              console.log(message)
+            } else {
+              console.log("Some unknown error")
+            }
+          } else {
+            console.log("Some unknown error")
+          }
+          return Promise.reject(rawError)
+        }
+      )
+      return
     }
   }
   var handleChange = function (e) {
@@ -72,6 +94,5 @@ function SignupForm(Props) {
 
 var make = SignupForm
 
-exports.handleSignupFormSubmit = handleSignupFormSubmit
 exports.make = make
 /* Ionic Not a pure module */
