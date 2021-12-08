@@ -29,7 +29,7 @@ Test.test("Validates valid state", function (param) {
   return Assert.assertArrayEqual(result, expected)
 })
 
-Test.test("Invalidates invalid state", function (param) {
+Test.test("Invalidates empty required fields", function (param) {
   var stateArray = [
     [
       "email",
@@ -52,6 +52,90 @@ Test.test("Invalidates invalid state", function (param) {
     {
       name: "password",
       error: "This field is required",
+    },
+  ]
+  return Assert.assertArrayEqual(result, expected)
+})
+
+Test.test("Invalidates too short password", function (param) {
+  var stateArray = [
+    [
+      "email",
+      {
+        value: "myemail@gmail.com",
+        error: "",
+      },
+    ],
+    [
+      "password",
+      {
+        value: "1",
+        error: "",
+      },
+    ],
+  ]
+  var state = Belt_MapString.fromArray(stateArray)
+  var result = SignupValidation.validate(state)
+  var expected = [
+    {
+      name: "password",
+      error: SignupValidation.tooShortPassword,
+    },
+  ]
+  return Assert.assertArrayEqual(result, expected)
+})
+
+Test.test("Invalidates too long password", function (param) {
+  var stateArray = [
+    [
+      "email",
+      {
+        value: "myemail@gmail.com",
+        error: "",
+      },
+    ],
+    [
+      "password",
+      {
+        value: "1234567890123456789012345678901234567890",
+        error: "",
+      },
+    ],
+  ]
+  var state = Belt_MapString.fromArray(stateArray)
+  var result = SignupValidation.validate(state)
+  var expected = [
+    {
+      name: "password",
+      error: SignupValidation.tooLongPassword,
+    },
+  ]
+  return Assert.assertArrayEqual(result, expected)
+})
+
+Test.test("Invalidates invalid email", function (param) {
+  var stateArray = [
+    [
+      "email",
+      {
+        value: "myemail@gmail",
+        error: "",
+      },
+    ],
+    [
+      "password",
+      {
+        value: "123456789",
+        error: "",
+      },
+    ],
+  ]
+  var state = Belt_MapString.fromArray(stateArray)
+  var result = SignupValidation.validate(state)
+  var expected = [
+    {
+      name: "email",
+      error: SignupValidation.invalidEmail,
     },
   ]
   return Assert.assertArrayEqual(result, expected)
