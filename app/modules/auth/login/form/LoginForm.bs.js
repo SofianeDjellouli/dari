@@ -2,11 +2,11 @@
 "use strict"
 
 var Curry = require("rescript/lib/js/curry.js")
-var Ionic = require("../../../core/rescript/ionic/Ionic.bs.js")
+var Ionic = require("../../../../core/rescript/ionic/Ionic.bs.js")
 var React = require("react")
 var $$Promise = require("@ryyppy/rescript-promise/src/Promise.bs.js")
-var Snackbar = require("../../../core/components/snackbar/Snackbar.bs.js")
-var TextField = require("../../../core/components/textfield/TextField.bs.js")
+var Snackbar = require("../../../../core/components/snackbar/Snackbar.bs.js")
+var TextField = require("../../../../core/components/textfield/TextField.bs.js")
 var LoginOutput = require("../output/LoginOutput.bs.js")
 var LoginReducer = require("../reducer/LoginReducer.bs.js")
 var Belt_MapString = require("rescript/lib/js/belt_MapString.js")
