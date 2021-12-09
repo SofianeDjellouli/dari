@@ -1,5 +1,7 @@
 open Ionic
 
+@module external styles: {..} = "./index.module.scss"
+
 @react.component
 let make = (~title: string, ~children: React.element) => <>
   <Toolbar.IonHeader>
@@ -7,9 +9,9 @@ let make = (~title: string, ~children: React.element) => <>
       <Toolbar.IonTitle> {React.string(title)} </Toolbar.IonTitle>
     </Toolbar.IonToolbar>
   </Toolbar.IonHeader>
-  <Content.IonContent className="ion-padding">
-    <div>
-      <Grid.IonGrid>
+  <Content.IonContent>
+    <div className={styles["wrapper"]}>
+      <Grid.IonGrid className={Clsx.classes(["ion-padding"])}>
         <Grid.IonRow className="ion-justify-content-center">
           <Grid.IonCol sizeMd="5" sizeLg="4"> children </Grid.IonCol>
         </Grid.IonRow>

@@ -104,7 +104,7 @@ module Input = {
 module Grid = {
   module IonGrid = {
     @module("@ionic/react") @react.component
-    external make: (~children: React.element=?) => React.element = "IonGrid"
+    external make: (~children: React.element=?, ~className: string=?) => React.element = "IonGrid"
   }
 
   module IonCol = {
