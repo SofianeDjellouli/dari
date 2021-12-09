@@ -3,7 +3,7 @@
 
 var Page = require("../../../core/components/page/Page.bs.js")
 var React = require("react")
-var LoginForm = require("../LoginForm.bs.js")
+var LoginForm = require("../form/LoginForm.bs.js")
 
 function LoginPage(Props) {
   return React.createElement(Page.make, {

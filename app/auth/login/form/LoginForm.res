@@ -2,30 +2,30 @@ open Ionic
 open Belt
 open Promise
 
-@module("app/auth/mutations/signup")
-external signup: 'a = "default"
+@module("app/auth/mutations/login")
+external login: 'a = "default"
 // The latter causes a Blitz error
-// external signup: (FormApi.state, Blitz.Ctx.t) => Promise.t<None> = "default"
+// external login: (FormApi.state, Blitz.Ctx.t) => Promise.t<None> = "default"
 
 @react.component
 let make = () => {
   let setSnackbar = Snackbar.useSnackbar()
 
-  let (signupMutation, data) = Blitz.ReactQuery.useMutation(signup)
+  let (loginMutation, data) = Blitz.ReactQuery.useMutation(login)
 
-  let (state, dispatch) = React.useReducer(SignupReducer.reducer, SignupReducer.initialState)
+  let (state, dispatch) = React.useReducer(LoginReducer.reducer, LoginReducer.initialState)
 
   let handleSubmit = (event: ReactEvent.Form.t) => {
     ReactEvent.Synthetic.preventDefault(event)
 
-    let errors = SignupValidation.validate(state)
+    let errors = LoginValidation.validate(state)
 
     if Js.Array2.length(errors) > 0 {
       errors->SetErrors->dispatch
     } else {
       state
-      ->SignupOutput.getOutput
-      ->(e => signupMutation(. e))
+      ->LoginOutput.getOutput
+      ->(e => loginMutation(. e))
       ->Promise.then(num => {
         Js.log(num)
 
@@ -57,7 +57,7 @@ let make = () => {
     {name: name, value: value}->Change->dispatch
   }
 
-  let getField = field => Map.String.getWithDefault(state, field, SignupReducer.field)
+  let getField = field => Map.String.getWithDefault(state, field, LoginReducer.field)
 
   let getValue = field => getField(field).value
 

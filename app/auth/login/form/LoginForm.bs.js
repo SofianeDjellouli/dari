@@ -2,28 +2,28 @@
 "use strict"
 
 var Curry = require("rescript/lib/js/curry.js")
-var Ionic = require("../../core/rescript/ionic/Ionic.bs.js")
+var Ionic = require("../../../core/rescript/ionic/Ionic.bs.js")
 var React = require("react")
 var $$Promise = require("@ryyppy/rescript-promise/src/Promise.bs.js")
-var Snackbar = require("../../core/components/snackbar/Snackbar.bs.js")
-var TextField = require("../../core/components/textfield/TextField.bs.js")
-var SignupOutput = require("../signup/form/SignupOutput.bs.js")
-var SignupReducer = require("../signup/form/SignupReducer.bs.js")
+var Snackbar = require("../../../core/components/snackbar/Snackbar.bs.js")
+var TextField = require("../../../core/components/textfield/TextField.bs.js")
+var LoginOutput = require("../output/LoginOutput.bs.js")
+var LoginReducer = require("../reducer/LoginReducer.bs.js")
 var Belt_MapString = require("rescript/lib/js/belt_MapString.js")
-var SignupValidation = require("../signup/form/SignupValidation.bs.js")
+var LoginValidation = require("../validation/LoginValidation.bs.js")
 var DataClient = require("next/data-client")
-var Signup = require("app/auth/mutations/signup").default
+var Login = require("app/auth/mutations/login").default
 
 function LoginForm(Props) {
   var setSnackbar = Snackbar.useSnackbar(undefined)
-  var match = DataClient.useMutation(Signup)
-  var signupMutation = match[0]
-  var match$1 = React.useReducer(SignupReducer.reducer, SignupReducer.initialState)
+  var match = DataClient.useMutation(Login)
+  var loginMutation = match[0]
+  var match$1 = React.useReducer(LoginReducer.reducer, LoginReducer.initialState)
   var dispatch = match$1[1]
   var state = match$1[0]
   var handleSubmit = function ($$event) {
     $$event.preventDefault()
-    var errors = SignupValidation.validate(state)
+    var errors = LoginValidation.validate(state)
     if (errors.length > 0) {
       return Curry._1(dispatch, {
         TAG: /* SetErrors */ 1,
@@ -31,7 +31,7 @@ function LoginForm(Props) {
       })
     } else {
       $$Promise.$$catch(
-        signupMutation(SignupOutput.getOutput(state)).then(function (num) {
+        loginMutation(LoginOutput.getOutput(state)).then(function (num) {
           console.log(num)
           return Promise.resolve(num)
         }),
@@ -77,8 +77,8 @@ function LoginForm(Props) {
     React.createElement(TextField.make, {
       name: "email",
       label: "Email",
-      error: Belt_MapString.getWithDefault(state, "email", SignupReducer.field).error,
-      value: Belt_MapString.getWithDefault(state, "email", SignupReducer.field).value,
+      error: Belt_MapString.getWithDefault(state, "email", LoginReducer.field).error,
+      value: Belt_MapString.getWithDefault(state, "email", LoginReducer.field).value,
       onChange: handleChange,
       type_: "email",
       autofocus: true,
@@ -86,8 +86,8 @@ function LoginForm(Props) {
     React.createElement(TextField.make, {
       name: "password",
       label: "Password",
-      error: Belt_MapString.getWithDefault(state, "password", SignupReducer.field).error,
-      value: Belt_MapString.getWithDefault(state, "password", SignupReducer.field).value,
+      error: Belt_MapString.getWithDefault(state, "password", LoginReducer.field).error,
+      value: Belt_MapString.getWithDefault(state, "password", LoginReducer.field).value,
       onChange: handleChange,
       type_: "password",
     }),
