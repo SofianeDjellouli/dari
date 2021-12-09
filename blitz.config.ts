@@ -1,6 +1,10 @@
 import { BlitzConfig, sessionMiddleware, simpleRolesIsAuthorized } from "blitz"
+import path from "path"
 
 const config: BlitzConfig = {
+  sassOptions: {
+    includePaths: [path.join(__dirname, "styles")],
+  },
   middleware: [
     sessionMiddleware({
       cookiePrefix: "dari",

@@ -10,6 +10,7 @@
     "react-final-form": "6.5.7",
     "recoil": "0.5.2",
     "rescript-recoil": "3.0.0",
+    "sass": "1.44.0",
     "zod": "3.11.6"
   },
   "devDependencies": {
