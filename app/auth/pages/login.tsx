@@ -1,4 +1,8 @@
-import { useRouter, BlitzPage } from "blitz"
+import { make as LoginPage } from "app/auth/login/page/LoginPage.bs"
+
+export default LoginPage
+
+/* import { useRouter, BlitzPage } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import { LoginForm } from "app/auth/components/LoginForm"
 
@@ -23,3 +27,4 @@ LoginPage.redirectAuthenticatedTo = "/"
 LoginPage.getLayout = (page) => <Layout title="Log In">{page}</Layout>
 
 export default LoginPage
+ */
