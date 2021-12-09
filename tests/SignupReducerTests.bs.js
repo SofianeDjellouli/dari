@@ -3,7 +3,7 @@
 
 var Test = require("rescript-test/src/Test.bs.js")
 var Assert = require("./Assert.bs.js")
-var SignupReducer = require("../app/auth/signup/form/SignupReducer.bs.js")
+var SignupReducer = require("../app/auth/signup/form/reducer/SignupReducer.bs.js")
 var Belt_MapString = require("rescript/lib/js/belt_MapString.js")
 
 Test.test("Handles Change action", function (param) {
