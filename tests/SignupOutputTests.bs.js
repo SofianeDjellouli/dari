@@ -4,7 +4,7 @@
 var Test = require("rescript-test/src/Test.bs.js")
 var Assert = require("./Assert.bs.js")
 var Js_dict = require("rescript/lib/js/js_dict.js")
-var SignupOutput = require("../app/modules/auth/signup/form/output/SignupOutput.bs.js")
+var SignupOutput = require("../app/modules/auth/signup/output/SignupOutput.bs.js")
 var Belt_MapString = require("rescript/lib/js/belt_MapString.js")
 
 Test.test("Gets values from state", function (param) {

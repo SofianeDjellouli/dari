@@ -4,7 +4,7 @@
 var Test = require("rescript-test/src/Test.bs.js")
 var Assert = require("./Assert.bs.js")
 var Belt_MapString = require("rescript/lib/js/belt_MapString.js")
-var SignupValidation = require("../app/modules/auth/signup/form/validation/SignupValidation.bs.js")
+var SignupValidation = require("../app/modules/auth/signup/validation/SignupValidation.bs.js")
 
 Test.test("Validates valid state", function (param) {
   var stateArray = [

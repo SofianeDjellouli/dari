@@ -3,7 +3,7 @@
 
 var Page = require("../../../../core/components/page/Page.bs.js")
 var React = require("react")
-var SignupForm = require("../form/form/SignupForm.bs.js")
+var SignupForm = require("../form/SignupForm.bs.js")
 
 function SignupPage(Props) {
   return React.createElement(Page.make, {

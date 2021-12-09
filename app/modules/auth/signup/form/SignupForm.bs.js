@@ -2,21 +2,23 @@
 "use strict"
 
 var Curry = require("rescript/lib/js/curry.js")
-var Ionic = require("../../../../../core/rescript/ionic/Ionic.bs.js")
+var Ionic = require("../../../../core/rescript/ionic/Ionic.bs.js")
 var React = require("react")
 var $$Promise = require("@ryyppy/rescript-promise/src/Promise.bs.js")
-var Snackbar = require("../../../../../core/components/snackbar/Snackbar.bs.js")
-var TextField = require("../../../../../core/components/textfield/TextField.bs.js")
+var Snackbar = require("../../../../core/components/snackbar/Snackbar.bs.js")
+var TextField = require("../../../../core/components/textfield/TextField.bs.js")
 var SignupOutput = require("../output/SignupOutput.bs.js")
 var SignupReducer = require("../reducer/SignupReducer.bs.js")
 var Belt_MapString = require("rescript/lib/js/belt_MapString.js")
 var SignupValidation = require("../validation/SignupValidation.bs.js")
 var DataClient = require("next/data-client")
-var Signup = require("app/auth/mutations/signup").default
+var Signup = require("../mutations/signup").default
+
+var signup = Signup
 
 function SignupForm(Props) {
   var setSnackbar = Snackbar.useSnackbar(undefined)
-  var match = DataClient.useMutation(Signup)
+  var match = DataClient.useMutation(signup)
   var signupMutation = match[0]
   var match$1 = React.useReducer(SignupReducer.reducer, SignupReducer.initialState)
   var dispatch = match$1[1]
@@ -102,5 +104,6 @@ function SignupForm(Props) {
 
 var make = SignupForm
 
+exports.signup = signup
 exports.make = make
-/* Ionic Not a pure module */
+/* signup Not a pure module */

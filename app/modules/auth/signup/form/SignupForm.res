@@ -2,11 +2,11 @@ open Ionic
 open Belt
 open Promise
 
-@module("app/auth/mutations/signup")
+@module("../mutations/signup")
 external signup: 'a = "default"
 // The latter causes a Blitz error
 // external signup: (FormApi.state, Blitz.Ctx.t) => Promise.t<None> = "default"
-
+  
 @react.component
 let make = () => {
   let setSnackbar = Snackbar.useSnackbar()
