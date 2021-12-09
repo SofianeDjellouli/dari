@@ -1,7 +1,7 @@
 import { Routes, useMutation, useRouter } from "blitz"
 import { Form, FORM_ERROR } from "app/core/components/Form"
-import signup from "app/auth/mutations/signup"
-import { Signup } from "app/auth/validations"
+import signup from "app/modules/auth/mutations/signup"
+import { Signup } from "app/modules/auth/validations"
 import { FC } from "react"
 
 export const SignupForm: FC = () => {

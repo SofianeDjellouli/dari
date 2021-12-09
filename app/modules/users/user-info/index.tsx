@@ -2,9 +2,9 @@ import { Suspense } from "react"
 import { Image, Link, BlitzPage, useMutation, Routes, useQuery } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
-import logout from "app/auth/mutations/logout"
+import logout from "app/modules/auth/mutations/logout"
 import logo from "public/logo.png"
-import getErrand from "app/auth/queries/getErrands"
+import getErrand from "app/modules/auth/queries/getErrands"
 
 /*
  * This file is just for a pleasant getting started page for your new app.

@@ -1,4 +1,4 @@
-import { make as LoginPage } from "app/auth/login/page/LoginPage.bs"
+import { make as LoginPage } from "app/modules/auth/login/page/LoginPage.bs"
 
 export default LoginPage
 

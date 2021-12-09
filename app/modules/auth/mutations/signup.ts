@@ -1,6 +1,6 @@
 import { Ctx, SecurePassword } from "blitz"
 import db from "db"
-import { Signup } from "app/auth/validations"
+import { Signup } from "app/modules/auth/validations"
 import { Role } from "types"
 import sendGrid from "@sendgrid/mail"
 import { EMAIL_SENDER } from "app/core/email/constants"

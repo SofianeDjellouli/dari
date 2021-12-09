@@ -7,7 +7,7 @@ import {
   ErrorFallbackProps,
   useQueryErrorResetBoundary,
 } from "blitz"
-import LoginForm from "app/auth/components/LoginForm"
+import LoginForm from "app/modules/auth/components/LoginForm"
 import { IonApp } from "@ionic/react"
 import "@ionic/react/css/core.css"
 import "@ionic/react/css/normalize.css"

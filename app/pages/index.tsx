@@ -2,7 +2,7 @@ import { Suspense } from "react"
 import { Image, Link, BlitzPage } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import logo from "public/logo.png"
-import { UserInfo } from "app/users/user-info"
+import { UserInfo } from "app/modules/users/user-info"
 
 const Home: BlitzPage = () => (
   <div className="container">
