@@ -2,12 +2,10 @@ open Ionic
 open Belt
 open Promise
 
-type user = {"email": string, "name": string, "role": string, "id": int}
-
 @module("app/auth/mutations/signup")
 external signup: 'a = "default"
 // The latter causes a Blitz error
-// external signup: (FormApi.state, Blitz.Ctx.t) => Promise.t<user> = "default"
+// external signup: (FormApi.state, Blitz.Ctx.t) => Promise.t<None> = "default"
 
 @react.component
 let make = () => {
