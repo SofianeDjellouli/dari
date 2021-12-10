@@ -26,10 +26,13 @@ var IonToolbar = {}
 
 var IonTitle = {}
 
+var IonButtons = {}
+
 var Toolbar = {
   IonHeader: IonHeader,
   IonToolbar: IonToolbar,
   IonTitle: IonTitle,
+  IonButtons: IonButtons,
 }
 
 var IonPage = {}
@@ -125,6 +128,47 @@ var Form = {
   make: Ionic$Form,
 }
 
+var SpreadableIonSplitPanel = {}
+
+function Ionic$Menu$IonSplitPanel(Props) {
+  var contentId = Props.contentId
+  var when_ = Props.when_
+  var tmp = {}
+  if (contentId !== undefined) {
+    tmp.contentId = contentId
+  }
+  return React.createElement(Spread.make, {
+    props: {
+      when: when_,
+    },
+    children: React.createElement(React$1.IonSplitPanel, tmp),
+  })
+}
+
+var IonSplitPanel = {
+  make: Ionic$Menu$IonSplitPanel,
+}
+
+var IonMenu = {}
+
+var IonMenuToggle = {}
+
+var Menu = {
+  SpreadableIonSplitPanel: SpreadableIonSplitPanel,
+  IonSplitPanel: IonSplitPanel,
+  IonMenu: IonMenu,
+  IonMenuToggle: IonMenuToggle,
+}
+
+var IonList = {}
+
+var IonListHeader = {}
+
+var List = {
+  IonList: IonList,
+  IonListHeader: IonListHeader,
+}
+
 exports.Content = Content
 exports.ProgressIndicators = ProgressIndicators
 exports.Toolbar = Toolbar
@@ -135,4 +179,6 @@ exports.Grid = Grid
 exports.Button = Button
 exports.Toast = Toast
 exports.Form = Form
+exports.Menu = Menu
+exports.List = List
 /* react Not a pure module */

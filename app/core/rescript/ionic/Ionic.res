@@ -10,6 +10,13 @@ type color = [
   | #dark
 ]
 
+type slot = [
+  | #primary
+  | #secondary
+  | #end
+  | #start
+]
+
 module Content = {
   module IonContent = {
     @module("@ionic/react") @react.component
@@ -48,6 +55,11 @@ module Toolbar = {
   module IonTitle = {
     @module("@ionic/react") @react.component
     external make: (~children: React.element=?) => React.element = "IonTitle"
+  }
+
+  module IonButtons = {
+    @module("@ionic/react") @react.component
+    external make: (~children: React.element=?, ~slot: slot=?) => React.element = "IonButtons"
   }
 }
 
@@ -165,4 +177,39 @@ module Form = {
     <form onSubmit>
       children <input type_="submit" style={ReactDOMStyle.make(~display="none", ())} />
     </form>
+}
+
+module Menu = {
+  module SpreadableIonSplitPanel = {
+    @module("@ionic/react") @react.component
+    external make: (~contentId: string=?) => React.element = "IonSplitPanel"
+  }
+
+  module IonSplitPanel = {
+    @react.component
+    let make = (~contentId: option<string>=?, ~when_: string) =>
+      <Spread props={"when": when_}> <SpreadableIonSplitPanel ?contentId /> </Spread>
+  }
+
+  module IonMenu = {
+    @module("@ionic/react") @react.component
+    external make: (~children: React.element=?, ~contentId: string=?) => React.element = "IonMenu"
+  }
+
+  module IonMenuToggle = {
+    @module("@ionic/react") @react.component
+    external make: (~children: React.element=?, ~autoHide: bool) => React.element = "IonMenuToggle"
+  }
+}
+
+module List = {
+  module IonList = {
+    @module("@ionic/react") @react.component
+    external make: (~children: React.element=?) => React.element = "IonList"
+  }
+
+  module IonListHeader = {
+    @module("@ionic/react") @react.component
+    external make: (~children: React.element=?) => React.element = "IonListHeader"
+  }
 }
