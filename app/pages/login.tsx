@@ -10,6 +10,4 @@ LoginPage.getLayout = (page) => (
 
 LoginPage.redirectAuthenticatedTo = "/"
 
-LoginPage.authenticate = false
-
 export default LoginPage

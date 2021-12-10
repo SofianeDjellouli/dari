@@ -12,11 +12,13 @@ var LoginReducer = require("../reducer/LoginReducer.bs.js")
 var Belt_MapString = require("rescript/lib/js/belt_MapString.js")
 var LoginValidation = require("../validation/LoginValidation.bs.js")
 var DataClient = require("next/data-client")
-var Login = require("app/auth/mutations/login").default
+var Login = require("../../mutations/login").default
+
+var login = Login
 
 function LoginForm(Props) {
   var setSnackbar = Snackbar.useSnackbar(undefined)
-  var match = DataClient.useMutation(Login)
+  var match = DataClient.useMutation(login)
   var loginMutation = match[0]
   var match$1 = React.useReducer(LoginReducer.reducer, LoginReducer.initialState)
   var dispatch = match$1[1]
@@ -102,5 +104,6 @@ function LoginForm(Props) {
 
 var make = LoginForm
 
+exports.login = login
 exports.make = make
-/* Ionic Not a pure module */
+/* login Not a pure module */

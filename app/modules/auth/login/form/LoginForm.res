@@ -2,7 +2,7 @@ open Ionic
 open Belt
 open Promise
 
-@module("app/auth/mutations/login")
+@module("../../mutations/login")
 external login: 'a = "default"
 // The latter causes a Blitz error
 // external login: (FormApi.state, Blitz.Ctx.t) => Promise.t<None> = "default"

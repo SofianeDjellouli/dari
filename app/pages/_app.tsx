@@ -6,6 +6,7 @@ import {
   AuthorizationError,
   ErrorFallbackProps,
   useQueryErrorResetBoundary,
+  Link,
 } from "blitz"
 import LoginForm from "app/modules/auth/components/LoginForm"
 import { IonApp } from "@ionic/react"
@@ -27,6 +28,22 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <RecoilRoot>
       <IonApp>
+        <Link href="/projects">
+          <a>{"projects"}</a>
+        </Link>
+
+        <Link href="/login">
+          <a>{"login"}</a>
+        </Link>
+
+        <Link href="/signup">
+          <a>{"signup"}</a>
+        </Link>
+
+        <Link href="/">
+          <a>{"home"}</a>
+        </Link>
+
         <ErrorBoundary
           FallbackComponent={RootErrorFallback}
           onReset={useQueryErrorResetBoundary().reset}
