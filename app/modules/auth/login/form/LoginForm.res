@@ -7,7 +7,7 @@ external login: 'a = "default"
 // The latter causes a Blitz error
 // external login: (FormApi.state, Blitz.Ctx.t) => Promise.t<None> = "default"
 
-@react.component
+@genType("LoginForm") @react.component
 let make = () => {
   let setSnackbar = Snackbar.useSnackbar()
 

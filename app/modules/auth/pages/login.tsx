@@ -1,30 +1,15 @@
-import { make as LoginPage } from "app/modules/auth/login/page/LoginPage.bs"
+import { LoginForm } from "app/modules/auth/login/form/LoginForm.gen"
+import { BlitzPage } from "blitz"
+import { UnauthenticatedLayout } from "app/core/layouts/unauthenticated/UnauthenticatedLayout.gen"
 
-export default LoginPage
+const LoginPage: BlitzPage = LoginForm
 
-/* import { useRouter, BlitzPage } from "blitz"
-import Layout from "app/core/layouts/Layout"
-import { LoginForm } from "app/auth/components/LoginForm"
-
-const LoginPage: BlitzPage = () => {
-  const router = useRouter()
-
-  return (
-    <div>
-      <LoginForm
-        onSuccess={(_user) => {
-          const next = router.query.next ? decodeURIComponent(router.query.next as string) : "/"
-
-          router.push(next)
-        }}
-      />
-    </div>
-  )
-}
+LoginPage.getLayout = (page) => (
+  <UnauthenticatedLayout title="Create Account">{page}</UnauthenticatedLayout>
+)
 
 LoginPage.redirectAuthenticatedTo = "/"
 
-LoginPage.getLayout = (page) => <Layout title="Log In">{page}</Layout>
+LoginPage.authenticate = false
 
 export default LoginPage
- */

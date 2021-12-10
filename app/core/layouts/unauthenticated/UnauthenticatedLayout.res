@@ -2,7 +2,7 @@ open Ionic
 
 @module external styles: {..} = "./index.module.scss"
 
-@react.component
+@genType("UnauthenticatedLayout") @react.component
 let make = (~title: string, ~children: React.element) => <>
   <Toolbar.IonHeader>
     <Toolbar.IonToolbar>

@@ -8,7 +8,7 @@ var IndexModuleScss = require("./index.module.scss")
 
 var styles = IndexModuleScss
 
-function Page(Props) {
+function UnauthenticatedLayout(Props) {
   var title = Props.title
   var children = Props.children
   return React.createElement(
@@ -43,7 +43,7 @@ function Page(Props) {
   )
 }
 
-var make = Page
+var make = UnauthenticatedLayout
 
 exports.styles = styles
 exports.make = make

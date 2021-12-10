@@ -7,7 +7,7 @@ external signup: 'a = "default"
 // The latter causes a Blitz error
 // external signup: (FormApi.state, Blitz.Ctx.t) => Promise.t<None> = "default"
   
-@react.component
+@genType("SignupForm") @react.component
 let make = () => {
   let setSnackbar = Snackbar.useSnackbar()
 
