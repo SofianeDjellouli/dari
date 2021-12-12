@@ -238,6 +238,9 @@ module Icon = {
 
   @module("ionicons/icons")
   external bagOutline: string = "bagOutline"
+
+  @module("ionicons/icons")
+  external peopleCircleOutline: string = "peopleCircleOutline"
 }
 
 module Tabs = {

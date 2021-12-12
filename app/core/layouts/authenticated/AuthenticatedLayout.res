@@ -10,6 +10,9 @@ let make = (~children: React.element) =>
           <List.IonListHeader> {React.string("Navigate")} </List.IonListHeader>
           <Menu.IonMenuToggle autoHide=false>
             <AuthenticatedLayoutMenuItem href="/" icon=Icon.home label="Home" />
+            <AuthenticatedLayoutMenuItem
+              href="/family" icon=Icon.peopleCircleOutline label="Family"
+            />
             <AuthenticatedLayoutMenuItem href="/errands" icon=Icon.bagOutline label="Errands" />
           </Menu.IonMenuToggle>
         </List.IonList>

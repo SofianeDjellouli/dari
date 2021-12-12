@@ -47,6 +47,11 @@ function AuthenticatedLayout(Props) {
               label: "Home",
             }),
             React.createElement(AuthenticatedLayoutMenuItem.make, {
+              href: "/family",
+              icon: Icons.peopleCircleOutline,
+              label: "Family",
+            }),
+            React.createElement(AuthenticatedLayoutMenuItem.make, {
               href: "/errands",
               icon: Icons.bagOutline,
               label: "Errands",
