@@ -83,6 +83,7 @@ module Item = {
       ~children: React.element=?,
       ~lines: [#full | #inset | #none]=?,
       ~button: bool=?,
+      ~onClick: ReactEvent.Form.t => unit=?,
     ) => React.element = "IonItem"
   }
 
@@ -241,6 +242,9 @@ module Icon = {
 
   @module("ionicons/icons")
   external peopleCircleOutline: string = "peopleCircleOutline"
+
+  @module("ionicons/icons")
+  external logOutOutline: string = "logOutOutline"
 }
 
 module Tabs = {

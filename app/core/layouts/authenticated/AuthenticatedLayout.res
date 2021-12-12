@@ -1,7 +1,14 @@
 open Ionic
 
+@module("../../../modules/auth/mutations/logout")
+external logoutMutation: 'a = "default"
+
 @genType("AuthenticatedLayout") @react.component
-let make = (~children: React.element) =>
+let make = (~children: React.element) => {
+  let (logout, _) = Blitz.ReactQuery.useMutation(logoutMutation)
+
+  let handleLogout = _ => logout(. None)->ignore
+
   <Menu.IonSplitPane when_="md" contentId="main-content">
     <Menu.IonMenu contentId="main-content">
       <Toolbar.MainHeader color=#primary> {React.string("Dari")} </Toolbar.MainHeader>
@@ -14,6 +21,10 @@ let make = (~children: React.element) =>
               href="/family" icon=Icon.peopleCircleOutline label="Family"
             />
             <AuthenticatedLayoutMenuItem href="/errands" icon=Icon.bagOutline label="Errands" />
+            <Item.IonItem button=true onClick=handleLogout>
+              <Icon.IonIcon slot="start" icon=Icon.logOutOutline />
+              <Item.IonLabel> {React.string("Logout")} </Item.IonLabel>
+            </Item.IonItem>
           </Menu.IonMenuToggle>
         </List.IonList>
       </Content.IonContent>
@@ -34,3 +45,4 @@ let make = (~children: React.element) =>
       <Content.IonContent className="ion-padding"> children </Content.IonContent>
     </IonPage>
   </Menu.IonSplitPane>
+}

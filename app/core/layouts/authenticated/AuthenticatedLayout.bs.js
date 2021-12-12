@@ -5,10 +5,19 @@ var Ionic = require("../../rescript/ionic/Ionic.bs.js")
 var React = require("react")
 var React$1 = require("@ionic/react")
 var Icons = require("ionicons/icons")
+var DataClient = require("next/data-client")
 var AuthenticatedLayoutMenuItem = require("./menu-item/AuthenticatedLayoutMenuItem.bs.js")
+var Logout = require("../../../modules/auth/mutations/logout").default
+
+var logoutMutation = Logout
 
 function AuthenticatedLayout(Props) {
   var children = Props.children
+  var match = DataClient.useMutation(logoutMutation)
+  var logout = match[0]
+  var handleLogout = function (param) {
+    logout(undefined)
+  }
   return React.createElement(
     Ionic.Menu.IonSplitPane.make,
     {
@@ -55,7 +64,22 @@ function AuthenticatedLayout(Props) {
               href: "/errands",
               icon: Icons.bagOutline,
               label: "Errands",
-            })
+            }),
+            React.createElement(
+              React$1.IonItem,
+              {
+                children: null,
+                button: true,
+                onClick: handleLogout,
+              },
+              React.createElement(React$1.IonIcon, {
+                slot: "start",
+                icon: Icons.logOutOutline,
+              }),
+              React.createElement(React$1.IonLabel, {
+                children: "Logout",
+              })
+            )
           )
         ),
       })
@@ -99,5 +123,6 @@ function AuthenticatedLayout(Props) {
 
 var make = AuthenticatedLayout
 
+exports.logoutMutation = logoutMutation
 exports.make = make
-/* Ionic Not a pure module */
+/* logoutMutation Not a pure module */
