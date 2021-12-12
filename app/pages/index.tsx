@@ -1,10 +1,13 @@
 import { Suspense } from "react"
-import { Image, Link, BlitzPage } from "blitz"
-import Layout from "app/core/layouts/Layout"
-import logo from "public/logo.png"
+import { Image, Link, BlitzPage, Routes } from "blitz"
 import { UserInfo } from "app/modules/users/user-info"
+import { AuthenticatedLayout } from "app/core/layouts/authenticated/AuthenticatedLayout.gen"
 
 const Home: BlitzPage = () => (
+  <Suspense fallback="Loading...">
+    <UserInfo />
+  </Suspense>
+) /* (
   <div className="container">
     <main>
       <div className="logo">
@@ -229,10 +232,12 @@ const Home: BlitzPage = () => (
       }
     `}</style>
   </div>
-)
+) */
 
 Home.suppressFirstRenderFlicker = true
 
-Home.getLayout = (page) => <Layout title="Home">{page}</Layout>
+Home.getLayout = (page) => <AuthenticatedLayout>{page}</AuthenticatedLayout>
+
+Home.authenticate = { redirectTo: Routes.Login() }
 
 export default Home

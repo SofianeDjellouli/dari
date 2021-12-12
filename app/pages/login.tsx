@@ -1,13 +1,13 @@
 import { LoginForm } from "app/modules/auth/login/form/LoginForm.gen"
-import { BlitzPage } from "blitz"
+import { BlitzPage, Routes } from "blitz"
 import { UnauthenticatedLayout } from "app/core/layouts/unauthenticated/UnauthenticatedLayout.gen"
 
-const LoginPage: BlitzPage = LoginForm
+const Login: BlitzPage = LoginForm
 
-LoginPage.getLayout = (page) => (
+Login.getLayout = (page) => (
   <UnauthenticatedLayout title="Create Account">{page}</UnauthenticatedLayout>
 )
 
-LoginPage.redirectAuthenticatedTo = "/"
+Login.redirectAuthenticatedTo = Routes.Home()
 
-export default LoginPage
+export default Login
