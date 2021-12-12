@@ -4,9 +4,7 @@ import { UnauthenticatedLayout } from "app/core/layouts/unauthenticated/Unauthen
 
 const Login: BlitzPage = LoginForm
 
-Login.getLayout = (page) => (
-  <UnauthenticatedLayout title="Create Account">{page}</UnauthenticatedLayout>
-)
+Login.getLayout = (page) => <UnauthenticatedLayout title="Login">{page}</UnauthenticatedLayout>
 
 Login.redirectAuthenticatedTo = Routes.Home()
 
