@@ -2,6 +2,7 @@
 "use strict"
 
 var Clsx = require("../../rescript/clsx/Clsx.bs.js")
+var Ionic = require("../../rescript/ionic/Ionic.bs.js")
 var React = require("react")
 var React$1 = require("@ionic/react")
 var IndexModuleScss = require("./index.module.scss")
@@ -14,12 +15,8 @@ function UnauthenticatedLayout(Props) {
   return React.createElement(
     React.Fragment,
     undefined,
-    React.createElement(React$1.IonHeader, {
-      children: React.createElement(React$1.IonToolbar, {
-        children: React.createElement(React$1.IonTitle, {
-          children: title,
-        }),
-      }),
+    React.createElement(Ionic.Toolbar.MainHeader.make, {
+      children: title,
     }),
     React.createElement(React$1.IonContent, {
       children: React.createElement(

@@ -3,6 +3,7 @@
 
 var React = require("react")
 var Spread = require("../../components/spread/Spread.bs.js")
+var Caml_option = require("rescript/lib/js/caml_option.js")
 var React$1 = require("@ionic/react")
 
 var IonContent = {}
@@ -28,11 +29,32 @@ var IonTitle = {}
 
 var IonButtons = {}
 
+function Ionic$Toolbar$MainHeader(Props) {
+  var children = Props.children
+  var color = Props.color
+  var tmp = {
+    children: React.createElement(React$1.IonTitle, {
+      children: children,
+    }),
+  }
+  if (color !== undefined) {
+    tmp.color = Caml_option.valFromOption(color)
+  }
+  return React.createElement(React$1.IonHeader, {
+    children: React.createElement(React$1.IonToolbar, tmp),
+  })
+}
+
+var MainHeader = {
+  make: Ionic$Toolbar$MainHeader,
+}
+
 var Toolbar = {
   IonHeader: IonHeader,
   IonToolbar: IonToolbar,
   IonTitle: IonTitle,
   IonButtons: IonButtons,
+  MainHeader: MainHeader,
 }
 
 var IonPage = {}
@@ -130,10 +152,13 @@ var Form = {
 
 var SpreadableIonSplitPanel = {}
 
-function Ionic$Menu$IonSplitPanel(Props) {
+function Ionic$Menu$IonSplitPane(Props) {
   var contentId = Props.contentId
   var when_ = Props.when_
-  var tmp = {}
+  var children = Props.children
+  var tmp = {
+    children: children,
+  }
   if (contentId !== undefined) {
     tmp.contentId = contentId
   }
@@ -141,12 +166,12 @@ function Ionic$Menu$IonSplitPanel(Props) {
     props: {
       when: when_,
     },
-    children: React.createElement(React$1.IonSplitPanel, tmp),
+    children: React.createElement(React$1.IonSplitPane, tmp),
   })
 }
 
-var IonSplitPanel = {
-  make: Ionic$Menu$IonSplitPanel,
+var IonSplitPane = {
+  make: Ionic$Menu$IonSplitPane,
 }
 
 var IonMenu = {}
@@ -155,7 +180,7 @@ var IonMenuToggle = {}
 
 var Menu = {
   SpreadableIonSplitPanel: SpreadableIonSplitPanel,
-  IonSplitPanel: IonSplitPanel,
+  IonSplitPane: IonSplitPane,
   IonMenu: IonMenu,
   IonMenuToggle: IonMenuToggle,
 }
@@ -169,6 +194,29 @@ var List = {
   IonListHeader: IonListHeader,
 }
 
+var IonIcon = {}
+
+var Icon = {
+  IonIcon: IonIcon,
+}
+
+var IonTabs = {}
+
+var IonTabBar = {}
+
+var IonTab = {}
+
+var IonTabButton = {}
+
+var Tabs = {
+  IonTabs: IonTabs,
+  IonTabBar: IonTabBar,
+  IonTab: IonTab,
+  IonTabButton: IonTabButton,
+}
+
+var IonPage$1 = {}
+
 exports.Content = Content
 exports.ProgressIndicators = ProgressIndicators
 exports.Toolbar = Toolbar
@@ -181,4 +229,7 @@ exports.Toast = Toast
 exports.Form = Form
 exports.Menu = Menu
 exports.List = List
+exports.Icon = Icon
+exports.Tabs = Tabs
+exports.IonPage = IonPage$1
 /* react Not a pure module */

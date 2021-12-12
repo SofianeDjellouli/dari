@@ -49,7 +49,7 @@ module Toolbar = {
 
   module IonToolbar = {
     @module("@ionic/react") @react.component
-    external make: (~children: React.element=?) => React.element = "IonToolbar"
+    external make: (~children: React.element=?, ~color: color=?) => React.element = "IonToolbar"
   }
 
   module IonTitle = {
@@ -60,6 +60,12 @@ module Toolbar = {
   module IonButtons = {
     @module("@ionic/react") @react.component
     external make: (~children: React.element=?, ~slot: slot=?) => React.element = "IonButtons"
+  }
+
+  module MainHeader = {
+    @react.component
+    let make = (~children: React.element, ~color: option<color>=?) =>
+      <IonHeader> <IonToolbar ?color> <IonTitle> children </IonTitle> </IonToolbar> </IonHeader>
   }
 }
 
@@ -76,6 +82,7 @@ module Item = {
     external make: (
       ~children: React.element=?,
       ~lines: [#full | #inset | #none]=?,
+      ~button: bool=?,
     ) => React.element = "IonItem"
   }
 
@@ -182,13 +189,16 @@ module Form = {
 module Menu = {
   module SpreadableIonSplitPanel = {
     @module("@ionic/react") @react.component
-    external make: (~contentId: string=?) => React.element = "IonSplitPanel"
+    external make: (~contentId: string=?, ~children: React.element) => React.element =
+      "IonSplitPane"
   }
 
-  module IonSplitPanel = {
+  module IonSplitPane = {
     @react.component
-    let make = (~contentId: option<string>=?, ~when_: string) =>
-      <Spread props={"when": when_}> <SpreadableIonSplitPanel ?contentId /> </Spread>
+    let make = (~contentId: option<string>=?, ~when_: string, ~children: React.element) =>
+      <Spread props={"when": when_}>
+        <SpreadableIonSplitPanel ?contentId> children </SpreadableIonSplitPanel>
+      </Spread>
   }
 
   module IonMenu = {
@@ -212,4 +222,44 @@ module List = {
     @module("@ionic/react") @react.component
     external make: (~children: React.element=?) => React.element = "IonListHeader"
   }
+}
+
+module Icon = {
+  module IonIcon = {
+    @module("@ionic/react") @react.component
+    external make: (~slot: string=?, ~icon: string) => React.element = "IonIcon"
+  }
+
+  @module("ionicons/icons")
+  external home: string = "home"
+
+  @module("ionicons/icons")
+  external menu: string = "menu"
+}
+
+module Tabs = {
+  module IonTabs = {
+    @module("@ionic/react") @react.component
+    external make: (~children: React.element=?) => React.element = "IonTabs"
+  }
+
+  module IonTabBar = {
+    @module("@ionic/react") @react.component
+    external make: (~children: React.element=?, ~slot: slot=?) => React.element = "IonTabBar"
+  }
+
+  module IonTab = {
+    @module("@ionic/react") @react.component
+    external make: (~children: React.element=?) => React.element = "IonTab"
+  }
+
+  module IonTabButton = {
+    @module("@ionic/react") @react.component
+    external make: (~children: React.element=?, ~tab: string=?) => React.element = "IonTabButton"
+  }
+}
+
+module IonPage = {
+  @module("@ionic/react") @react.component
+  external make: (~children: React.element=?, ~id: string=?) => React.element = "IonPage"
 }

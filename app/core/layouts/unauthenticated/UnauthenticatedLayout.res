@@ -4,11 +4,7 @@ open Ionic
 
 @genType("UnauthenticatedLayout") @react.component
 let make = (~title: string, ~children: React.element) => <>
-  <Toolbar.IonHeader>
-    <Toolbar.IonToolbar>
-      <Toolbar.IonTitle> {React.string(title)} </Toolbar.IonTitle>
-    </Toolbar.IonToolbar>
-  </Toolbar.IonHeader>
+  <Toolbar.MainHeader> {React.string(title)} </Toolbar.MainHeader>
   <Content.IonContent>
     <div className={styles["wrapper"]}>
       <Grid.IonGrid className={Clsx.classes(["ion-padding"])}>
