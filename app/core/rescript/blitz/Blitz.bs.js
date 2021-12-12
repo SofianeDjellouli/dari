@@ -5,6 +5,9 @@ var Ctx = {}
 
 var ReactQuery = {}
 
+var Link
+
 exports.Ctx = Ctx
 exports.ReactQuery = ReactQuery
+exports.Link = Link
 /* No side effect */

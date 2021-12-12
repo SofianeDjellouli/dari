@@ -4,15 +4,13 @@ open Ionic
 let make = (~children: React.element) =>
   <Menu.IonSplitPane when_="md" contentId="main-content">
     <Menu.IonMenu contentId="main-content">
-      <Toolbar.MainHeader color=#primary> {React.string("title")} </Toolbar.MainHeader>
+      <Toolbar.MainHeader color=#primary> {React.string("Dari")} </Toolbar.MainHeader>
       <Content.IonContent>
         <List.IonList>
           <List.IonListHeader> {React.string("Navigate")} </List.IonListHeader>
           <Menu.IonMenuToggle autoHide=false>
-            <Item.IonItem button=true>
-              <Icon.IonIcon slot="start" icon=Icon.home />
-              <Item.IonLabel> {React.string("Home")} </Item.IonLabel>
-            </Item.IonItem>
+            <AuthenticatedLayoutMenuItem href="/" icon=Icon.home label="Home" />
+            <AuthenticatedLayoutMenuItem href="/errands" icon=Icon.bagOutline label="Errands" />
           </Menu.IonMenuToggle>
         </List.IonList>
       </Content.IonContent>

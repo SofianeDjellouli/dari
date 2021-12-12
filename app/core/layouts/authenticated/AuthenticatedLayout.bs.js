@@ -5,6 +5,7 @@ var Ionic = require("../../rescript/ionic/Ionic.bs.js")
 var React = require("react")
 var React$1 = require("@ionic/react")
 var Icons = require("ionicons/icons")
+var AuthenticatedLayoutMenuItem = require("./menu-item/AuthenticatedLayoutMenuItem.bs.js")
 
 function AuthenticatedLayout(Props) {
   var children = Props.children
@@ -22,7 +23,7 @@ function AuthenticatedLayout(Props) {
         contentId: "main-content",
       },
       React.createElement(Ionic.Toolbar.MainHeader.make, {
-        children: "title",
+        children: "Dari",
         color: "primary",
       }),
       React.createElement(React$1.IonContent, {
@@ -34,23 +35,23 @@ function AuthenticatedLayout(Props) {
           React.createElement(React$1.IonListHeader, {
             children: "Navigate",
           }),
-          React.createElement(React$1.IonMenuToggle, {
-            children: React.createElement(
-              React$1.IonItem,
-              {
-                children: null,
-                button: true,
-              },
-              React.createElement(React$1.IonIcon, {
-                slot: "start",
-                icon: Icons.home,
-              }),
-              React.createElement(React$1.IonLabel, {
-                children: "Home",
-              })
-            ),
-            autoHide: false,
-          })
+          React.createElement(
+            React$1.IonMenuToggle,
+            {
+              children: null,
+              autoHide: false,
+            },
+            React.createElement(AuthenticatedLayoutMenuItem.make, {
+              href: "/",
+              icon: Icons.home,
+              label: "Home",
+            }),
+            React.createElement(AuthenticatedLayoutMenuItem.make, {
+              href: "/errands",
+              icon: Icons.bagOutline,
+              label: "Errands",
+            })
+          )
         ),
       })
     ),

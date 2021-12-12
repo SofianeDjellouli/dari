@@ -44,3 +44,5 @@ module ReactQuery = {
     'context,
   > = "useMutation"
 }
+
+module Link = Next.Link

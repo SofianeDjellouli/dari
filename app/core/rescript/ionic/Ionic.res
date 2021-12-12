@@ -235,6 +235,9 @@ module Icon = {
 
   @module("ionicons/icons")
   external menu: string = "menu"
+
+  @module("ionicons/icons")
+  external bagOutline: string = "bagOutline"
 }
 
 module Tabs = {
