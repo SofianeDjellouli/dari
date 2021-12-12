@@ -3,15 +3,15 @@ open Belt
 open Promise
 
 @module("../mutations/signup")
-external signup: 'a = "default"
+external signupMutation: 'a = "default"
 // The latter causes a Blitz error
-// external signup: (FormApi.state, Blitz.Ctx.t) => Promise.t<None> = "default"
-  
+// external signupMutation: (FormApi.state, Blitz.Ctx.t) => Promise.t<None> = "default"
+
 @genType("SignupForm") @react.component
 let make = () => {
   let setSnackbar = Snackbar.useSnackbar()
 
-  let (signupMutation, data) = Blitz.ReactQuery.useMutation(signup)
+  let (signup, data) = Blitz.ReactQuery.useMutation(signupMutation)
 
   let (state, dispatch) = React.useReducer(SignupReducer.reducer, SignupReducer.initialState)
 
@@ -25,7 +25,7 @@ let make = () => {
     } else {
       state
       ->SignupOutput.getOutput
-      ->(e => signupMutation(. e))
+      ->(e => signup(. e))
       ->Promise.then(num => {
         Js.log(num)
 

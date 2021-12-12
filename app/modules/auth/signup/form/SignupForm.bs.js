@@ -14,12 +14,12 @@ var SignupValidation = require("../validation/SignupValidation.bs.js")
 var DataClient = require("next/data-client")
 var Signup = require("../mutations/signup").default
 
-var signup = Signup
+var signupMutation = Signup
 
 function SignupForm(Props) {
   var setSnackbar = Snackbar.useSnackbar(undefined)
-  var match = DataClient.useMutation(signup)
-  var signupMutation = match[0]
+  var match = DataClient.useMutation(signupMutation)
+  var signup = match[0]
   var match$1 = React.useReducer(SignupReducer.reducer, SignupReducer.initialState)
   var dispatch = match$1[1]
   var state = match$1[0]
@@ -33,7 +33,7 @@ function SignupForm(Props) {
       })
     } else {
       $$Promise.$$catch(
-        signupMutation(SignupOutput.getOutput(state)).then(function (num) {
+        signup(SignupOutput.getOutput(state)).then(function (num) {
           console.log(num)
           return Promise.resolve(num)
         }),
@@ -104,6 +104,6 @@ function SignupForm(Props) {
 
 var make = SignupForm
 
-exports.signup = signup
+exports.signupMutation = signupMutation
 exports.make = make
-/* signup Not a pure module */
+/* signupMutation Not a pure module */
