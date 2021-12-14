@@ -4,6 +4,6 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
-  "jest.autoRun": "off",
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "importSorter.generalConfiguration.configurationFilePath": "import-sorter.json"
 }
