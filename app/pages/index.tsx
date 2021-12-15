@@ -1,7 +1,7 @@
-import { Suspense } from "react"
-import { Image, Link, BlitzPage, Routes } from "blitz"
-import { UserInfo } from "app/modules/users/user-info"
 import { AuthenticatedLayout } from "app/core/layouts/authenticated/AuthenticatedLayout.gen"
+import { UserInfo } from "app/modules/users/user-info"
+import { BlitzPage, Routes } from "blitz"
+import { Suspense } from "react"
 
 const Home: BlitzPage = () => (
   <Suspense fallback="Loading...">

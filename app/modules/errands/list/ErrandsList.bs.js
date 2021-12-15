@@ -3,8 +3,14 @@
 
 var React = require("react")
 var React$1 = require("@ionic/react")
+var DataClient = require("next/data-client")
+var Errands = require("../queries/errands").default
+
+var errandsQuery = Errands
 
 function ErrandsList(Props) {
+  var match = DataClient.useQuery(errandsQuery, undefined)
+  console.log(match[0], match[1].isLoading)
   return React.createElement(React$1.IonContent, {
     children: React.createElement(React$1.IonList, {
       children: React.createElement(React$1.IonItem, {
@@ -18,5 +24,6 @@ function ErrandsList(Props) {
 
 var make = ErrandsList
 
+exports.errandsQuery = errandsQuery
 exports.make = make
-/* react Not a pure module */
+/* errandsQuery Not a pure module */
