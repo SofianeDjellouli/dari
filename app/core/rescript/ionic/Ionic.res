@@ -17,6 +17,8 @@ type slot = [
   | #start
 ]
 
+type onFormEvent = ReactEvent.Form.t => unit
+
 module Content = {
   module IonContent = {
     @module("@ionic/react") @react.component
@@ -83,7 +85,8 @@ module Item = {
       ~children: React.element=?,
       ~lines: [#full | #inset | #none]=?,
       ~button: bool=?,
-      ~onClick: ReactEvent.Form.t => unit=?,
+      ~onClick: onFormEvent=?,
+      ~color: color=?,
     ) => React.element = "IonItem"
   }
 
@@ -113,10 +116,10 @@ module Input = {
       ~name: string,
       ~placeholder: string=?,
       ~value: string,
-      ~onIonChange: ReactEvent.Form.t => unit,
+      ~onIonChange: onFormEvent,
       ~autofocus: bool=?,
       ~color: color=?,
-      ~onIonBlur: ReactEvent.Form.t => unit=?,
+      ~onIonBlur: onFormEvent=?,
     ) => React.element = "IonInput"
   }
 }
@@ -181,7 +184,7 @@ module Toast = {
 
 module Form = {
   @react.component
-  let make = (~onSubmit: ReactEvent.Form.t => unit, ~children: React.element) =>
+  let make = (~onSubmit: onFormEvent, ~children: React.element) =>
     <form onSubmit>
       children <input type_="submit" style={ReactDOMStyle.make(~display="none", ())} />
     </form>
@@ -272,4 +275,18 @@ module Tabs = {
 module IonPage = {
   @module("@ionic/react") @react.component
   external make: (~children: React.element=?, ~id: string=?) => React.element = "IonPage"
+}
+
+module Checkbox = {
+  module IonCheckbox = {
+    @module("@ionic/react") @react.component
+    external make: (
+      ~children: React.element=?,
+      ~slot: slot=?,
+      ~checked: bool=?,
+      ~color: color=?,
+      ~name: string=?,
+      ~onIonChange: onFormEvent=?,
+    ) => React.element = "IonCheckbox"
+  }
 }

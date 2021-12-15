@@ -217,6 +217,12 @@ var Tabs = {
 
 var IonPage$1 = {}
 
+var IonCheckbox = {}
+
+var Checkbox = {
+  IonCheckbox: IonCheckbox,
+}
+
 exports.Content = Content
 exports.ProgressIndicators = ProgressIndicators
 exports.Toolbar = Toolbar
@@ -232,4 +238,5 @@ exports.List = List
 exports.Icon = Icon
 exports.Tabs = Tabs
 exports.IonPage = IonPage$1
+exports.Checkbox = Checkbox
 /* react Not a pure module */
