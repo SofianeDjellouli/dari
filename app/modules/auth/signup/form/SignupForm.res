@@ -2,16 +2,16 @@ open Ionic
 open Belt
 open Promise
 
+type signupType = Js.Dict.t<string> => Promise.t<unit>
+
 @module("../mutations/signup")
-external signupMutation: 'a = "default"
-// The latter causes a Blitz error
-// external signupMutation: (FormApi.state, Blitz.Ctx.t) => Promise.t<None> = "default"
+external signup: 'a = "default"
 
 @genType("SignupForm") @react.component
 let make = () => {
   let setSnackbar = Snackbar.useSnackbar()
 
-  let (signup, data) = Blitz.ReactQuery.useMutation(signupMutation)
+  let (signupMutation, data) = Blitz.ReactQuery.useMutation(signup)
 
   let (state, dispatch) = React.useReducer(SignupReducer.reducer, SignupReducer.initialState)
 
@@ -25,7 +25,7 @@ let make = () => {
     } else {
       state
       ->SignupOutput.getOutput
-      ->(e => signup(. e))
+      ->signupMutation
       ->Promise.then(num => {
         Js.log(num)
 

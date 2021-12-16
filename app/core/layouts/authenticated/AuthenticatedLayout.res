@@ -1,13 +1,15 @@
 open Ionic
 
+type logoutMutationType = unit => Promise.t<unit>
+
 @module("../../../modules/auth/mutations/logout")
-external logoutMutation: 'a = "default"
+external logoutMutation: logoutMutationType = "default"
 
 @genType("AuthenticatedLayout") @react.component
 let make = (~children: React.element) => {
   let (logout, _) = Blitz.ReactQuery.useMutation(logoutMutation)
 
-  let handleLogout = _ => logout(. None)->ignore
+  let handleLogout = _ => logout()->ignore
 
   <Menu.IonSplitPane when_="md" contentId="main-content">
     <Menu.IonMenu contentId="main-content">

@@ -19,9 +19,7 @@ var login = Login
 function LoginForm(Props) {
   var setSnackbar = Snackbar.useSnackbar(undefined)
   var match = DataClient.useMutation(login)
-  var data = match[1]
   var loginMutation = match[0]
-  console.log(data)
   var match$1 = React.useReducer(LoginReducer.reducer, LoginReducer.initialState)
   var dispatch = match$1[1]
   var state = match$1[0]
@@ -35,7 +33,7 @@ function LoginForm(Props) {
       })
     } else {
       $$Promise.$$catch(
-        loginMutation(LoginOutput.getOutput(state)).then(function (num) {
+        Curry._1(loginMutation, LoginOutput.getOutput(state)).then(function (num) {
           console.log(num)
           return Promise.resolve(num)
         }),
@@ -99,7 +97,7 @@ function LoginForm(Props) {
       color: "danger",
       expand: "block",
       label: "Submit",
-      isLoading: data.isLoading,
+      isLoading: match[1].isLoading,
     })
   )
 }

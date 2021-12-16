@@ -2,10 +2,10 @@ open Ionic
 open Belt
 open Promise
 
+type loginType = Js.Dict.t<string> => Promise.t<unit>
+
 @module("../../mutations/login")
-external login: 'a = "default"
-// The latter causes a Blitz error
-// external login: (FormApi.state, Blitz.Ctx.t) => Promise.t<None> = "default"
+external login: loginType = "default"
 
 @genType("LoginForm") @react.component
 let make = () => {
@@ -25,7 +25,7 @@ let make = () => {
     } else {
       state
       ->LoginOutput.getOutput
-      ->(e => loginMutation(. e))
+      ->loginMutation
       ->Promise.then(num => {
         Js.log(num)
 
