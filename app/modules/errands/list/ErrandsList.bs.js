@@ -2,6 +2,7 @@
 "use strict"
 
 var React = require("react")
+var Belt_Array = require("rescript/lib/js/belt_Array.js")
 var React$1 = require("@ionic/react")
 var DataClient = require("next/data-client")
 var Errands = require("../queries/errands").default
@@ -9,16 +10,43 @@ var Errands = require("../queries/errands").default
 var errandsQuery = Errands
 
 function ErrandsList(Props) {
-  var match = DataClient.useQuery(errandsQuery, undefined)
-  console.log(match[0], match[1].isLoading)
+  var match = DataClient.usePaginatedQuery(errandsQuery, undefined)
+  var errands = match[0]
+  console.log(errands, match[1].isLoading)
+  var handleCheck = function (e) {
+    console.log(e.target.name)
+  }
   return React.createElement(React$1.IonContent, {
-    children: React.createElement(React$1.IonList, {
-      children: React.createElement(React$1.IonItem, {
-        children: React.createElement(React$1.IonLabel, {
-          children: "hi",
-        }),
-      }),
-    }),
+    children:
+      errands !== undefined
+        ? React.createElement(React$1.IonList, {
+            children: Belt_Array.map(errands, function (errand) {
+              var match = errand.level
+              var color =
+                match === "Missing" ? "warning" : match === "Present" ? "success" : "danger"
+              return React.createElement(
+                React$1.IonItem,
+                {
+                  children: null,
+                  color: color,
+                  key: String(errand.id),
+                },
+                React.createElement(React$1.IonLabel, {
+                  children: errand.name,
+                }),
+                Belt_Array.map(["Present", "Lacking", "Missing"], function (e) {
+                  return React.createElement(React$1.IonCheckbox, {
+                    slot: "end",
+                    checked: errand.level === e,
+                    name: e,
+                    onIonChange: handleCheck,
+                    key: e,
+                  })
+                })
+              )
+            }),
+          })
+        : null,
   })
 }
 
