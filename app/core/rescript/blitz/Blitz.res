@@ -22,7 +22,7 @@ module ReactQuery = {
 
   type mutationFunction<'data, 'variables> = 'variables => Promise.t<'data>
 
-  type mutateFunction<'data, 'error, 'variables, 'context> = 'variables => Promise.t<'data>
+  type mutateFunction<'data, 'error, 'variables, 'context> = (. 'variables) => Promise.t<'data>
 
   type mutationResultPair<'data, 'error, 'variables, 'context> = (
     mutateFunction<'data, 'error, 'variables, 'context>,

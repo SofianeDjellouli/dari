@@ -9,7 +9,7 @@ external logoutMutation: logoutMutationType = "default"
 let make = (~children: React.element) => {
   let (logout, _) = Blitz.ReactQuery.useMutation(logoutMutation)
 
-  let handleLogout = _ => logout()->ignore
+  let handleLogout = _ => logout(. ignore())->ignore
 
   <Menu.IonSplitPane when_="md" contentId="main-content">
     <Menu.IonMenu contentId="main-content">

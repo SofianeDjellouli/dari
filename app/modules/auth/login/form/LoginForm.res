@@ -25,12 +25,7 @@ let make = () => {
     } else {
       state
       ->LoginOutput.getOutput
-      ->loginMutation
-      ->Promise.then(num => {
-        Js.log(num)
-
-        Promise.resolve(num)
-      })
+      ->(a => loginMutation(. a))
       ->Promise.catch(rawError => {
         switch rawError {
         | JsError(error) =>
@@ -41,7 +36,7 @@ let make = () => {
         | _ => setSnackbar(_ => "Some unknown error")
         }
 
-        Promise.reject(rawError)
+        resolve()
       })
       ->ignore
     }

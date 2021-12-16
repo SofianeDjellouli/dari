@@ -25,7 +25,7 @@ let make = () => {
     } else {
       state
       ->SignupOutput.getOutput
-      ->signupMutation
+      ->(e => signupMutation(. e))
       ->Promise.then(num => {
         Js.log(num)
 

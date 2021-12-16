@@ -33,7 +33,7 @@ function SignupForm(Props) {
       })
     } else {
       $$Promise.$$catch(
-        Curry._1(signupMutation, SignupOutput.getOutput(state)).then(function (num) {
+        signupMutation(SignupOutput.getOutput(state)).then(function (num) {
           console.log(num)
           return Promise.resolve(num)
         }),

@@ -32,31 +32,25 @@ function LoginForm(Props) {
         _0: errors,
       })
     } else {
-      $$Promise.$$catch(
-        Curry._1(loginMutation, LoginOutput.getOutput(state)).then(function (num) {
-          console.log(num)
-          return Promise.resolve(num)
-        }),
-        function (rawError) {
-          if (rawError.RE_EXN_ID === $$Promise.JsError) {
-            var message = rawError._1.message
-            if (message !== undefined) {
-              Curry._1(setSnackbar, function (param) {
-                return message
-              })
-            } else {
-              Curry._1(setSnackbar, function (param) {
-                return "Some unknown error"
-              })
-            }
+      $$Promise.$$catch(loginMutation(LoginOutput.getOutput(state)), function (rawError) {
+        if (rawError.RE_EXN_ID === $$Promise.JsError) {
+          var message = rawError._1.message
+          if (message !== undefined) {
+            Curry._1(setSnackbar, function (param) {
+              return message
+            })
           } else {
             Curry._1(setSnackbar, function (param) {
               return "Some unknown error"
             })
           }
-          return Promise.reject(rawError)
+        } else {
+          Curry._1(setSnackbar, function (param) {
+            return "Some unknown error"
+          })
         }
-      )
+        return Promise.resolve(undefined)
+      })
       return
     }
   }
