@@ -57,20 +57,29 @@ enum TokenType {
   RESET_PASSWORD
 }
 
-enum ErrandLevel {
+model Errand {
+  id            Int          @id @default(autoincrement())
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  name          String
+  ErrandLevel   ErrandLevel? @relation(fields: [errandLevelId], references: [id])
+  errandLevelId Int?
+  Family        Family?      @relation(fields: [familyId], references: [id])
+  familyId      Int?
+}
+
+enum ErrandLevelName {
   Present
   Lacking
   Missing
 }
 
-model Errand {
-  id        Int         @id @default(autoincrement())
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
-  level     ErrandLevel
-  name      String
-  family    Family?     @relation(fields: [familyId], references: [id])
-  familyId  Int?
+model ErrandLevel {
+  id        Int             @id @default(autoincrement())
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+  errands   Errand[]
+  name      ErrandLevelName
 }
 
 model Family {
