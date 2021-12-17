@@ -5,47 +5,42 @@ var React = require("react")
 var Belt_Array = require("rescript/lib/js/belt_Array.js")
 var React$1 = require("@ionic/react")
 var DataClient = require("next/data-client")
-var Errands = require("../queries/errands").default
+var Errands = require("../queries/errands-levels").default
+var Update = require("../mutations/update").default
 
 var errandsQuery = Errands
 
+var updateErrand = Update
+
 function ErrandsList(Props) {
   var match = DataClient.usePaginatedQuery(errandsQuery, undefined)
-  var errands = match[0]
-  console.log(errands, match[1].isLoading)
-  var handleCheck = function (e) {
-    console.log(e.target.name)
-  }
+  var errandsLevels = match[0]
+  console.log(errandsLevels)
+  DataClient.useMutation(updateErrand)
   return React.createElement(React$1.IonContent, {
     children:
-      errands !== undefined
-        ? React.createElement(React$1.IonList, {
-            children: Belt_Array.map(errands, function (errand) {
-              var match = errand.level
-              var color =
-                match === "Missing" ? "warning" : match === "Present" ? "success" : "danger"
-              return React.createElement(
-                React$1.IonItem,
-                {
-                  children: null,
-                  color: color,
-                  key: String(errand.id),
-                },
-                React.createElement(React$1.IonLabel, {
-                  children: errand.name,
-                }),
-                Belt_Array.map(["Present", "Lacking", "Missing"], function (e) {
-                  return React.createElement(React$1.IonCheckbox, {
-                    slot: "end",
-                    checked: errand.level === e,
-                    name: e,
-                    onIonChange: handleCheck,
-                    key: e,
+      errandsLevels !== undefined
+        ? React.createElement(
+            React.Fragment,
+            undefined,
+            Belt_Array.map(errandsLevels, function (errandsLevel) {
+              return React.createElement(React$1.IonList, {
+                children: Belt_Array.map(errandsLevel.errands, function (errand) {
+                  var match = errand.level
+                  var color =
+                    match === "Missing" ? "danger" : match === "Present" ? "success" : "warning"
+                  return React.createElement(React$1.IonItem, {
+                    children: React.createElement(React$1.IonLabel, {
+                      children: errand.name,
+                    }),
+                    color: color,
+                    key: String(errand.id),
                   })
-                })
-              )
-            }),
-          })
+                }),
+                key: String(errandsLevel.id),
+              })
+            })
+          )
         : null,
   })
 }
@@ -53,5 +48,6 @@ function ErrandsList(Props) {
 var make = ErrandsList
 
 exports.errandsQuery = errandsQuery
+exports.updateErrand = updateErrand
 exports.make = make
 /* errandsQuery Not a pure module */
