@@ -1,3 +1,4 @@
+import { SecurePassword } from "blitz"
 import db from "./index"
 
 /*
@@ -7,18 +8,25 @@ import db from "./index"
  * or https://github.com/Marak/Faker.js to easily generate
  * realistic data.
  */
-const seed = async () =>
-  (
-    [
-      { level: "Present", name: "jazar" },
-      { level: "Present", name: "mouz" },
-      { level: "Missing", name: "dajaj" },
-      { level: "Missing", name: "joubn" },
-      { level: "Lacking", name: "halib" },
-      { level: "Present", name: "zit" },
-    ] as const
-  ).forEach(async (data, i) => {
-    await db.errand.create({ data })
+
+const createManyErrands = (names: string[]) => ({
+  errands: { create: names.map((name) => ({ name })) },
+})
+
+const errandsLevelsData = [
+  { id: 1, name: "Missing", ...createManyErrands(["jazar", "mouz", "zit"]) },
+  { id: 2, name: "Lacking", ...createManyErrands(["halib"]) },
+  { id: 3, name: "Present", ...createManyErrands(["dajaj", "joubn"]) },
+] as const
+
+const seed = async () => {
+  errandsLevelsData.forEach(async (data) => {
+    await db.errandLevel.create({ data })
   })
+
+  const hashedPassword = await SecurePassword.hash("12345678")
+
+  await db.user.create({ data: { email: "sofiane@vaangroup.com", hashedPassword } })
+}
 
 export default seed
