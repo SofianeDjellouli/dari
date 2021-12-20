@@ -199,6 +199,7 @@ module Button = {
       ~shape: shape=?,
       ~onClick: onClickEvent=?,
       ~fill: fill=?,
+      ~disabled: bool=?,
     ) => React.element = "IonButton"
   }
 

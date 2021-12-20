@@ -46,21 +46,24 @@ function getErrandLevelProps(level) {
   }
 }
 
-function ErrandsItem(Props) {
+function ErrandsLevelItem(Props) {
   var name = Props.name
   var errands = Props.errands
   var defaultToggled = Props.defaultToggled
   var handleUpdate = Props.handleUpdate
+  var handleDelete = Props.handleDelete
   var match = Toggle.useToggle(defaultToggled)
   var toggle = match[1]
-  var toggled = match[0]
   var handleToggle = function (param) {
     return Curry._1(toggle, undefined)
   }
   var handleUpdateClick = function (e) {
-    var dataset = e.currentTarget.dataset
-    Curry._1(handleUpdate, dataset)
+    Curry._1(handleUpdate, e.currentTarget.dataset)
   }
+  var handleDeleteClick = function (e) {
+    Curry._1(handleDelete, e.currentTarget.dataset)
+  }
+  var isToggledAllowed = match[0] && errands.length > 0
   return React.createElement(React$1.IonList, {
     children: React.createElement(
       React.Fragment,
@@ -77,12 +80,13 @@ function ErrandsItem(Props) {
         React.createElement(React$1.IonButton, {
           children: React.createElement(React$1.IonIcon, {
             slot: "icon-only",
-            icon: toggled ? Icons.chevronDownOutline : Icons.chevronForwardOutline,
+            icon: isToggledAllowed ? Icons.chevronDownOutline : Icons.chevronForwardOutline,
           }),
           shape: "round",
+          disabled: !isToggledAllowed,
         })
       ),
-      toggled
+      isToggledAllowed
         ? Belt_Array.map(errands, function (errand) {
             var props = getErrandLevelProps(errand.level)
             var secondAction = props.secondAction
@@ -95,11 +99,18 @@ function ErrandsItem(Props) {
                 key: String(errand.id),
               },
               React.createElement(React$1.IonItemOptions, {
-                children: React.createElement(React$1.IonItemOption, {
-                  children: React.createElement(React$1.IonIcon, {
-                    icon: Icons.trashBin,
+                children: React.createElement(Spread.make, {
+                  props: {
+                    "data-id": errand.id,
+                  },
+                  children: React.createElement(React$1.IonItemOption, {
+                    children: React.createElement(React$1.IonIcon, {
+                      icon: Icons.trashBin,
+                    }),
+                    onClick: handleDeleteClick,
+                    color: color,
+                    name: "hi",
                   }),
-                  color: color,
                 }),
                 side: "start",
               }),
@@ -142,7 +153,7 @@ function ErrandsItem(Props) {
   })
 }
 
-var make = ErrandsItem
+var make = ErrandsLevelItem
 
 exports.presentProps = presentProps
 exports.lackingProps = lackingProps

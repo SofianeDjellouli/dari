@@ -46,7 +46,10 @@ let getErrandLevelProps = (level: errandLevelLabel) =>
   }
 
 type updateErrandPayload = {id: int, name: [#Present | #Missing | #Lacking]}
+
 type updateErrandType = updateErrandPayload => Promise.t<unit>
+
+type deleteErrandType = int => Promise.t<unit>
 
 @react.component
 let make = (
@@ -54,25 +57,26 @@ let make = (
   ~errands: array<errand>,
   ~defaultToggled: bool,
   ~handleUpdate: updateErrandType,
+  ~handleDelete: deleteErrandType,
 ) => {
   let (toggled, toggle) = Toggle.useToggle(~default=defaultToggled)
 
   let handleToggle = _ => toggle()
 
-  let handleUpdateClick = e => {
-    let dataset = ReactEvent.Mouse.currentTarget(e)["dataset"]
+  let handleUpdateClick = e => ReactEvent.Mouse.currentTarget(e)["dataset"]->handleUpdate->ignore
 
-    dataset->handleUpdate->ignore
-  }
+  let handleDeleteClick = e => ReactEvent.Mouse.currentTarget(e)["dataset"]->handleDelete->ignore
+
+  let isToggledAllowed = toggled && Js.Array.length(errands) > 0
 
   <List.IonList>
     {<>
       <List.IonListHeader onClick=handleToggle>
         <Item.IonLabel> <h2> {React.string(name)} </h2> </Item.IonLabel>
-        <Button.IonButton shape=#round>
+        <Button.IonButton shape=#round disabled={!isToggledAllowed}>
           <Icon.IonIcon
             slot=#"icon-only"
-            icon={if toggled {
+            icon={if isToggledAllowed {
               Icon.chevronDownOutline
             } else {
               Icon.chevronForwardOutline
@@ -80,7 +84,7 @@ let make = (
           />
         </Button.IonButton>
       </List.IonListHeader>
-      {if toggled {
+      {if isToggledAllowed {
         errands
         ->Belt.Array.map(errand => {
           let props = getErrandLevelProps(errand.level)
@@ -89,7 +93,11 @@ let make = (
 
           <Item.IonItemSliding key={Belt.Int.toString(errand.id)}>
             <Item.IonItemOptions side=#start>
-              <Item.IonItemOption color> <Icon.IonIcon icon=Icon.trashBin /> </Item.IonItemOption>
+              <Spread props={{"data-id": errand.id}}>
+                <Item.IonItemOption color onClick=handleDeleteClick name="hi">
+                  <Icon.IonIcon icon=Icon.trashBin />
+                </Item.IonItemOption>
+              </Spread>
             </Item.IonItemOptions>
             <Item.IonItem color>
               <Item.IonLabel> {React.string(errand.name)} </Item.IonLabel>
