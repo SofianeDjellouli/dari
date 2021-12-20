@@ -69,10 +69,22 @@ var IonLabel = {}
 
 var IonNote = {}
 
+var IonItemSliding = {}
+
+var IonItemOptions = {}
+
+var IonItemOption = {}
+
+var IonItemDivider = {}
+
 var Item = {
   IonItem: IonItem,
   IonLabel: IonLabel,
   IonNote: IonNote,
+  IonItemSliding: IonItemSliding,
+  IonItemOptions: IonItemOptions,
+  IonItemOption: IonItemOption,
+  IonItemDivider: IonItemDivider,
 }
 
 var IonInput = {}
@@ -223,6 +235,15 @@ var Checkbox = {
   IonCheckbox: IonCheckbox,
 }
 
+var IonReorderGroup = {}
+
+var IonReorder = {}
+
+var Reorder = {
+  IonReorderGroup: IonReorderGroup,
+  IonReorder: IonReorder,
+}
+
 exports.Content = Content
 exports.ProgressIndicators = ProgressIndicators
 exports.Toolbar = Toolbar
@@ -239,4 +260,5 @@ exports.Icon = Icon
 exports.Tabs = Tabs
 exports.IonPage = IonPage$1
 exports.Checkbox = Checkbox
+exports.Reorder = Reorder
 /* react Not a pure module */

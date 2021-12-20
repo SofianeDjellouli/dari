@@ -17,7 +17,15 @@ type slot = [
   | #start
 ]
 
+type side = [#end | #start]
+
+type lines = [#full | #inset | #none]
+
+type expand = [#block | #full]
+
 type onFormEvent = ReactEvent.Form.t => unit
+
+type onClickEvent = ReactEvent.Mouse.t => unit
 
 module Content = {
   module IonContent = {
@@ -85,7 +93,7 @@ module Item = {
       ~children: React.element=?,
       ~lines: [#full | #inset | #none]=?,
       ~button: bool=?,
-      ~onClick: onFormEvent=?,
+      ~onClick: onClickEvent=?,
       ~color: color=?,
     ) => React.element = "IonItem"
   }
@@ -105,6 +113,31 @@ module Item = {
       ~color: color=?,
       ~className: string=?,
     ) => React.element = "IonNote"
+  }
+
+  module IonItemSliding = {
+    @module("@ionic/react") @react.component
+    external make: (~children: React.element=?) => React.element = "IonItemSliding"
+  }
+
+  module IonItemOptions = {
+    @module("@ionic/react") @react.component
+    external make: (~children: React.element=?, ~side: side=?) => React.element = "IonItemOptions"
+  }
+
+  module IonItemOption = {
+    @module("@ionic/react") @react.component
+    external make: (
+      ~children: React.element=?,
+      ~onClick: onClickEvent=?,
+      ~color: color=?,
+      ~expandable: bool=?,
+    ) => React.element = "IonItemOption"
+  }
+
+  module IonItemDivider = {
+    @module("@ionic/react") @react.component
+    external make: (~children: React.element=?) => React.element = "IonItemDivider"
   }
 }
 
@@ -147,11 +180,16 @@ module Grid = {
 
 module Button = {
   module IonButton = {
+    type shape = [#round]
+
     @module("@ionic/react") @react.component
     external make: (
       ~children: React.element=?,
       ~color: color=?,
-      ~expand: [#block | #full]=?,
+      ~expand: expand=?,
+      ~slot: slot=?,
+      ~shape: shape=?,
+      ~onClick: onClickEvent=?,
     ) => React.element = "IonButton"
   }
 
@@ -224,7 +262,11 @@ module List = {
 
   module IonListHeader = {
     @module("@ionic/react") @react.component
-    external make: (~children: React.element=?) => React.element = "IonListHeader"
+    external make: (
+      ~children: React.element=?,
+      ~lines: lines=?,
+      ~onClick: onClickEvent=?,
+    ) => React.element = "IonListHeader"
   }
 }
 
@@ -248,6 +290,24 @@ module Icon = {
 
   @module("ionicons/icons")
   external logOutOutline: string = "logOutOutline"
+
+  @module("ionicons/icons")
+  external trashBin: string = "trashBin"
+
+  @module("ionicons/icons")
+  external heart: string = "heart"
+
+  @module("ionicons/icons")
+  external heartHalf: string = "heartHalf"
+
+  @module("ionicons/icons")
+  external heartDislikeOutline: string = "heartDislikeOutline"
+
+  @module("ionicons/icons")
+  external chevronForwardOutline: string = "chevronForwardOutline"
+
+  @module("ionicons/icons")
+  external chevronDownOutline: string = "chevronDownOutline"
 }
 
 module Tabs = {
@@ -288,5 +348,20 @@ module Checkbox = {
       ~name: string=?,
       ~onIonChange: onFormEvent=?,
     ) => React.element = "IonCheckbox"
+  }
+}
+
+module Reorder = {
+  module IonReorderGroup = {
+    @module("@ionic/react") @react.component
+    external make: (
+      ~children: React.element=?,
+      ~onIonItemReorder: unit => unit=?,
+    ) => React.element = "IonReorderGroup"
+  }
+
+  module IonReorder = {
+    @module("@ionic/react") @react.component
+    external make: (~children: React.element=?, ~slot: slot=?) => React.element = "IonReorder"
   }
 }
