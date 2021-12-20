@@ -5,7 +5,7 @@ let messageState = Recoil.atom({
 
 let useSnackbar = () => Recoil.useSetRecoilState(messageState)
 
-@react.component
+@genType("Snackbar") @react.component
 let make = () => {
   let (message, setMessage) = Recoil.useRecoilState(messageState)
 

@@ -1,24 +1,23 @@
-import {
-  AppProps,
-  ErrorBoundary,
-  ErrorComponent,
-  AuthenticationError,
-  AuthorizationError,
-  ErrorFallbackProps,
-  useQueryErrorResetBoundary,
-  Link,
-} from "blitz"
-import { IonApp } from "@ionic/react"
 import "@ionic/react/css/core.css"
 import "@ionic/react/css/normalize.css"
 import "@ionic/react/css/structure.css"
 import "@ionic/react/css/typography.css"
 import "@ionic/react/css/padding.css"
 import "@ionic/react/css/flex-utils.css"
+import { Snackbar } from "app/core/components/snackbar/Snackbar.gen"
+import { LoginForm } from "app/modules/auth/login/form/LoginForm.gen"
+import {
+  AppProps,
+  AuthenticationError,
+  AuthorizationError,
+  ErrorBoundary,
+  ErrorComponent,
+  ErrorFallbackProps,
+  useQueryErrorResetBoundary,
+} from "blitz"
 import React from "react"
 import { RecoilRoot } from "recoil"
-import { make as Snackbar } from "app/core/components/snackbar/Snackbar.bs"
-import { LoginForm } from "app/modules/auth/login/form/LoginForm.gen"
+import { IonApp } from "@ionic/react"
 
 // TODO: Implement this for recoil warnings: https://github.com/facebookexperimental/Recoil/issues/733#issuecomment-925072943
 
