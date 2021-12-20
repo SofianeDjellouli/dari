@@ -24,7 +24,7 @@ let make = (~children: React.element) => {
             />
             <AuthenticatedLayoutMenuItem href="/errands" icon=Icon.bagOutline label="Errands" />
             <Item.IonItem button=true onClick=handleLogout>
-              <Icon.IonIcon slot="start" icon=Icon.logOutOutline />
+              <Icon.IonIcon slot=#start icon=Icon.logOutOutline />
               <Item.IonLabel> {React.string("Logout")} </Item.IonLabel>
             </Item.IonItem>
           </Menu.IonMenuToggle>
@@ -37,7 +37,7 @@ let make = (~children: React.element) => {
           <Toolbar.IonButtons slot=#start>
             <Menu.IonMenuToggle autoHide=false>
               <Button.IonButton>
-                <Icon.IonIcon slot="icon-only" icon=Icon.menu />
+                <Icon.IonIcon slot=#"icon-only" icon=Icon.menu />
               </Button.IonButton>
             </Menu.IonMenuToggle>
           </Toolbar.IonButtons>

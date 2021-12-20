@@ -65,6 +65,8 @@ var Navigation = {
 
 var IonItem = {}
 
+var IonItemGroup = {}
+
 var IonLabel = {}
 
 var IonNote = {}
@@ -79,6 +81,7 @@ var IonItemDivider = {}
 
 var Item = {
   IonItem: IonItem,
+  IonItemGroup: IonItemGroup,
   IonLabel: IonLabel,
   IonNote: IonNote,
   IonItemSliding: IonItemSliding,

@@ -23,6 +23,8 @@ type lines = [#full | #inset | #none]
 
 type expand = [#block | #full]
 
+type fill = [#clear | #default | #outline | #solid]
+
 type onFormEvent = ReactEvent.Form.t => unit
 
 type onClickEvent = ReactEvent.Mouse.t => unit
@@ -98,6 +100,11 @@ module Item = {
     ) => React.element = "IonItem"
   }
 
+  module IonItemGroup = {
+    @module("@ionic/react") @react.component
+    external make: (~children: React.element=?) => React.element = "IonItemGroup"
+  }
+
   module IonLabel = {
     @module("@ionic/react") @react.component
     external make: (
@@ -132,6 +139,7 @@ module Item = {
       ~onClick: onClickEvent=?,
       ~color: color=?,
       ~expandable: bool=?,
+      ~name: string=?,
     ) => React.element = "IonItemOption"
   }
 
@@ -190,6 +198,7 @@ module Button = {
       ~slot: slot=?,
       ~shape: shape=?,
       ~onClick: onClickEvent=?,
+      ~fill: fill=?,
     ) => React.element = "IonButton"
   }
 
@@ -272,8 +281,11 @@ module List = {
 
 module Icon = {
   module IonIcon = {
+    type slot = [#end | #start | #"icon-only"]
+
     @module("@ionic/react") @react.component
-    external make: (~slot: string=?, ~icon: string) => React.element = "IonIcon"
+    external make: (~slot: slot=?, ~icon: string, ~onClick: onClickEvent=?) => React.element =
+      "IonIcon"
   }
 
   @module("ionicons/icons")
