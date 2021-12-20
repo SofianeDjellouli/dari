@@ -1,6 +1,6 @@
 module.exports = {
   extends: ["blitz"],
-  ignorePatterns: "*.bs.js",
+  ignorePatterns: ["*.bs.js", "*.gen.tsx"],
   rules: {
     "react/jsx-newline": ["error", { prevent: false }],
     "padding-line-between-statements": [
