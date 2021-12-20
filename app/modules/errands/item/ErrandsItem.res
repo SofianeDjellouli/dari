@@ -20,11 +20,11 @@ type iconPropsType = {icon: string, name: string}
 
 type propsType = {color: Ionic.color, firstAction: iconPropsType, secondAction: iconPropsType}
 
-let presentProps = {icon: Icon.heart, name: "present"}
+let presentProps = {icon: Icon.heart, name: "Present"}
 
-let lackingProps = {icon: Icon.heartHalf, name: "lacking"}
+let lackingProps = {icon: Icon.heartHalf, name: "Lacking"}
 
-let missingProps = {icon: Icon.heartDislikeOutline, name: "missing"}
+let missingProps = {icon: Icon.heartDislikeOutline, name: "Missing"}
 
 let getErrandLevelProps = (level: errandLevelLabel) =>
   switch level {
@@ -45,12 +45,15 @@ let getErrandLevelProps = (level: errandLevelLabel) =>
     }
   }
 
+type updateErrandPayload = {id: int, name: [#Present | #Missing | #Lacking]}
+type updateErrandType = updateErrandPayload => Promise.t<unit>
+
 @react.component
 let make = (
   ~name: string,
   ~errands: array<errand>,
   ~defaultToggled: bool,
-  ~handleUpdate: (. string, string) => unit,
+  ~handleUpdate: updateErrandType,
 ) => {
   let (toggled, toggle) = Toggle.useToggle(~default=defaultToggled)
 
@@ -59,7 +62,7 @@ let make = (
   let handleUpdateClick = e => {
     let dataset = ReactEvent.Mouse.currentTarget(e)["dataset"]
 
-    handleUpdate(. dataset["action"], dataset["id"])
+    dataset->handleUpdate->ignore
   }
 
   <List.IonList>
@@ -90,10 +93,10 @@ let make = (
             </Item.IonItemOptions>
             <Item.IonItem color>
               <Item.IonLabel> {React.string(errand.name)} </Item.IonLabel>
-              <Spread props={{"data-action": firstAction.name, "data-id": errand.id}}>
+              <Spread props={{"data-name": firstAction.name, "data-id": errand.id}}>
                 <Icon.IonIcon slot=#end icon=firstAction.icon onClick=handleUpdateClick />
               </Spread>
-              <Spread props={{"data-action": secondAction.name, "data-id": errand.id}}>
+              <Spread props={{"data-name": secondAction.name, "data-id": errand.id}}>
                 <Icon.IonIcon slot=#end icon=secondAction.icon onClick=handleUpdateClick />
               </Spread>
             </Item.IonItem>

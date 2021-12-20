@@ -39,7 +39,7 @@ module ReactQuery = {
 
   type query<'variables, 'result> = 'variables => Promise.t<'result>
 
-  type queryExtras<'error> = {
+  type queryExtras<'error, 'result> = {
     isError: bool,
     isFetched: bool,
     isFetchedAfterMount: bool,
@@ -62,19 +62,20 @@ module ReactQuery = {
     reset: unit => unit,
     error: option<'error>,
     status: status,
+    refetch: unit => Promise.t<'result>,
   }
 
   @module("next/data-client")
   external useQuery: (
     query<'variables, 'result>,
     'variables,
-  ) => (option<'result>, queryExtras<'error>) = "useQuery"
+  ) => (option<'result>, queryExtras<'error, 'result>) = "useQuery"
 
   @module("next/data-client")
   external usePaginatedQuery: (
     query<'variables, 'result>,
     'variables,
-  ) => (option<'result>, queryExtras<'error>) = "usePaginatedQuery"
+  ) => (option<'result>, queryExtras<'error, 'result>) = "usePaginatedQuery"
 }
 
 module Link = Next.Link

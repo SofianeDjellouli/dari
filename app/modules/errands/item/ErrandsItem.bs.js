@@ -11,17 +11,17 @@ var Icons = require("ionicons/icons")
 
 var presentProps = {
   icon: Icons.heart,
-  name: "present",
+  name: "Present",
 }
 
 var lackingProps = {
   icon: Icons.heartHalf,
-  name: "lacking",
+  name: "Lacking",
 }
 
 var missingProps = {
   icon: Icons.heartDislikeOutline,
-  name: "missing",
+  name: "Missing",
 }
 
 function getErrandLevelProps(level) {
@@ -59,7 +59,7 @@ function ErrandsItem(Props) {
   }
   var handleUpdateClick = function (e) {
     var dataset = e.currentTarget.dataset
-    return handleUpdate(dataset.action, dataset.id)
+    Curry._1(handleUpdate, dataset)
   }
   return React.createElement(React$1.IonList, {
     children: React.createElement(
@@ -114,7 +114,7 @@ function ErrandsItem(Props) {
                 }),
                 React.createElement(Spread.make, {
                   props: {
-                    "data-action": firstAction.name,
+                    "data-name": firstAction.name,
                     "data-id": errand.id,
                   },
                   children: React.createElement(React$1.IonIcon, {
@@ -125,7 +125,7 @@ function ErrandsItem(Props) {
                 }),
                 React.createElement(Spread.make, {
                   props: {
-                    "data-action": secondAction.name,
+                    "data-name": secondAction.name,
                     "data-id": errand.id,
                   },
                   children: React.createElement(React$1.IonIcon, {

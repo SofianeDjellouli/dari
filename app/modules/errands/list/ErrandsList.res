@@ -5,26 +5,22 @@ type errandsQueryType = unit => Promise.t<ErrandsItem.errandsLevels>
 @module("../queries/errands-levels")
 external errandsQuery: errandsQueryType = "default"
 
-type updateErrandPayload =
-  | Name({id: int, name: string})
-  | Level({id: int, level: [#Present | #Missing | #Lacking]})
-
-type updateErrandType = updateErrandPayload => Promise.t<ErrandsItem.errandLevel>
-
 @module("../mutations/update")
-external updateErrand: updateErrandType = "default"
+external updateErrand: ErrandsItem.updateErrandType = "default"
 
 @genType("ErrandsList") @react.component
 let make = () => {
-  let (errandsLevels, _) = Blitz.ReactQuery.usePaginatedQuery(errandsQuery, ())
+  let (errandsLevels, errandsLevelsQueryExtras) = Blitz.ReactQuery.usePaginatedQuery(
+    errandsQuery,
+    (),
+  )
 
-  Js.log(errandsLevels)
+  let (updateErrandMutation, _) = Blitz.ReactQuery.useMutation(updateErrand)
 
-  /* let (updateErrandMutation, _) = Blitz.ReactQuery.useMutation(updateErrand)
-   */
-  let handleUpdate = (. name, id) => {
-    Js.log2(name, id)
-  }
+  let handleUpdate = data =>
+    updateErrandMutation(. data)
+    ->Promise.then(_ => errandsLevelsQueryExtras.refetch())
+    ->Promise.then(_ => Promise.resolve())
 
   <Content.IonContent>
     {switch errandsLevels {
