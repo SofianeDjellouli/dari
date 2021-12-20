@@ -1,12 +1,15 @@
 open Ionic
 
-type errandsQueryType = unit => Promise.t<ErrandsItem.errandsLevels>
+type errandsQueryType = unit => Promise.t<ErrandsLevelItem.errandsLevels>
 
 @module("../queries/errands-levels")
 external errandsQuery: errandsQueryType = "default"
 
 @module("../mutations/update")
-external updateErrand: ErrandsItem.updateErrandType = "default"
+external updateErrand: ErrandsLevelItem.updateErrandType = "default"
+
+@module("../mutations/delete")
+external deleteErrand: ErrandsLevelItem.deleteErrandType = "default"
 
 @genType("ErrandsList") @react.component
 let make = () => {
@@ -17,8 +20,15 @@ let make = () => {
 
   let (updateErrandMutation, _) = Blitz.ReactQuery.useMutation(updateErrand)
 
+  let (deleteErrandMutation, _) = Blitz.ReactQuery.useMutation(deleteErrand)
+
   let handleUpdate = data =>
     updateErrandMutation(. data)
+    ->Promise.then(_ => errandsLevelsQueryExtras.refetch())
+    ->Promise.then(_ => Promise.resolve())
+
+  let handleDelete = data =>
+    deleteErrandMutation(. data)
     ->Promise.then(_ => errandsLevelsQueryExtras.refetch())
     ->Promise.then(_ => Promise.resolve())
 
@@ -27,12 +37,13 @@ let make = () => {
     | Some(errandsLevels) => <>
         {errandsLevels
         ->Belt.Array.map(errandLevel =>
-          <ErrandsItem
+          <ErrandsLevelItem
             key={Belt.Int.toString(errandLevel.id)}
             name=errandLevel.name
             errands=errandLevel.errands
             defaultToggled={errandLevel.name === "Missing"}
             handleUpdate
+            handleDelete
           />
         )
         ->React.array}

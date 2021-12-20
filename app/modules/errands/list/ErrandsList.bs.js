@@ -4,9 +4,10 @@
 var Curry = require("rescript/lib/js/curry.js")
 var React = require("react")
 var Belt_Array = require("rescript/lib/js/belt_Array.js")
-var ErrandsItem = require("../item/ErrandsItem.bs.js")
 var React$1 = require("@ionic/react")
+var ErrandsLevelItem = require("../level-item/ErrandsLevelItem.bs.js")
 var DataClient = require("next/data-client")
+var Delete = require("../mutations/delete").default
 var Update = require("../mutations/update").default
 var ErrandsLevels = require("../queries/errands-levels").default
 
@@ -14,14 +15,27 @@ var errandsQuery = ErrandsLevels
 
 var updateErrand = Update
 
+var deleteErrand = Delete
+
 function ErrandsList(Props) {
   var match = DataClient.usePaginatedQuery(errandsQuery, undefined)
   var errandsLevelsQueryExtras = match[1]
   var errandsLevels = match[0]
   var match$1 = DataClient.useMutation(updateErrand)
   var updateErrandMutation = match$1[0]
+  var match$2 = DataClient.useMutation(deleteErrand)
+  var deleteErrandMutation = match$2[0]
   var handleUpdate = function (data) {
     return updateErrandMutation(data)
+      .then(function (param) {
+        return Curry._1(errandsLevelsQueryExtras.refetch, undefined)
+      })
+      .then(function (param) {
+        return Promise.resolve(undefined)
+      })
+  }
+  var handleDelete = function (data) {
+    return deleteErrandMutation(data)
       .then(function (param) {
         return Curry._1(errandsLevelsQueryExtras.refetch, undefined)
       })
@@ -36,11 +50,12 @@ function ErrandsList(Props) {
             React.Fragment,
             undefined,
             Belt_Array.map(errandsLevels, function (errandLevel) {
-              return React.createElement(ErrandsItem.make, {
+              return React.createElement(ErrandsLevelItem.make, {
                 name: errandLevel.name,
                 errands: errandLevel.errands,
                 defaultToggled: errandLevel.name === "Missing",
                 handleUpdate: handleUpdate,
+                handleDelete: handleDelete,
                 key: String(errandLevel.id),
               })
             })
@@ -53,5 +68,6 @@ var make = ErrandsList
 
 exports.errandsQuery = errandsQuery
 exports.updateErrand = updateErrand
+exports.deleteErrand = deleteErrand
 exports.make = make
 /* errandsQuery Not a pure module */
