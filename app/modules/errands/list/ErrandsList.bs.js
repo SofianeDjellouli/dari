@@ -3,12 +3,13 @@
 
 var React = require("react")
 var Belt_Array = require("rescript/lib/js/belt_Array.js")
+var ErrandsItem = require("../item/ErrandsItem.bs.js")
 var React$1 = require("@ionic/react")
 var DataClient = require("next/data-client")
-var Errands = require("../queries/errands-levels").default
 var Update = require("../mutations/update").default
+var ErrandsLevels = require("../queries/errands-levels").default
 
-var errandsQuery = Errands
+var errandsQuery = ErrandsLevels
 
 var updateErrand = Update
 
@@ -16,28 +17,18 @@ function ErrandsList(Props) {
   var match = DataClient.usePaginatedQuery(errandsQuery, undefined)
   var errandsLevels = match[0]
   console.log(errandsLevels)
-  DataClient.useMutation(updateErrand)
   return React.createElement(React$1.IonContent, {
     children:
       errandsLevels !== undefined
         ? React.createElement(
             React.Fragment,
             undefined,
-            Belt_Array.map(errandsLevels, function (errandsLevel) {
-              return React.createElement(React$1.IonList, {
-                children: Belt_Array.map(errandsLevel.errands, function (errand) {
-                  var match = errand.level
-                  var color =
-                    match === "Missing" ? "danger" : match === "Present" ? "success" : "warning"
-                  return React.createElement(React$1.IonItem, {
-                    children: React.createElement(React$1.IonLabel, {
-                      children: errand.name,
-                    }),
-                    color: color,
-                    key: String(errand.id),
-                  })
-                }),
-                key: String(errandsLevel.id),
+            Belt_Array.map(errandsLevels, function (errandLevel) {
+              return React.createElement(ErrandsItem.make, {
+                name: errandLevel.name,
+                errands: errandLevel.errands,
+                defaultToggled: errandLevel.name === "Missing",
+                key: String(errandLevel.id),
               })
             })
           )
