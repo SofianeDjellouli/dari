@@ -1,9 +1,11 @@
 open Ionic
 
+type errandLevelLabel = [#Present | #Lacking | #Missing]
+
 type errand = {
   id: int,
   name: string,
-  level: [#Present | #Lacking | #Missing],
+  level: errandLevelLabel,
 }
 
 type errandLevel = {
@@ -14,20 +16,59 @@ type errandLevel = {
 
 type errandsLevels = array<errandLevel>
 
-type propsType = {color: Ionic.color, firstAction: string, secondAction: string}
+type iconPropsType = {icon: string, name: string}
+
+type propsType = {color: Ionic.color, firstAction: iconPropsType, secondAction: iconPropsType}
+
+let presentProps = {icon: Icon.heart, name: "present"}
+
+let lackingProps = {icon: Icon.heartHalf, name: "lacking"}
+
+let missingProps = {icon: Icon.heartDislikeOutline, name: "missing"}
+
+let getErrandLevelProps = (level: errandLevelLabel) =>
+  switch level {
+  | #Present => {
+      color: #success,
+      firstAction: lackingProps,
+      secondAction: missingProps,
+    }
+  | #Missing => {
+      color: #danger,
+      firstAction: presentProps,
+      secondAction: lackingProps,
+    }
+  | #Lacking => {
+      color: #warning,
+      firstAction: presentProps,
+      secondAction: missingProps,
+    }
+  }
 
 @react.component
-let make = (~name: string, ~errands: array<errand>, ~defaultToggled: bool) => {
+let make = (
+  ~name: string,
+  ~errands: array<errand>,
+  ~defaultToggled: bool,
+  ~handleUpdate: (. string, string) => unit,
+) => {
   let (toggled, toggle) = Toggle.useToggle(~default=defaultToggled)
 
   let handleToggle = _ => toggle()
 
+  let handleUpdateClick = e => {
+    let dataset = ReactEvent.Mouse.currentTarget(e)["dataset"]
+
+    handleUpdate(. dataset["action"], dataset["id"])
+  }
+
   <List.IonList>
     {<>
       <List.IonListHeader onClick=handleToggle>
-        <Item.IonLabel> {React.string(name)} </Item.IonLabel>
+        <Item.IonLabel> <h2> {React.string(name)} </h2> </Item.IonLabel>
         <Button.IonButton shape=#round>
           <Icon.IonIcon
+            slot=#"icon-only"
             icon={if toggled {
               Icon.chevronDownOutline
             } else {
@@ -39,25 +80,9 @@ let make = (~name: string, ~errands: array<errand>, ~defaultToggled: bool) => {
       {if toggled {
         errands
         ->Belt.Array.map(errand => {
-          let props = switch errand.level {
-          | #Present => {
-              color: #success,
-              firstAction: Icon.heartDislikeOutline,
-              secondAction: Icon.heartHalf,
-            }
-          | #Missing => {
-              color: #danger,
-              firstAction: Icon.heart,
-              secondAction: Icon.heartHalf,
-            }
-          | #Lacking => {
-              color: #warning,
-              firstAction: Icon.heart,
-              secondAction: Icon.heartDislikeOutline,
-            }
-          }
+          let props = getErrandLevelProps(errand.level)
 
-          let color = props.color
+          let {color, firstAction, secondAction} = props
 
           <Item.IonItemSliding key={Belt.Int.toString(errand.id)}>
             <Item.IonItemOptions side=#start>
@@ -65,15 +90,13 @@ let make = (~name: string, ~errands: array<errand>, ~defaultToggled: bool) => {
             </Item.IonItemOptions>
             <Item.IonItem color>
               <Item.IonLabel> {React.string(errand.name)} </Item.IonLabel>
+              <Spread props={{"data-action": firstAction.name, "data-id": errand.id}}>
+                <Icon.IonIcon slot=#end icon=firstAction.icon onClick=handleUpdateClick />
+              </Spread>
+              <Spread props={{"data-action": secondAction.name, "data-id": errand.id}}>
+                <Icon.IonIcon slot=#end icon=secondAction.icon onClick=handleUpdateClick />
+              </Spread>
             </Item.IonItem>
-            <Item.IonItemOptions side=#end>
-              <Item.IonItemOption color>
-                <Icon.IonIcon icon=props.firstAction />
-              </Item.IonItemOption>
-              <Item.IonItemOption color>
-                <Icon.IonIcon icon=props.secondAction />
-              </Item.IonItemOption>
-            </Item.IonItemOptions>
           </Item.IonItemSliding>
         })
         ->React.array

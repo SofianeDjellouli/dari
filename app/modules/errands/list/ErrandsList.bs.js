@@ -17,6 +17,9 @@ function ErrandsList(Props) {
   var match = DataClient.usePaginatedQuery(errandsQuery, undefined)
   var errandsLevels = match[0]
   console.log(errandsLevels)
+  var handleUpdate = function (name, id) {
+    console.log(name, id)
+  }
   return React.createElement(React$1.IonContent, {
     children:
       errandsLevels !== undefined
@@ -28,6 +31,7 @@ function ErrandsList(Props) {
                 name: errandLevel.name,
                 errands: errandLevel.errands,
                 defaultToggled: errandLevel.name === "Missing",
+                handleUpdate: handleUpdate,
                 key: String(errandLevel.id),
               })
             })

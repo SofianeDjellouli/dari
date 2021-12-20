@@ -21,10 +21,10 @@ let make = () => {
   Js.log(errandsLevels)
 
   /* let (updateErrandMutation, _) = Blitz.ReactQuery.useMutation(updateErrand)
-
-  let handleCheck = (e: ReactEvent.Form.t) => {
-    Js.log(ReactEvent.Form.target(e)["name"])
-  } */
+   */
+  let handleUpdate = (. name, id) => {
+    Js.log2(name, id)
+  }
 
   <Content.IonContent>
     {switch errandsLevels {
@@ -36,6 +36,7 @@ let make = () => {
             name=errandLevel.name
             errands=errandLevel.errands
             defaultToggled={errandLevel.name === "Missing"}
+            handleUpdate
           />
         )
         ->React.array}

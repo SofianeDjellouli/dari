@@ -3,20 +3,63 @@
 
 var Curry = require("rescript/lib/js/curry.js")
 var React = require("react")
+var Spread = require("../../../core/components/spread/Spread.bs.js")
 var Toggle = require("../../../core/hooks/toggle/Toggle.bs.js")
 var Belt_Array = require("rescript/lib/js/belt_Array.js")
 var React$1 = require("@ionic/react")
 var Icons = require("ionicons/icons")
 
+var presentProps = {
+  icon: Icons.heart,
+  name: "present",
+}
+
+var lackingProps = {
+  icon: Icons.heartHalf,
+  name: "lacking",
+}
+
+var missingProps = {
+  icon: Icons.heartDislikeOutline,
+  name: "missing",
+}
+
+function getErrandLevelProps(level) {
+  if (level === "Missing") {
+    return {
+      color: "danger",
+      firstAction: presentProps,
+      secondAction: lackingProps,
+    }
+  } else if (level === "Present") {
+    return {
+      color: "success",
+      firstAction: lackingProps,
+      secondAction: missingProps,
+    }
+  } else {
+    return {
+      color: "warning",
+      firstAction: presentProps,
+      secondAction: missingProps,
+    }
+  }
+}
+
 function ErrandsItem(Props) {
   var name = Props.name
   var errands = Props.errands
   var defaultToggled = Props.defaultToggled
+  var handleUpdate = Props.handleUpdate
   var match = Toggle.useToggle(defaultToggled)
   var toggle = match[1]
   var toggled = match[0]
   var handleToggle = function (param) {
     return Curry._1(toggle, undefined)
+  }
+  var handleUpdateClick = function (e) {
+    var dataset = e.currentTarget.dataset
+    return handleUpdate(dataset.action, dataset.id)
   }
   return React.createElement(React$1.IonList, {
     children: React.createElement(
@@ -29,10 +72,11 @@ function ErrandsItem(Props) {
           onClick: handleToggle,
         },
         React.createElement(React$1.IonLabel, {
-          children: name,
+          children: React.createElement("h2", undefined, name),
         }),
         React.createElement(React$1.IonButton, {
           children: React.createElement(React$1.IonIcon, {
+            slot: "icon-only",
             icon: toggled ? Icons.chevronDownOutline : Icons.chevronForwardOutline,
           }),
           shape: "round",
@@ -40,25 +84,9 @@ function ErrandsItem(Props) {
       ),
       toggled
         ? Belt_Array.map(errands, function (errand) {
-            var match = errand.level
-            var props =
-              match === "Missing"
-                ? {
-                    color: "danger",
-                    firstAction: Icons.heart,
-                    secondAction: Icons.heartHalf,
-                  }
-                : match === "Present"
-                ? {
-                    color: "success",
-                    firstAction: Icons.heartDislikeOutline,
-                    secondAction: Icons.heartHalf,
-                  }
-                : {
-                    color: "warning",
-                    firstAction: Icons.heart,
-                    secondAction: Icons.heartDislikeOutline,
-                  }
+            var props = getErrandLevelProps(errand.level)
+            var secondAction = props.secondAction
+            var firstAction = props.firstAction
             var color = props.color
             return React.createElement(
               React$1.IonItemSliding,
@@ -75,29 +103,36 @@ function ErrandsItem(Props) {
                 }),
                 side: "start",
               }),
-              React.createElement(React$1.IonItem, {
-                children: React.createElement(React$1.IonLabel, {
-                  children: errand.name,
-                }),
-                color: color,
-              }),
               React.createElement(
-                React$1.IonItemOptions,
+                React$1.IonItem,
                 {
                   children: null,
-                  side: "end",
+                  color: color,
                 },
-                React.createElement(React$1.IonItemOption, {
-                  children: React.createElement(React$1.IonIcon, {
-                    icon: props.firstAction,
-                  }),
-                  color: color,
+                React.createElement(React$1.IonLabel, {
+                  children: errand.name,
                 }),
-                React.createElement(React$1.IonItemOption, {
+                React.createElement(Spread.make, {
+                  props: {
+                    "data-action": firstAction.name,
+                    "data-id": errand.id,
+                  },
                   children: React.createElement(React$1.IonIcon, {
-                    icon: props.secondAction,
+                    slot: "end",
+                    icon: firstAction.icon,
+                    onClick: handleUpdateClick,
                   }),
-                  color: color,
+                }),
+                React.createElement(Spread.make, {
+                  props: {
+                    "data-action": secondAction.name,
+                    "data-id": errand.id,
+                  },
+                  children: React.createElement(React$1.IonIcon, {
+                    slot: "end",
+                    icon: secondAction.icon,
+                    onClick: handleUpdateClick,
+                  }),
                 })
               )
             )
@@ -109,5 +144,9 @@ function ErrandsItem(Props) {
 
 var make = ErrandsItem
 
+exports.presentProps = presentProps
+exports.lackingProps = lackingProps
+exports.missingProps = missingProps
+exports.getErrandLevelProps = getErrandLevelProps
 exports.make = make
-/* react Not a pure module */
+/* presentProps Not a pure module */
