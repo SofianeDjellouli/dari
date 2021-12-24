@@ -110,6 +110,7 @@ module Item = {
     external make: (
       ~children: React.element=?,
       ~position: [#fixed | #floating | #stacked]=?,
+      ~onClick: onClickEvent=?,
     ) => React.element = "IonLabel"
   }
 
@@ -154,13 +155,15 @@ module Input = {
     @module("@ionic/react") @react.component
     external make: (
       ~children: React.element=?,
-      ~name: string,
+      ~name: string=?,
       ~placeholder: string=?,
       ~value: string,
-      ~onIonChange: onFormEvent,
       ~autofocus: bool=?,
       ~color: color=?,
+      ~ref: ReactDOM.domRef=?,
+      ~onIonChange: onFormEvent=?,
       ~onIonBlur: onFormEvent=?,
+      ~onIonInput: onFormEvent=?,
     ) => React.element = "IonInput"
   }
 }
@@ -321,6 +324,12 @@ module Icon = {
 
   @module("ionicons/icons")
   external chevronDownOutline: string = "chevronDownOutline"
+
+  @module("ionicons/icons")
+  external createOutline: string = "createOutline"
+
+  @module("ionicons/icons")
+  external checkmarkCircle: string = "checkmarkCircle"
 }
 
 module Tabs = {
@@ -376,5 +385,16 @@ module Reorder = {
   module IonReorder = {
     @module("@ionic/react") @react.component
     external make: (~children: React.element=?, ~slot: slot=?) => React.element = "IonReorder"
+  }
+}
+
+module Popover = {
+  module IonPopover = {
+    @module("@ionic/react") @react.component
+    external make: (
+      ~children: React.element=?,
+      ~isOpen: bool=?,
+      ~onDidDismiss: unit => unit=?,
+    ) => React.element = "IonPopover"
   }
 }

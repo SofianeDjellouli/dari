@@ -247,6 +247,12 @@ var Reorder = {
   IonReorder: IonReorder,
 }
 
+var IonPopover = {}
+
+var Popover = {
+  IonPopover: IonPopover,
+}
+
 exports.Content = Content
 exports.ProgressIndicators = ProgressIndicators
 exports.Toolbar = Toolbar
@@ -264,4 +270,5 @@ exports.Tabs = Tabs
 exports.IonPage = IonPage$1
 exports.Checkbox = Checkbox
 exports.Reorder = Reorder
+exports.Popover = Popover
 /* react Not a pure module */
