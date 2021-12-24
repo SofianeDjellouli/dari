@@ -6,7 +6,7 @@ type Payload = {
   name: "Present" | "Missing" | "Lacking"
 }
 
-export default async function updateErrand({ id, name }: Payload, ctx: Ctx) {
+export default async function updateErrandLevel({ id, name }: Payload, ctx: Ctx) {
   ctx.session.$authorize()
 
   const errandsLevels = await db.errandLevel.findMany()
