@@ -330,6 +330,9 @@ module Icon = {
 
   @module("ionicons/icons")
   external checkmarkCircle: string = "checkmarkCircle"
+
+  @module("ionicons/icons")
+  external add: string = "add"
 }
 
 module Tabs = {
@@ -396,5 +399,38 @@ module Popover = {
       ~isOpen: bool=?,
       ~onDidDismiss: unit => unit=?,
     ) => React.element = "IonPopover"
+  }
+}
+
+module Fab = {
+  type horizontal = [#center | #end | #start]
+
+  type vertical = [#center | #bottom | #top]
+
+  module IonFab = {
+    @module("@ionic/react") @react.component
+    external make: (
+      ~children: React.element=?,
+      ~slot: slot=?,
+      ~horizontal: horizontal=?,
+      ~vertical: vertical=?,
+      ~slot: slot=?,
+      ~activated: bool=?,
+      ~edge: bool=?,
+    ) => React.element = "IonFab"
+  }
+
+  module IonFabButton = {
+    @module("@ionic/react") @react.component
+    external make: (~children: React.element=?) => React.element = "IonFabButton"
+  }
+
+  module IonFabList = {
+    @module("@ionic/react") @react.component
+    external make: (
+      ~children: React.element=?,
+      ~activated: bool=?,
+      ~side: [#bottom | #end | #start | #top]=?,
+    ) => React.element = "IonFabList"
   }
 }

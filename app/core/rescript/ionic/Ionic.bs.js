@@ -253,6 +253,18 @@ var Popover = {
   IonPopover: IonPopover,
 }
 
+var IonFab = {}
+
+var IonFabButton = {}
+
+var IonFabList = {}
+
+var Fab = {
+  IonFab: IonFab,
+  IonFabButton: IonFabButton,
+  IonFabList: IonFabList,
+}
+
 exports.Content = Content
 exports.ProgressIndicators = ProgressIndicators
 exports.Toolbar = Toolbar
@@ -271,4 +283,5 @@ exports.IonPage = IonPage$1
 exports.Checkbox = Checkbox
 exports.Reorder = Reorder
 exports.Popover = Popover
+exports.Fab = Fab
 /* react Not a pure module */
