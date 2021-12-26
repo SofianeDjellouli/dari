@@ -5,13 +5,13 @@ open Promise
 type signupType = Js.Dict.t<string> => Promise.t<unit>
 
 @module("../mutations/signup")
-external signup: 'a = "default"
+external signup: signupType = "default"
 
 @genType("SignupForm") @react.component
 let make = () => {
   let setSnackbar = Snackbar.useSnackbar()
 
-  let (signupMutation, data) = Blitz.ReactQuery.useMutation(signup)
+  let (signupMutation, data) = Blitz.ReactQuery.useMutation(~function=signup, ())
 
   let (state, dispatch) = React.useReducer(SignupReducer.reducer, SignupReducer.initialState)
 
@@ -26,11 +26,6 @@ let make = () => {
       state
       ->SignupOutput.getOutput
       ->(e => signupMutation(. e))
-      ->Promise.then(num => {
-        Js.log(num)
-
-        Promise.resolve(num)
-      })
       ->Promise.catch(rawError => {
         switch rawError {
         | JsError(error) =>

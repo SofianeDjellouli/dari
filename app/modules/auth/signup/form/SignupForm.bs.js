@@ -18,7 +18,7 @@ var signup = Signup
 
 function SignupForm(Props) {
   var setSnackbar = Snackbar.useSnackbar(undefined)
-  var match = DataClient.useMutation(signup)
+  var match = DataClient.useMutation(signup, undefined)
   var signupMutation = match[0]
   var match$1 = React.useReducer(SignupReducer.reducer, SignupReducer.initialState)
   var dispatch = match$1[1]
@@ -32,31 +32,25 @@ function SignupForm(Props) {
         _0: errors,
       })
     } else {
-      $$Promise.$$catch(
-        signupMutation(SignupOutput.getOutput(state)).then(function (num) {
-          console.log(num)
-          return Promise.resolve(num)
-        }),
-        function (rawError) {
-          if (rawError.RE_EXN_ID === $$Promise.JsError) {
-            var message = rawError._1.message
-            if (message !== undefined) {
-              Curry._1(setSnackbar, function (param) {
-                return message
-              })
-            } else {
-              Curry._1(setSnackbar, function (param) {
-                return "Some unknown error"
-              })
-            }
+      $$Promise.$$catch(signupMutation(SignupOutput.getOutput(state)), function (rawError) {
+        if (rawError.RE_EXN_ID === $$Promise.JsError) {
+          var message = rawError._1.message
+          if (message !== undefined) {
+            Curry._1(setSnackbar, function (param) {
+              return message
+            })
           } else {
             Curry._1(setSnackbar, function (param) {
               return "Some unknown error"
             })
           }
-          return Promise.reject(rawError)
+        } else {
+          Curry._1(setSnackbar, function (param) {
+            return "Some unknown error"
+          })
         }
-      )
+        return Promise.reject(rawError)
+      })
       return
     }
   }

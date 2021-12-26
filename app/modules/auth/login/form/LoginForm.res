@@ -11,7 +11,7 @@ external login: loginType = "default"
 let make = () => {
   let setSnackbar = Snackbar.useSnackbar()
 
-  let (loginMutation, data) = Blitz.ReactQuery.useMutation(login)
+  let (loginMutation, data) = Blitz.ReactQuery.useMutation(~function=login, ())
 
   let (state, dispatch) = React.useReducer(LoginReducer.reducer, LoginReducer.initialState)
 

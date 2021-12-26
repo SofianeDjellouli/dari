@@ -13,7 +13,7 @@ var logoutMutation = Logout
 
 function AuthenticatedLayout(Props) {
   var children = Props.children
-  var match = DataClient.useMutation(logoutMutation)
+  var match = DataClient.useMutation(logoutMutation, undefined)
   var logout = match[0]
   var handleLogout = function (param) {
     logout(undefined)

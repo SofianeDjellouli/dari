@@ -7,7 +7,7 @@ external logoutMutation: logoutMutationType = "default"
 
 @genType("AuthenticatedLayout") @react.component
 let make = (~children: React.element) => {
-  let (logout, _) = Blitz.ReactQuery.useMutation(logoutMutation)
+  let (logout, _) = Blitz.ReactQuery.useMutation(~function=logoutMutation, ())
 
   let handleLogout = _ => logout(. ignore())->ignore
 

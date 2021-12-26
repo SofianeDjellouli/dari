@@ -18,7 +18,7 @@ var login = Login
 
 function LoginForm(Props) {
   var setSnackbar = Snackbar.useSnackbar(undefined)
-  var match = DataClient.useMutation(login)
+  var match = DataClient.useMutation(login, undefined)
   var loginMutation = match[0]
   var match$1 = React.useReducer(LoginReducer.reducer, LoginReducer.initialState)
   var dispatch = match$1[1]
