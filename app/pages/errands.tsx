@@ -1,11 +1,11 @@
 import { AuthenticatedLayout } from "app/core/layouts/authenticated/AuthenticatedLayout.gen"
-import { ErrandsLevelsList } from "app/modules/errands/levels-list/ErrandsLevelsList.gen"
+import { ErrandsPage } from "app/modules/errands/page/ErrandsPage.gen"
 import { BlitzPage, Routes } from "blitz"
 import { Suspense } from "react"
 
 const Errands: BlitzPage = () => (
   <Suspense fallback="Loading">
-    <ErrandsLevelsList />
+    <ErrandsPage />
   </Suspense>
 )
 
