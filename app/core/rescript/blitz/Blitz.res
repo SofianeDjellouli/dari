@@ -22,6 +22,11 @@ module ReactQuery = {
 
   type mutationFunction<'data, 'variables> = 'variables => Promise.t<'data>
 
+  type mutationOptions<'data, 'error, 'variables, 'context> = {
+    onSuccess: ('data, 'variables, 'context) => Promise.t<unit>,
+    onError: ('error, 'variables, 'context) => Promise.t<unit>,
+  }
+
   type mutateFunction<'data, 'error, 'variables, 'context> = (. 'variables) => Promise.t<'data>
 
   type mutationResultPair<'data, 'error, 'variables, 'context> = (
@@ -30,12 +35,11 @@ module ReactQuery = {
   )
 
   @module("next/data-client")
-  external useMutation: mutationFunction<'data, 'variables> => mutationResultPair<
-    'data,
-    'error,
-    'variables,
-    'context,
-  > = "useMutation"
+  external useMutation: (
+    ~function: mutationFunction<'data, 'variables>,
+    ~options: mutationOptions<'data, 'error, 'variables, 'context>=?,
+    unit,
+  ) => mutationResultPair<'data, 'error, 'variables, 'context> = "useMutation"
 
   type query<'variables, 'result> = 'variables => Promise.t<'result>
 
@@ -76,6 +80,9 @@ module ReactQuery = {
     query<'variables, 'result>,
     'variables,
   ) => (option<'result>, queryExtras<'error, 'result>) = "usePaginatedQuery"
+
+  @module("next/data-client")
+  external invalidateQuery: ('resolver, 'arguments) => Promise.t<unit> = "invalidateQuery"
 }
 
 module Link = Next.Link
