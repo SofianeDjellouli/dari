@@ -116,15 +116,20 @@ function Ionic$Button$AsyncButton(Props) {
   var label = Props.label
   var isLoadingOpt = Props.isLoading
   var isLoading = isLoadingOpt !== undefined ? isLoadingOpt : false
+  var tmp = {
+    children: isLoading ? React.createElement(React$1.IonSpinner, {}) : label,
+  }
+  if (color !== undefined) {
+    tmp.color = Caml_option.valFromOption(color)
+  }
+  if (expand !== undefined) {
+    tmp.expand = Caml_option.valFromOption(expand)
+  }
   return React.createElement(Spread.make, {
     props: {
       type: "submit",
     },
-    children: React.createElement(React$1.IonButton, {
-      children: isLoading ? React.createElement(React$1.IonSpinner, {}) : label,
-      color: color,
-      expand: expand,
-    }),
+    children: React.createElement(React$1.IonButton, tmp),
   })
 }
 

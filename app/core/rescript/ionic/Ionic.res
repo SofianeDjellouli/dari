@@ -1,33 +1,4 @@
-type color = [
-  | #primary
-  | #secondary
-  | #tertiary
-  | #success
-  | #warning
-  | #danger
-  | #light
-  | #medium
-  | #dark
-]
-
-type slot = [
-  | #primary
-  | #secondary
-  | #end
-  | #start
-]
-
-type side = [#end | #start]
-
-type lines = [#full | #inset | #none]
-
-type expand = [#block | #full]
-
-type fill = [#clear | #default | #outline | #solid]
-
-type onFormEvent = ReactEvent.Form.t => unit
-
-type onClickEvent = ReactEvent.Mouse.t => unit
+open IonicTypes
 
 module Content = {
   module IonContent = {
@@ -208,12 +179,18 @@ module Button = {
 
   module AsyncButton = {
     @react.component
-    let make = (~color, ~expand, ~label: string, ~isLoading: bool=false) =>
+    let make = (
+      ~color: option<color>=?,
+      ~expand: option<expand>=?,
+      ~label: string,
+      ~isLoading: bool=false,
+    ) =>
       <Spread props={"type": "submit"}>
-        <IonButton color expand>
-          {switch isLoading {
-          | true => <ProgressIndicators.IonSpinner />
-          | false => React.string(label)
+        <IonButton ?color ?expand>
+          {if isLoading {
+            <ProgressIndicators.IonSpinner />
+          } else {
+            React.string(label)
           }}
         </IonButton>
       </Spread>
@@ -288,8 +265,12 @@ module Icon = {
     type slot = [#end | #start | #"icon-only"]
 
     @module("@ionic/react") @react.component
-    external make: (~slot: slot=?, ~icon: string, ~onClick: onClickEvent=?) => React.element =
-      "IonIcon"
+    external make: (
+      ~slot: slot=?,
+      ~icon: string,
+      ~onClick: onClickEvent=?,
+      ~color: color=?,
+    ) => React.element = "IonIcon"
   }
 
   @module("ionicons/icons")
@@ -411,10 +392,9 @@ module Fab = {
     @module("@ionic/react") @react.component
     external make: (
       ~children: React.element=?,
-      ~slot: slot=?,
+      ~slot: [#fixed]=?,
       ~horizontal: horizontal=?,
       ~vertical: vertical=?,
-      ~slot: slot=?,
       ~activated: bool=?,
       ~edge: bool=?,
     ) => React.element = "IonFab"
