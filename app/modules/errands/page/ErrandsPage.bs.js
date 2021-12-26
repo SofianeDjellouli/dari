@@ -3,7 +3,7 @@
 
 var React = require("react")
 var React$1 = require("@ionic/react")
-var CreateErrands = require("../create/CreateErrands.bs.js")
+var CreateErrand = require("../create/CreateErrand.bs.js")
 var ErrandsLevelsList = require("../levels-list/ErrandsLevelsList.bs.js")
 
 function ErrandsPage(Props) {
@@ -12,7 +12,7 @@ function ErrandsPage(Props) {
     {
       children: null,
     },
-    React.createElement(CreateErrands.make, {}),
+    React.createElement(CreateErrand.make, {}),
     React.createElement(ErrandsLevelsList.make, {})
   )
 }

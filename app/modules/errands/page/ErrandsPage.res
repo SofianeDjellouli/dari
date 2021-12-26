@@ -2,5 +2,5 @@ open Ionic
 
 @genType("ErrandsPage") @react.component
 let make = () => {
-  <Content.IonContent> <CreateErrands /> <ErrandsLevelsList /> </Content.IonContent>
+  <Content.IonContent> <CreateErrand /> <ErrandsLevelsList /> </Content.IonContent>
 }
