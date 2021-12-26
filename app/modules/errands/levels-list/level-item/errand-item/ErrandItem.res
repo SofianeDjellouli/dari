@@ -2,17 +2,17 @@ open Ionic
 
 type iconPropsType = {icon: string, name: string}
 
-type propsType = {
-  color: Ionic.color,
-  firstAction: iconPropsType,
-  secondAction: iconPropsType,
-}
-
 let presentProps: iconPropsType = {icon: Icon.heart, name: "Present"}
 
 let lackingProps: iconPropsType = {icon: Icon.heartHalf, name: "Lacking"}
 
 let missingProps: iconPropsType = {icon: Icon.heartDislikeOutline, name: "Missing"}
+
+type propsType = {
+  color: IonicTypes.color,
+  firstAction: iconPropsType,
+  secondAction: iconPropsType,
+}
 
 let getErrandItemProps = level =>
   switch level {
@@ -33,7 +33,7 @@ let getErrandItemProps = level =>
     }
   }
 
-type updateErrandLevelPayload = {id: int, name: [#Present | #Missing | #Lacking]}
+type updateErrandLevelPayload = {id: int, name: ErrandsTypes.errandLevelLabel}
 
 type updateErrandNamePayload = {id: int, name: string}
 
@@ -41,13 +41,13 @@ type updateErrandLevelType = updateErrandLevelPayload => Promise.t<unit>
 type updateErrandNameType = updateErrandNamePayload => Promise.t<unit>
 type deleteErrandType = int => Promise.t<unit>
 
-@module("../mutations/update-level")
+@module("../../../mutations/update-level")
 external updateErrandLevel: updateErrandLevelType = "default"
 
-@module("../mutations/update-name")
+@module("../../../mutations/update-name")
 external updateErrandName: updateErrandNameType = "default"
 
-@module("../mutations/delete")
+@module("../../../mutations/delete")
 external deleteErrand: deleteErrandType = "default"
 
 external unsafeAsHtmlInputElement: Dom.eventTarget => Webapi.Dom.HtmlInputElement.t = "%identity"
@@ -59,11 +59,11 @@ let make = (
 ) => {
   let (value, setValue) = React.useState(_ => errand.name)
 
-  let (updateErrandLevelMutation, _) = Blitz.ReactQuery.useMutation(updateErrandLevel)
+  let (updateErrandLevelMutation, _) = Blitz.ReactQuery.useMutation(~function=updateErrandLevel, ())
 
-  let (updateErrandNameMutation, _) = Blitz.ReactQuery.useMutation(updateErrandName)
+  let (updateErrandNameMutation, _) = Blitz.ReactQuery.useMutation(~function=updateErrandName, ())
 
-  let (deleteErrandMutation, _) = Blitz.ReactQuery.useMutation(deleteErrand)
+  let (deleteErrandMutation, _) = Blitz.ReactQuery.useMutation(~function=deleteErrand, ())
 
   let handleRefetch = promise => promise->Promise.then(refetch)->ignore
 

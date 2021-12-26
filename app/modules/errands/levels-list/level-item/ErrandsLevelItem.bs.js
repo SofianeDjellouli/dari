@@ -2,9 +2,9 @@
 "use strict"
 
 var React = require("react")
-var Toggle = require("../../../core/hooks/toggle/Toggle.bs.js")
+var Toggle = require("../../../../core/hooks/toggle/Toggle.bs.js")
 var Belt_Array = require("rescript/lib/js/belt_Array.js")
-var ErrandItem = require("../errand-item/ErrandItem.bs.js")
+var ErrandItem = require("./errand-item/ErrandItem.bs.js")
 var React$1 = require("@ionic/react")
 var Icons = require("ionicons/icons")
 
