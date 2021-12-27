@@ -5,16 +5,8 @@ import "@ionic/react/css/typography.css"
 import "@ionic/react/css/padding.css"
 import "@ionic/react/css/flex-utils.css"
 import { Snackbar } from "app/core/components/snackbar/Snackbar.gen"
-import { LoginForm } from "app/modules/auth/login/form/LoginForm.gen"
-import {
-  AppProps,
-  AuthenticationError,
-  AuthorizationError,
-  ErrorBoundary,
-  ErrorComponent,
-  ErrorFallbackProps,
-  useQueryErrorResetBoundary,
-} from "blitz"
+import { CustomErrorBoundary } from "app/core/layouts/custom-error-boundary"
+import { AppProps } from "blitz"
 import React from "react"
 import { RecoilRoot } from "recoil"
 import { IonApp } from "@ionic/react"
@@ -27,32 +19,12 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <RecoilRoot>
       <IonApp>
-        <ErrorBoundary
-          FallbackComponent={RootErrorFallback}
-          onReset={useQueryErrorResetBoundary().reset}
-        >
+        <CustomErrorBoundary>
           {getLayout(<Component {...pageProps} />)}
 
           <Snackbar />
-        </ErrorBoundary>
+        </CustomErrorBoundary>
       </IonApp>
     </RecoilRoot>
   )
-}
-
-function RootErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
-  if (error instanceof AuthenticationError) {
-    return <LoginForm />
-  } else if (error instanceof AuthorizationError) {
-    return (
-      <ErrorComponent
-        statusCode={error.statusCode}
-        title="Sorry, you are not authorized to access this"
-      />
-    )
-  } else {
-    return (
-      <ErrorComponent statusCode={error.statusCode || 400} title={error.message || error.name} />
-    )
-  }
 }
