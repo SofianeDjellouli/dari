@@ -22,9 +22,10 @@ module ReactQuery = {
 
   type mutationFunction<'data, 'variables> = 'variables => Promise.t<'data>
 
+  @deriving(abstract)
   type mutationOptions<'data, 'error, 'variables, 'context> = {
-    onSuccess: ('data, 'variables, 'context) => Promise.t<unit>,
-    onError: ('error, 'variables, 'context) => Promise.t<unit>,
+    @optional onSuccess: ('data, 'variables, 'context) => unit,
+    @optional onError: ('error, 'variables, 'context) => unit,
   }
 
   type mutateFunction<'data, 'error, 'variables, 'context> = (. 'variables) => Promise.t<'data>
@@ -35,11 +36,33 @@ module ReactQuery = {
   )
 
   @module("next/data-client")
-  external useMutation: (
+  external useMutationDefault: (
     ~function: mutationFunction<'data, 'variables>,
     ~options: mutationOptions<'data, 'error, 'variables, 'context>=?,
     unit,
   ) => mutationResultPair<'data, 'error, 'variables, 'context> = "useMutation"
+
+  let useMutation = (
+    ~function: mutationFunction<'data, 'variables>,
+    ~options: option<mutationOptions<'data, 'error, 'variables, 'context>>=?,
+    (),
+  ): mutationResultPair<'data, 'error, 'variables, 'context> => {
+    let setSnackbar = Snackbar.useSnackbar()
+
+    let config = switch options {
+    | Some(opts) => opts
+    | None => mutationOptions(~onError=(rawError, _, _) =>
+        setSnackbar(_ =>
+          switch Js.Exn.message(rawError) {
+          | Some(message) => message
+          | None => "An error happened"
+          }
+        )
+      , ())
+    }
+
+    useMutationDefault(~function, ~options=config, ())
+  }
 
   type query<'variables, 'result> = 'variables => Promise.t<'result>
 

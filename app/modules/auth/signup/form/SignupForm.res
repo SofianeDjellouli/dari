@@ -1,6 +1,4 @@
 open Ionic
-open Belt
-open Promise
 
 type signupType = Js.Dict.t<string> => Promise.t<unit>
 
@@ -9,8 +7,6 @@ external signup: signupType = "default"
 
 @genType("SignupForm") @react.component
 let make = () => {
-  let setSnackbar = Snackbar.useSnackbar()
-
   let (signupMutation, data) = Blitz.ReactQuery.useMutation(~function=signup, ())
 
   let (state, dispatch) = React.useReducer(SignupReducer.reducer, SignupReducer.initialState)
@@ -23,22 +19,7 @@ let make = () => {
     if Js.Array2.length(errors) > 0 {
       errors->SetErrors->dispatch
     } else {
-      state
-      ->SignupOutput.getOutput
-      ->(e => signupMutation(. e))
-      ->Promise.catch(rawError => {
-        switch rawError {
-        | JsError(error) =>
-          switch Js.Exn.message(error) {
-          | Some(message) => setSnackbar(_ => message)
-          | None => setSnackbar(_ => "Some unknown error")
-          }
-        | _ => setSnackbar(_ => "Some unknown error")
-        }
-
-        Promise.reject(rawError)
-      })
-      ->ignore
+      state->SignupOutput.getOutput->(e => signupMutation(. e))->ignore
     }
   }
 
@@ -52,7 +33,7 @@ let make = () => {
     {name: name, value: value}->Change->dispatch
   }
 
-  let getField = field => Map.String.getWithDefault(state, field, SignupReducer.field)
+  let getField = field => Belt.Map.String.getWithDefault(state, field, SignupReducer.field)
 
   let getValue = field => getField(field).value
 

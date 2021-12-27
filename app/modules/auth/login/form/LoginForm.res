@@ -1,6 +1,4 @@
 open Ionic
-open Belt
-open Promise
 
 type loginType = Js.Dict.t<string> => Promise.t<unit>
 
@@ -9,8 +7,6 @@ external login: loginType = "default"
 
 @genType("LoginForm") @react.component
 let make = () => {
-  let setSnackbar = Snackbar.useSnackbar()
-
   let (loginMutation, data) = Blitz.ReactQuery.useMutation(~function=login, ())
 
   let (state, dispatch) = React.useReducer(LoginReducer.reducer, LoginReducer.initialState)
@@ -23,36 +19,21 @@ let make = () => {
     if Js.Array2.length(errors) > 0 {
       errors->SetErrors->dispatch
     } else {
-      state
-      ->LoginOutput.getOutput
-      ->(a => loginMutation(. a))
-      ->Promise.catch(rawError => {
-        switch rawError {
-        | JsError(error) =>
-          switch Js.Exn.message(error) {
-          | Some(message) => setSnackbar(_ => message)
-          | None => setSnackbar(_ => "Some unknown error")
-          }
-        | _ => setSnackbar(_ => "Some unknown error")
-        }
-
-        resolve()
-      })
-      ->ignore
+      state->LoginOutput.getOutput->(a => loginMutation(. a))->ignore
     }
   }
 
   let handleChange = (e: ReactEvent.Form.t) => {
-    let event = ReactEvent.Form.target(e)
+    let target = ReactEvent.Form.target(e)
 
-    let value = event["value"]
+    let value = target["value"]
 
-    let name = event["name"]
+    let name = target["name"]
 
     {name: name, value: value}->Change->dispatch
   }
 
-  let getField = field => Map.String.getWithDefault(state, field, LoginReducer.field)
+  let getField = field => Belt.Map.String.getWithDefault(state, field, LoginReducer.field)
 
   let getValue = field => getField(field).value
 

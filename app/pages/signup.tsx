@@ -1,6 +1,6 @@
+import { UnauthenticatedLayout } from "app/core/layouts/unauthenticated/UnauthenticatedLayout.gen"
 import { SignupForm } from "app/modules/auth/signup/form/SignupForm.gen"
 import { BlitzPage } from "blitz"
-import { UnauthenticatedLayout } from "app/core/layouts/unauthenticated/UnauthenticatedLayout.gen"
 
 const Signup: BlitzPage = SignupForm
 
