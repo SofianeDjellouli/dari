@@ -7,7 +7,7 @@ let make = (
   ~defaultToggled: bool,
   ~refetch: unit => Promise.t<ErrandsTypes.errandsLevels>,
 ) => {
-  let (errandsToggled, toggleErrands) = Toggle.useToggle(~default=defaultToggled)
+  let (errandsToggled, toggleErrands) = Toggle.useToggle(~default=defaultToggled, ())
 
   <List.IonList>
     {<>

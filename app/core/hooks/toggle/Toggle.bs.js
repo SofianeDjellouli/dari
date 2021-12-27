@@ -4,7 +4,7 @@
 var Curry = require("rescript/lib/js/curry.js")
 var React = require("react")
 
-function useToggle(defaultOpt) {
+function useToggle(defaultOpt, param) {
   var $$default = defaultOpt !== undefined ? defaultOpt : false
   var match = React.useState(function () {
     return $$default

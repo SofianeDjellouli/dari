@@ -13,7 +13,7 @@ function ErrandsLevelItem(Props) {
   var errands = Props.errands
   var defaultToggled = Props.defaultToggled
   var refetch = Props.refetch
-  var match = Toggle.useToggle(defaultToggled)
+  var match = Toggle.useToggle(defaultToggled, undefined)
   var errandsToggled = match[0]
   return React.createElement(React$1.IonList, {
     children: React.createElement(
