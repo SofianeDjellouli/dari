@@ -13,7 +13,7 @@ var logoutMutation = Logout
 
 function AuthenticatedLayout(Props) {
   var children = Props.children
-  var match = Blitz.ReactQuery.useMutation(logoutMutation, undefined, undefined)
+  var match = Blitz.ReactQuery.useMutation(logoutMutation, undefined, undefined, undefined)
   var logout = match[0]
   var handleLogout = function (param) {
     logout(undefined)

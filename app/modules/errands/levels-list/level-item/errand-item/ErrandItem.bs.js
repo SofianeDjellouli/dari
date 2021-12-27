@@ -63,11 +63,11 @@ function ErrandItem(Props) {
     return errand.name
   })
   var setValue = match[1]
-  var match$1 = Blitz.ReactQuery.useMutation(updateErrandLevel, undefined, undefined)
+  var match$1 = Blitz.ReactQuery.useMutation(updateErrandLevel, undefined, undefined, undefined)
   var updateErrandLevelMutation = match$1[0]
-  var match$2 = Blitz.ReactQuery.useMutation(updateErrandName, undefined, undefined)
+  var match$2 = Blitz.ReactQuery.useMutation(updateErrandName, undefined, undefined, undefined)
   var updateErrandNameMutation = match$2[0]
-  var match$3 = Blitz.ReactQuery.useMutation(deleteErrand, undefined, undefined)
+  var match$3 = Blitz.ReactQuery.useMutation(deleteErrand, undefined, undefined, undefined)
   var deleteErrandMutation = match$3[0]
   var handleRefetch = function (promise) {
     promise.then(Curry.__1(refetch))

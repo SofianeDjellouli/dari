@@ -3,29 +3,29 @@
 
 var Curry = require("rescript/lib/js/curry.js")
 var Snackbar = require("../../components/snackbar/Snackbar.bs.js")
-var Caml_option = require("rescript/lib/js/caml_option.js")
 var DataClient = require("next/data-client")
 
 var Ctx = {}
 
-function useMutation($$function, options, param) {
+function useMutation($$function, onSuccess, onError, param) {
   var setSnackbar = Snackbar.useSnackbar(undefined)
-  var config =
-    options !== undefined
-      ? Caml_option.valFromOption(options)
-      : {
-          onError: function (rawError, param, param$1) {
-            return Curry._1(setSnackbar, function (param) {
-              var message = rawError.message
-              if (message !== undefined) {
-                return message
-              } else {
-                return "An error happened"
-              }
-            })
-          },
+  var handleError =
+    onError !== undefined
+      ? onError
+      : function (rawError, param, param$1) {
+          return Curry._1(setSnackbar, function (param) {
+            var message = rawError.message
+            if (message !== undefined) {
+              return message
+            } else {
+              return "An error happened"
+            }
+          })
         }
-  return DataClient.useMutation($$function, config)
+  return DataClient.useMutation($$function, {
+    onSuccess: onSuccess,
+    onError: handleError,
+  })
 }
 
 var ReactQuery = {

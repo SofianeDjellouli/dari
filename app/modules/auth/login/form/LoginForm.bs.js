@@ -15,7 +15,7 @@ var Login = require("../../mutations/login").default
 var login = Login
 
 function LoginForm(Props) {
-  var match = Blitz.ReactQuery.useMutation(login, undefined, undefined)
+  var match = Blitz.ReactQuery.useMutation(login, undefined, undefined, undefined)
   var loginMutation = match[0]
   var match$1 = React.useReducer(LoginReducer.reducer, LoginReducer.initialState)
   var dispatch = match$1[1]

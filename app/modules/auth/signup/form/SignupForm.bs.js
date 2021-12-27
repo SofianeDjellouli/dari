@@ -15,7 +15,7 @@ var Signup = require("../mutations/signup").default
 var signup = Signup
 
 function SignupForm(Props) {
-  var match = Blitz.ReactQuery.useMutation(signup, undefined, undefined)
+  var match = Blitz.ReactQuery.useMutation(signup, undefined, undefined, undefined)
   var signupMutation = match[0]
   var match$1 = React.useReducer(SignupReducer.reducer, SignupReducer.initialState)
   var dispatch = match$1[1]

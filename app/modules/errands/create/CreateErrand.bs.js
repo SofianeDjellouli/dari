@@ -15,7 +15,7 @@ var createErrand = Create
 
 function CreateErrand(Props) {
   var setSnackbar = Snackbar.useSnackbar(undefined)
-  var match = Blitz.ReactQuery.useMutation(createErrand, undefined, undefined)
+  var match = Blitz.ReactQuery.useMutation(createErrand, undefined, undefined, undefined)
   var createErrandMutation = match[0]
   var match$1 = React.useReducer(CreateErrandReducer.reducer, CreateErrandReducer.initialState)
   var dispatch = match$1[1]
