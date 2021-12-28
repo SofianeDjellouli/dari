@@ -2,8 +2,8 @@
 "use strict"
 
 var Test = require("rescript-test/src/Test.bs.js")
-var Assert = require("../assert/Assert.bs.js")
-var FormState = require("../../app/core/rescript/form/state/FormState.bs.js")
+var Assert = require("../../assert/Assert.bs.js")
+var FormState = require("../../../app/core/form/state/FormState.bs.js")
 var Belt_MapString = require("rescript/lib/js/belt_MapString.js")
 
 Test.test("Detects valid form", function (param) {
