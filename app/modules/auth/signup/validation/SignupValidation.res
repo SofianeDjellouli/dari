@@ -1,5 +1,6 @@
-open SignupReducer
-open Belt
+let setError: (string, string) => array<FormState.error> = (name, error) => [
+  {name: name, error: error},
+]
 
 let tooShortPassword = "Password must be at least 8 characters"
 
@@ -7,24 +8,28 @@ let tooLongPassword = "Password must be less than 32 characters"
 
 let invalidEmail = "Please enter a valid email address"
 
-let validate: state => array<error> = state =>
-  state->Map.String.toArray->Js.Array2.reduce((acc, curr) => {
-    let (key, {value}) = curr
+let requiredField = "This field is required"
 
-    let length = Js.String.length(value)
+let validate: FormState.fieldState => array<FormState.error> = state =>
+  state->Belt.Map.String.toArray->Js.Array2.reduce((acc, curr) => {
+    let (key, val) = curr
+
+    let addError = error => acc->Js.Array2.concat(setError(key, error))
+
+    let length = Js.String.length(val.value)
 
     if length === 0 {
-      Js.Array2.concat(acc, [{name: key, error: "This field is required"}])
+      addError(requiredField)
     } else if key === "password" {
       if length < 8 {
-        Js.Array2.concat(acc, [{name: key, error: tooShortPassword}])
+        addError(tooShortPassword)
       } else if length > 32 {
-        Js.Array2.concat(acc, [{name: key, error: tooLongPassword}])
+        addError(tooLongPassword)
       } else {
         acc
       }
-    } else if key === "email" && !Validations.testEmail(value) {
-      Js.Array2.concat(acc, [{name: key, error: invalidEmail}])
+    } else if key === "email" && !Validations.testEmail(val.value) {
+      addError(invalidEmail)
     } else {
       acc
     }

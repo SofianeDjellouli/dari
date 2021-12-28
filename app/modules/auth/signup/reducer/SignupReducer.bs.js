@@ -2,17 +2,13 @@
 "use strict"
 
 var Curry = require("rescript/lib/js/curry.js")
+var FormState = require("../../../../core/rescript/form/FormState.bs.js")
 var Caml_option = require("rescript/lib/js/caml_option.js")
 var Belt_MapString = require("rescript/lib/js/belt_MapString.js")
 
-var field = {
-  value: "",
-  error: "",
-}
-
 var stateArray = [
-  ["email", field],
-  ["password", field],
+  ["email", FormState.field],
+  ["password", FormState.field],
 ]
 
 var initialState = Belt_MapString.fromArray(stateArray)
@@ -43,7 +39,6 @@ function reducer(state, action) {
   })
 }
 
-exports.field = field
 exports.stateArray = stateArray
 exports.initialState = initialState
 exports.reducer = reducer

@@ -19,7 +19,7 @@ let make = () => {
     if Js.Array2.length(errors) > 0 {
       errors->SetErrors->dispatch
     } else {
-      state->SignupOutput.getOutput->(e => signupMutation(. e))->ignore
+      state->FormState.mapFieldsToDict->(e => signupMutation(. e))->ignore
     }
   }
 
@@ -33,7 +33,7 @@ let make = () => {
     {name: name, value: value}->Change->dispatch
   }
 
-  let getField = field => Belt.Map.String.getWithDefault(state, field, SignupReducer.field)
+  let getField = field => Belt.Map.String.getWithDefault(state, field, FormState.field)
 
   let getValue = field => getField(field).value
 

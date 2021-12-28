@@ -5,8 +5,8 @@ var Blitz = require("../../../../core/rescript/blitz/Blitz.bs.js")
 var Curry = require("rescript/lib/js/curry.js")
 var Ionic = require("../../../../core/rescript/ionic/Ionic.bs.js")
 var React = require("react")
+var FormState = require("../../../../core/rescript/form/FormState.bs.js")
 var TextField = require("../../../../core/components/textfield/TextField.bs.js")
-var SignupOutput = require("../output/SignupOutput.bs.js")
 var SignupReducer = require("../reducer/SignupReducer.bs.js")
 var Belt_MapString = require("rescript/lib/js/belt_MapString.js")
 var SignupValidation = require("../validation/SignupValidation.bs.js")
@@ -29,7 +29,7 @@ function SignupForm(Props) {
         _0: errors,
       })
     } else {
-      signupMutation(SignupOutput.getOutput(state))
+      signupMutation(FormState.mapFieldsToDict(state))
       return
     }
   }
@@ -52,8 +52,8 @@ function SignupForm(Props) {
     React.createElement(TextField.make, {
       name: "email",
       label: "Email",
-      error: Belt_MapString.getWithDefault(state, "email", SignupReducer.field).error,
-      value: Belt_MapString.getWithDefault(state, "email", SignupReducer.field).value,
+      error: Belt_MapString.getWithDefault(state, "email", FormState.field).error,
+      value: Belt_MapString.getWithDefault(state, "email", FormState.field).value,
       onChange: handleChange,
       type_: "email",
       autofocus: true,
@@ -61,8 +61,8 @@ function SignupForm(Props) {
     React.createElement(TextField.make, {
       name: "password",
       label: "Password",
-      error: Belt_MapString.getWithDefault(state, "password", SignupReducer.field).error,
-      value: Belt_MapString.getWithDefault(state, "password", SignupReducer.field).value,
+      error: Belt_MapString.getWithDefault(state, "password", FormState.field).error,
+      value: Belt_MapString.getWithDefault(state, "password", FormState.field).value,
       onChange: handleChange,
       type_: "password",
     }),

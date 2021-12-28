@@ -5,8 +5,8 @@ var Blitz = require("../../../../core/rescript/blitz/Blitz.bs.js")
 var Curry = require("rescript/lib/js/curry.js")
 var Ionic = require("../../../../core/rescript/ionic/Ionic.bs.js")
 var React = require("react")
+var FormState = require("../../../../core/rescript/form/FormState.bs.js")
 var TextField = require("../../../../core/components/textfield/TextField.bs.js")
-var LoginOutput = require("../output/LoginOutput.bs.js")
 var LoginReducer = require("../reducer/LoginReducer.bs.js")
 var Belt_MapString = require("rescript/lib/js/belt_MapString.js")
 var LoginValidation = require("../validation/LoginValidation.bs.js")
@@ -29,7 +29,7 @@ function LoginForm(Props) {
         _0: errors,
       })
     } else {
-      loginMutation(LoginOutput.getOutput(state))
+      loginMutation(FormState.mapFieldsToDict(state))
       return
     }
   }
@@ -52,8 +52,8 @@ function LoginForm(Props) {
     React.createElement(TextField.make, {
       name: "email",
       label: "Email",
-      error: Belt_MapString.getWithDefault(state, "email", LoginReducer.field).error,
-      value: Belt_MapString.getWithDefault(state, "email", LoginReducer.field).value,
+      error: Belt_MapString.getWithDefault(state, "email", FormState.field).error,
+      value: Belt_MapString.getWithDefault(state, "email", FormState.field).value,
       onChange: handleChange,
       type_: "email",
       autofocus: true,
@@ -61,8 +61,8 @@ function LoginForm(Props) {
     React.createElement(TextField.make, {
       name: "password",
       label: "Password",
-      error: Belt_MapString.getWithDefault(state, "password", LoginReducer.field).error,
-      value: Belt_MapString.getWithDefault(state, "password", LoginReducer.field).value,
+      error: Belt_MapString.getWithDefault(state, "password", FormState.field).error,
+      value: Belt_MapString.getWithDefault(state, "password", FormState.field).value,
       onChange: handleChange,
       type_: "password",
     }),
