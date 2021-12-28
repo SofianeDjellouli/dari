@@ -6,12 +6,7 @@ var EmailValidation = require("../../../../core/rescript/form/validations/email/
 var PasswordValidation = require("../../../../core/rescript/form/validations/password/PasswordValidation.bs.js")
 var RequiredValidation = require("../../../../core/rescript/form/validations/required/RequiredValidation.bs.js")
 
-var partial_arg = [
-  RequiredValidation.make,
-  EmailValidation.make,
-  EmailValidation.make,
-  PasswordValidation.make,
-]
+var partial_arg = [RequiredValidation.make, EmailValidation.make, PasswordValidation.make]
 
 function validate(param) {
   return FormState.makeValidate(partial_arg, param)
