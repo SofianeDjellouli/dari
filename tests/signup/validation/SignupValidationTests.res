@@ -1,79 +1,103 @@
 open Test
 open Assert
-open SignupValidation
-open SignupReducer
 
 test("Validates valid state", () => {
-  let stateArray:FormState.stateArray = [
+  let stateArray: FormState.stateArray = [
     ("email", {value: "myemail@gmail.com", error: ""}),
     ("password", {value: "12345678", error: ""}),
   ]
 
   let state = Belt.Map.String.fromArray(stateArray)
 
-  let result = validate(state)
+  let result = SignupValidation.validate(state)
 
-  let expected:FormState.errorsArray= []
+  let expected = state
 
-  assertArrayEqual(result, expected)
+  assertMapEqual(result, expected)
 })
 
 test("Invalidates empty required fields", () => {
-  let stateArray:FormState.stateArray = [
+  let stateArray: FormState.stateArray = [
     ("email", {value: "myemail@gmail.com", error: ""}),
     ("password", {value: "", error: ""}),
   ]
 
   let state = Belt.Map.String.fromArray(stateArray)
 
-  let result = validate(state)
+  let result = SignupValidation.validate(state)
 
-  let expected:FormState.errorsArray= [{name: "password", error: "This field is required"}]
+  let expectedArray: FormState.stateArray = [
+    ("email", {value: "myemail@gmail.com", error: ""}),
+    ("password", {value: "", error: RequiredValidation.requiredField}),
+  ]
 
-  assertArrayEqual(result, expected)
+  let expected = Belt.Map.String.fromArray(expectedArray)
+
+  assertMapEqual(result, expected)
 })
 
 test("Invalidates too short password", () => {
-  let stateArray:FormState.stateArray = [
+  let stateArray: FormState.stateArray = [
     ("email", {value: "myemail@gmail.com", error: ""}),
     ("password", {value: "1", error: ""}),
   ]
 
   let state = Belt.Map.String.fromArray(stateArray)
 
-  let result = validate(state)
+  let result = SignupValidation.validate(state)
 
-  let expected:FormState.errorsArray= [{name: "password", error: tooShortPassword}]
+  let expectedArray: FormState.stateArray = [
+    ("email", {value: "myemail@gmail.com", error: ""}),
+    ("password", {value: "1", error: PasswordValidation.tooShortPassword}),
+  ]
 
-  assertArrayEqual(result, expected)
+  let expected = Belt.Map.String.fromArray(expectedArray)
+
+  assertMapEqual(result, expected)
 })
 
 test("Invalidates too long password", () => {
-  let stateArray :FormState.stateArray= [
+  let stateArray: FormState.stateArray = [
     ("email", {value: "myemail@gmail.com", error: ""}),
     ("password", {value: "1234567890123456789012345678901234567890", error: ""}),
   ]
 
   let state = Belt.Map.String.fromArray(stateArray)
 
-  let result = validate(state)
+  let result = SignupValidation.validate(state)
 
-  let expected:FormState.errorsArray= [{name: "password", error: tooLongPassword}]
+  let expectedArray: FormState.stateArray = [
+    ("email", {value: "myemail@gmail.com", error: ""}),
+    (
+      "password",
+      {
+        value: "1234567890123456789012345678901234567890",
+        error: PasswordValidation.tooLongPassword,
+      },
+    ),
+  ]
 
-  assertArrayEqual(result, expected)
+  let expected = Belt.Map.String.fromArray(expectedArray)
+
+  assertMapEqual(result, expected)
 })
 
 test("Invalidates invalid email", () => {
-  let stateArray:FormState.stateArray = [
+  let stateArray: FormState.stateArray = [
     ("email", {value: "myemail@gmail", error: ""}),
     ("password", {value: "123456789", error: ""}),
   ]
 
   let state = Belt.Map.String.fromArray(stateArray)
 
-  let result = validate(state)
+  let result = SignupValidation.validate(state)
 
-  let expected:FormState.errorsArray= [{name: "email", error: invalidEmail}]
+  let expectedArray: FormState.stateArray = [
+    ("email", {value: "myemail@gmail", error: EmailValidation.invalidEmail}),
+    ("password", {value: "123456789", error: ""}),
+  ]
 
-  assertArrayEqual(result, expected)
+  let expected = Belt.Map.String.fromArray(expectedArray)
+
+  assertMapEqual(result, expected)
 })

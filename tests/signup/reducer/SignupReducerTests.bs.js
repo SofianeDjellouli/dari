@@ -49,7 +49,7 @@ Test.test("Handles Change action", function (param) {
   return Assert.assertMapEqual(result, expected)
 })
 
-Test.test("Handles SetErrors action", function (param) {
+Test.test("Handles SetState action", function (param) {
   var stateArray = [
     [
       "email",
@@ -67,34 +67,13 @@ Test.test("Handles SetErrors action", function (param) {
     ],
   ]
   var state = Belt_MapString.fromArray(stateArray)
+  var newState = Belt_MapString.fromArray(stateArray)
   var action = {
-    TAG: /* SetErrors */ 1,
-    _0: [
-      {
-        name: "email",
-        error: "Required",
-      },
-    ],
+    TAG: /* SetState */ 1,
+    _0: newState,
   }
   var result = SignupReducer.reducer(state, action)
-  var expectedArray = [
-    [
-      "email",
-      {
-        value: "",
-        error: "Required",
-      },
-    ],
-    [
-      "password",
-      {
-        value: "12345678",
-        error: "",
-      },
-    ],
-  ]
-  var expected = Belt_MapString.fromArray(expectedArray)
-  return Assert.assertMapEqual(result, expected)
+  return Assert.assertMapEqual(result, newState)
 })
 
 /*  Not a pure module */

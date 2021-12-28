@@ -1,6 +1,5 @@
 open Test
 open Assert
-open SignupReducer
 
 test("Handles Change action", () => {
   let stateArray: FormState.stateArray = [
@@ -10,9 +9,9 @@ test("Handles Change action", () => {
 
   let state = Belt.Map.String.fromArray(stateArray)
 
-  let action = Change({name: "email", value: "myemail@gmail.com"})
+  let action = SignupReducer.Change({name: "email", value: "myemail@gmail.com"})
 
-  let result = reducer(state, action)
+  let result = SignupReducer.reducer(state, action)
 
   let expectedArray: FormState.stateArray = [
     ("email", {value: "myemail@gmail.com", error: ""}),
@@ -24,7 +23,7 @@ test("Handles Change action", () => {
   assertMapEqual(result, expected)
 })
 
-test("Handles SetErrors action", () => {
+test("Handles SetState action", () => {
   let stateArray: FormState.stateArray = [
     ("email", {value: "", error: ""}),
     ("password", {value: "12345678", error: ""}),
@@ -32,16 +31,16 @@ test("Handles SetErrors action", () => {
 
   let state = Belt.Map.String.fromArray(stateArray)
 
-  let action = SetErrors([{name: "email", error: "Required"}])
-
-  let result = reducer(state, action)
-
-  let expectedArray: FormState.stateArray = [
-    ("email", {value: "", error: "Required"}),
+  let newStateArray: FormState.stateArray = [
+    ("email", {value: "", error: "required"}),
     ("password", {value: "12345678", error: ""}),
   ]
 
-  let expected = Belt.Map.String.fromArray((expectedArray: FormState.stateArray))
+  let newState = Belt.Map.String.fromArray(stateArray)
 
-  assertMapEqual(result, expected)
+  let action = SignupReducer.SetState(newState)
+
+  let result = SignupReducer.reducer(state, action)
+
+  assertMapEqual(result, newState)
 })

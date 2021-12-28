@@ -4,7 +4,10 @@
 var Test = require("rescript-test/src/Test.bs.js")
 var Assert = require("../../assert/Assert.bs.js")
 var Belt_MapString = require("rescript/lib/js/belt_MapString.js")
+var EmailValidation = require("../../../app/core/rescript/form/validations/email/EmailValidation.bs.js")
 var SignupValidation = require("../../../app/modules/auth/signup/validation/SignupValidation.bs.js")
+var PasswordValidation = require("../../../app/core/rescript/form/validations/password/PasswordValidation.bs.js")
+var RequiredValidation = require("../../../app/core/rescript/form/validations/required/RequiredValidation.bs.js")
 
 Test.test("Validates valid state", function (param) {
   var stateArray = [
@@ -25,8 +28,7 @@ Test.test("Validates valid state", function (param) {
   ]
   var state = Belt_MapString.fromArray(stateArray)
   var result = SignupValidation.validate(state)
-  var expected = []
-  return Assert.assertArrayEqual(result, expected)
+  return Assert.assertMapEqual(result, state)
 })
 
 Test.test("Invalidates empty required fields", function (param) {
@@ -48,13 +50,24 @@ Test.test("Invalidates empty required fields", function (param) {
   ]
   var state = Belt_MapString.fromArray(stateArray)
   var result = SignupValidation.validate(state)
-  var expected = [
-    {
-      name: "password",
-      error: "This field is required",
-    },
+  var expectedArray = [
+    [
+      "email",
+      {
+        value: "myemail@gmail.com",
+        error: "",
+      },
+    ],
+    [
+      "password",
+      {
+        value: "",
+        error: RequiredValidation.requiredField,
+      },
+    ],
   ]
-  return Assert.assertArrayEqual(result, expected)
+  var expected = Belt_MapString.fromArray(expectedArray)
+  return Assert.assertMapEqual(result, expected)
 })
 
 Test.test("Invalidates too short password", function (param) {
@@ -76,13 +89,24 @@ Test.test("Invalidates too short password", function (param) {
   ]
   var state = Belt_MapString.fromArray(stateArray)
   var result = SignupValidation.validate(state)
-  var expected = [
-    {
-      name: "password",
-      error: SignupValidation.tooShortPassword,
-    },
+  var expectedArray = [
+    [
+      "email",
+      {
+        value: "myemail@gmail.com",
+        error: "",
+      },
+    ],
+    [
+      "password",
+      {
+        value: "1",
+        error: PasswordValidation.tooShortPassword,
+      },
+    ],
   ]
-  return Assert.assertArrayEqual(result, expected)
+  var expected = Belt_MapString.fromArray(expectedArray)
+  return Assert.assertMapEqual(result, expected)
 })
 
 Test.test("Invalidates too long password", function (param) {
@@ -104,13 +128,24 @@ Test.test("Invalidates too long password", function (param) {
   ]
   var state = Belt_MapString.fromArray(stateArray)
   var result = SignupValidation.validate(state)
-  var expected = [
-    {
-      name: "password",
-      error: SignupValidation.tooLongPassword,
-    },
+  var expectedArray = [
+    [
+      "email",
+      {
+        value: "myemail@gmail.com",
+        error: "",
+      },
+    ],
+    [
+      "password",
+      {
+        value: "1234567890123456789012345678901234567890",
+        error: PasswordValidation.tooLongPassword,
+      },
+    ],
   ]
-  return Assert.assertArrayEqual(result, expected)
+  var expected = Belt_MapString.fromArray(expectedArray)
+  return Assert.assertMapEqual(result, expected)
 })
 
 Test.test("Invalidates invalid email", function (param) {
@@ -132,13 +167,24 @@ Test.test("Invalidates invalid email", function (param) {
   ]
   var state = Belt_MapString.fromArray(stateArray)
   var result = SignupValidation.validate(state)
-  var expected = [
-    {
-      name: "email",
-      error: SignupValidation.invalidEmail,
-    },
+  var expectedArray = [
+    [
+      "email",
+      {
+        value: "myemail@gmail",
+        error: EmailValidation.invalidEmail,
+      },
+    ],
+    [
+      "password",
+      {
+        value: "123456789",
+        error: "",
+      },
+    ],
   ]
-  return Assert.assertArrayEqual(result, expected)
+  var expected = Belt_MapString.fromArray(expectedArray)
+  return Assert.assertMapEqual(result, expected)
 })
 
 /*  Not a pure module */
