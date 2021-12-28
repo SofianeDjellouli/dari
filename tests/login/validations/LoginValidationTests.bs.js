@@ -4,10 +4,10 @@
 var Test = require("rescript-test/src/Test.bs.js")
 var Assert = require("../../assert/Assert.bs.js")
 var Belt_MapString = require("rescript/lib/js/belt_MapString.js")
-var EmailValidation = require("../../../app/core/rescript/form/validations/email/EmailValidation.bs.js")
+var EmailValidation = require("../../../app/core/form/validations/email/EmailValidation.bs.js")
 var LoginValidation = require("../../../app/modules/auth/login/validation/LoginValidation.bs.js")
-var PasswordValidation = require("../../../app/core/rescript/form/validations/password/PasswordValidation.bs.js")
-var RequiredValidation = require("../../../app/core/rescript/form/validations/required/RequiredValidation.bs.js")
+var PasswordValidation = require("../../../app/core/form/validations/password/PasswordValidation.bs.js")
+var RequiredValidation = require("../../../app/core/form/validations/required/RequiredValidation.bs.js")
 
 Test.test("Validates valid state", function (param) {
   var stateArray = [
