@@ -9,8 +9,6 @@ external createErrand: createErrandType = "default"
 let make = () => {
   let setSnackbar = Snackbar.useSnackbar()
 
-  let (createErrandMutation, data) = Blitz.ReactQuery.useMutation(~function=createErrand, ())
-
   let (state, dispatch) = React.useReducer(
     CreateErrandReducer.reducer,
     CreateErrandReducer.initialState,
@@ -20,25 +18,29 @@ let make = () => {
 
   let handleReset = _ => dispatch(Reset)
 
-  let handleSubmit = e => {
-    ReactEvent.Form.preventDefault(e)
-
-    createErrandMutation(. state)
-    ->Promise.then(errand => {
+  let (createErrandMutation, data) = Blitz.ReactQuery.useMutation(
+    ~function=createErrand,
+    ~onSuccess=(errand, _, _) => {
       handleReset()
 
       setSnackbar(_ => `${(errand.level :> string)} ${errand.name} added`)
 
-      Promise.resolve()
-    })
-    ->ignore
+      ignore()
+    },
+    (),
+  )
+
+  let handleSubmit = e => {
+    ReactEvent.Form.preventDefault(e)
+
+    createErrandMutation(. state)->ignore
   }
 
   if state.toggled {
     <Form onSubmit=handleSubmit>
       <CreateErrandItem state dispatch />
       <Toolbar.IonToolbar>
-        <Toolbar.IonButtons>
+        <Toolbar.IonButtons slot=#end>
           <Button.IonButton onClick=handleReset> {React.string("Cancel")} </Button.IonButton>
           <Button.AsyncButton color=#danger label="Confirm" isLoading=data.isLoading />
         </Toolbar.IonButtons>

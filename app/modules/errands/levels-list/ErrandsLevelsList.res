@@ -5,12 +5,7 @@ external errandsLevelsQuery: errandsQueryType = "default"
 
 @react.component
 let make = () => {
-  let (errandsLevels, errandsLevelsQueryExtras) = Blitz.ReactQuery.usePaginatedQuery(
-    errandsLevelsQuery,
-    (),
-  )
-
-  let refetch = errandsLevelsQueryExtras.refetch
+  let (errandsLevels, _) = Blitz.ReactQuery.usePaginatedQuery(errandsLevelsQuery, ())
 
   switch errandsLevels {
   | Some(errandsLevels) => <>
