@@ -2,9 +2,9 @@
 "use strict"
 
 var Test = require("rescript-test/src/Test.bs.js")
-var Assert = require("./Assert.bs.js")
+var Assert = require("../assert/Assert.bs.js")
 var Js_dict = require("rescript/lib/js/js_dict.js")
-var SignupOutput = require("../app/modules/auth/signup/output/SignupOutput.bs.js")
+var FormState = require("../../app/core/rescript/form/FormState.bs.js")
 var Belt_MapString = require("rescript/lib/js/belt_MapString.js")
 
 Test.test("Gets values from state", function (param) {
@@ -25,7 +25,7 @@ Test.test("Gets values from state", function (param) {
     ],
   ]
   var state = Belt_MapString.fromArray(stateArray)
-  var result = SignupOutput.getOutput(state)
+  var result = FormState.mapFieldsToDict(state)
   var expected = Js_dict.fromArray([
     ["email", "myemail@gmail.com"],
     ["password", "12345678"],

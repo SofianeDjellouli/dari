@@ -59,6 +59,7 @@
     "predev": "rm -f .bsb.lock && rescript clean && docker compose up -d",
     "prepare": "husky install",
     "preprod": "yarn build",
+    "pretest": "rescript build",
     "prod": "blitz s -5000",
     "rescript": "rescript build -w",
     "rescript:clean": "rescript clean",
