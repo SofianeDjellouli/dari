@@ -14,12 +14,12 @@ let make = () => {
   let handleSubmit = (event: ReactEvent.Form.t) => {
     ReactEvent.Synthetic.preventDefault(event)
 
-    let errors = SignupValidation.validate(state)
+    let validatedState = SignupValidation.validate(state)
 
-    if Js.Array2.length(errors) > 0 {
-      errors->SetErrors->dispatch
+    if FormState.isValidForm(validatedState) {
+      FormState.mapFieldsToMutation(state, signupMutation)
     } else {
-      state->FormState.mapFieldsToDict->(e => signupMutation(. e))->ignore
+      validatedState->SetState->dispatch
     }
   }
 

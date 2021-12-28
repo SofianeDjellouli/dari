@@ -5,7 +5,7 @@ var Blitz = require("../../../../core/rescript/blitz/Blitz.bs.js")
 var Curry = require("rescript/lib/js/curry.js")
 var Ionic = require("../../../../core/rescript/ionic/Ionic.bs.js")
 var React = require("react")
-var FormState = require("../../../../core/rescript/form/FormState.bs.js")
+var FormState = require("../../../../core/rescript/form/state/FormState.bs.js")
 var TextField = require("../../../../core/components/textfield/TextField.bs.js")
 var LoginReducer = require("../reducer/LoginReducer.bs.js")
 var Belt_MapString = require("rescript/lib/js/belt_MapString.js")
@@ -22,15 +22,14 @@ function LoginForm(Props) {
   var state = match$1[0]
   var handleSubmit = function ($$event) {
     $$event.preventDefault()
-    var errors = LoginValidation.validate(state)
-    if (errors.length > 0) {
-      return Curry._1(dispatch, {
-        TAG: /* SetErrors */ 1,
-        _0: errors,
-      })
+    var validatedState = LoginValidation.validate(state)
+    if (FormState.isValidForm(validatedState)) {
+      return FormState.mapFieldsToMutation(state, loginMutation)
     } else {
-      loginMutation(FormState.mapFieldsToDict(state))
-      return
+      return Curry._1(dispatch, {
+        TAG: /* SetState */ 1,
+        _0: validatedState,
+      })
     }
   }
   var handleChange = function (e) {
