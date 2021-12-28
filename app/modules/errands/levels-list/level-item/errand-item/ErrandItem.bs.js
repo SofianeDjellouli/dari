@@ -9,9 +9,11 @@ var Debounce = require("../../../../../core/fp/Debounce.bs.js")
 var Belt_Array = require("rescript/lib/js/belt_Array.js")
 var React$1 = require("@ionic/react")
 var Icons = require("ionicons/icons")
+var DataClient = require("next/data-client")
 var Delete = require("../../../mutations/delete").default
 var UpdateName = require("../../../mutations/update-name").default
 var UpdateLevel = require("../../../mutations/update-level").default
+var ErrandsLevels = require("../../../queries/errands-levels").default
 
 var presentProps = {
   icon: Icons.heart,
@@ -56,33 +58,40 @@ var updateErrandName = UpdateName
 
 var deleteErrand = Delete
 
+var errandsLevelsQuery = ErrandsLevels
+
+function useErrandMutation($$function) {
+  return Blitz.ReactQuery.useMutation(
+    $$function,
+    function (param, param$1, param$2) {
+      DataClient.invalidateQuery(errandsLevelsQuery, undefined)
+    },
+    undefined,
+    undefined
+  )
+}
+
 function ErrandItem(Props) {
   var errand = Props.errand
-  var refetch = Props.refetch
   var match = React.useState(function () {
     return errand.name
   })
   var setValue = match[1]
-  var match$1 = Blitz.ReactQuery.useMutation(updateErrandLevel, undefined, undefined, undefined)
+  var match$1 = useErrandMutation(updateErrandLevel)
   var updateErrandLevelMutation = match$1[0]
-  var match$2 = Blitz.ReactQuery.useMutation(updateErrandName, undefined, undefined, undefined)
+  var match$2 = useErrandMutation(updateErrandName)
   var updateErrandNameMutation = match$2[0]
-  var match$3 = Blitz.ReactQuery.useMutation(deleteErrand, undefined, undefined, undefined)
+  var match$3 = useErrandMutation(deleteErrand)
   var deleteErrandMutation = match$3[0]
-  var handleRefetch = function (promise) {
-    promise.then(Curry.__1(refetch))
-  }
   var handleUpdateLevelClick = function (e) {
     var name = e.currentTarget.dataset.name
-    return handleRefetch(
-      updateErrandLevelMutation({
-        id: errand.id,
-        name: name,
-      })
-    )
+    updateErrandLevelMutation({
+      id: errand.id,
+      name: name,
+    })
   }
   var handleDeleteClick = function (param) {
-    return handleRefetch(deleteErrandMutation(errand.id))
+    deleteErrandMutation(errand.id)
   }
   var handleChange = function (e) {
     var targetValue = e.target.value
@@ -95,12 +104,10 @@ function ErrandItem(Props) {
     var inputOption = inputRef.current
     var handleInput = Debounce.debounce(function (e) {
       var value = e.target.value
-      return handleRefetch(
-        updateErrandNameMutation({
-          id: errand.id,
-          name: value,
-        })
-      )
+      updateErrandNameMutation({
+        id: errand.id,
+        name: value,
+      })
     }, 300)
     if (!(inputOption == null)) {
       inputOption.addEventListener("input", handleInput)
@@ -163,5 +170,7 @@ exports.getErrandItemProps = getErrandItemProps
 exports.updateErrandLevel = updateErrandLevel
 exports.updateErrandName = updateErrandName
 exports.deleteErrand = deleteErrand
+exports.errandsLevelsQuery = errandsLevelsQuery
+exports.useErrandMutation = useErrandMutation
 exports.make = make
 /* presentProps Not a pure module */

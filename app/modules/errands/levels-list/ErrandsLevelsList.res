@@ -1,12 +1,12 @@
 type errandsQueryType = unit => Promise.t<ErrandsTypes.errandsLevels>
 
 @module("../queries/errands-levels")
-external errandsQuery: errandsQueryType = "default"
+external errandsLevelsQuery: errandsQueryType = "default"
 
 @react.component
 let make = () => {
   let (errandsLevels, errandsLevelsQueryExtras) = Blitz.ReactQuery.usePaginatedQuery(
-    errandsQuery,
+    errandsLevelsQuery,
     (),
   )
 
@@ -20,10 +20,9 @@ let make = () => {
 
         <ErrandsLevelItem
           key={Belt.Int.toString(errandLevel.id)}
+          defaultToggled={errandLevel.name === "Missing"}
           name
           errands
-          defaultToggled={errandLevel.name === "Missing"}
-          refetch
         />
       })
       ->React.array}

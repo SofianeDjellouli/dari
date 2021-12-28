@@ -7,12 +7,11 @@ var ErrandsLevelItem = require("./level-item/ErrandsLevelItem.bs.js")
 var DataClient = require("next/data-client")
 var ErrandsLevels = require("../queries/errands-levels").default
 
-var errandsQuery = ErrandsLevels
+var errandsLevelsQuery = ErrandsLevels
 
 function ErrandsLevelsList(Props) {
-  var match = DataClient.usePaginatedQuery(errandsQuery, undefined)
+  var match = DataClient.usePaginatedQuery(errandsLevelsQuery, undefined)
   var errandsLevels = match[0]
-  var refetch = match[1].refetch
   if (errandsLevels !== undefined) {
     return React.createElement(
       React.Fragment,
@@ -22,7 +21,6 @@ function ErrandsLevelsList(Props) {
           name: errandLevel.name,
           errands: errandLevel.errands,
           defaultToggled: errandLevel.name === "Missing",
-          refetch: refetch,
           key: String(errandLevel.id),
         })
       })
@@ -34,6 +32,6 @@ function ErrandsLevelsList(Props) {
 
 var make = ErrandsLevelsList
 
-exports.errandsQuery = errandsQuery
+exports.errandsLevelsQuery = errandsLevelsQuery
 exports.make = make
-/* errandsQuery Not a pure module */
+/* errandsLevelsQuery Not a pure module */

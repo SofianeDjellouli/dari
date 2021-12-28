@@ -1,12 +1,7 @@
 open Ionic
 
 @react.component
-let make = (
-  ~name: string,
-  ~errands: ErrandsTypes.errands,
-  ~defaultToggled: bool,
-  ~refetch: unit => Promise.t<ErrandsTypes.errandsLevels>,
-) => {
+let make = (~name: string, ~errands: ErrandsTypes.errands, ~defaultToggled: bool) => {
   let (errandsToggled, toggleErrands) = Toggle.useToggle(~default=defaultToggled, ())
 
   <List.IonList>
@@ -30,7 +25,7 @@ let make = (
       </List.IonListHeader>
       {if errandsToggled {
         errands
-        ->Belt.Array.map(errand => <ErrandItem key={errand.id->Belt.Int.toString} refetch errand />)
+        ->Belt.Array.map(errand => <ErrandItem key={errand.id->Belt.Int.toString} errand />)
         ->React.array
       } else {
         React.null

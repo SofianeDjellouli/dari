@@ -12,7 +12,6 @@ function ErrandsLevelItem(Props) {
   var name = Props.name
   var errands = Props.errands
   var defaultToggled = Props.defaultToggled
-  var refetch = Props.refetch
   var match = Toggle.useToggle(defaultToggled, undefined)
   var errandsToggled = match[0]
   return React.createElement(React$1.IonList, {
@@ -42,7 +41,6 @@ function ErrandsLevelItem(Props) {
         ? Belt_Array.map(errands, function (errand) {
             return React.createElement(ErrandItem.make, {
               errand: errand,
-              refetch: refetch,
               key: String(errand.id),
             })
           })

@@ -9,9 +9,7 @@ let useSnackbar = () => Recoil.useSetRecoilState(messageState)
 let make = () => {
   let (message, setMessage) = Recoil.useRecoilState(messageState)
 
-  let onDidPresent = () => {
-    let _ = Js.Global.setTimeout(() => setMessage(_ => ""), 10000)
-  }
+  let onDidPresent = () => Js.Global.setTimeout(_ => setMessage(_ => ""), 10000)->ignore
 
   <Ionic.Toast.IonToast message onDidPresent isOpen={message !== ""} />
 }

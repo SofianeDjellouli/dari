@@ -40,6 +40,7 @@ type updateErrandNamePayload = {id: int, name: string}
 type updateErrandLevelType = updateErrandLevelPayload => Promise.t<unit>
 type updateErrandNameType = updateErrandNamePayload => Promise.t<unit>
 type deleteErrandType = int => Promise.t<unit>
+type errandsQueryType = unit => Promise.t<ErrandsTypes.errandsLevels>
 
 @module("../../../mutations/update-level")
 external updateErrandLevel: updateErrandLevelType = "default"
@@ -50,30 +51,38 @@ external updateErrandName: updateErrandNameType = "default"
 @module("../../../mutations/delete")
 external deleteErrand: deleteErrandType = "default"
 
+@module("../../../mutations/delete")
+external deleteErrand: deleteErrandType = "default"
+
+@module("../../../queries/errands-levels")
+external errandsLevelsQuery: errandsQueryType = "default"
+
+let useErrandMutation = function =>
+  Blitz.ReactQuery.useMutation(
+    ~function,
+    ~onSuccess=(_, _, _) => Blitz.ReactQuery.invalidateQuery(errandsLevelsQuery, ignore())->ignore,
+    (),
+  )
+
 external unsafeAsHtmlInputElement: Dom.eventTarget => Webapi.Dom.HtmlInputElement.t = "%identity"
 
 @react.component
-let make = (
-  ~errand: ErrandsTypes.errand,
-  ~refetch: unit => Promise.t<ErrandsTypes.errandsLevels>,
-) => {
+let make = (~errand: ErrandsTypes.errand) => {
   let (value, setValue) = React.useState(_ => errand.name)
 
-  let (updateErrandLevelMutation, _) = Blitz.ReactQuery.useMutation(~function=updateErrandLevel, ())
+  let (updateErrandLevelMutation, _) = useErrandMutation(updateErrandLevel)
 
-  let (updateErrandNameMutation, _) = Blitz.ReactQuery.useMutation(~function=updateErrandName, ())
+  let (updateErrandNameMutation, _) = useErrandMutation(updateErrandName)
 
-  let (deleteErrandMutation, _) = Blitz.ReactQuery.useMutation(~function=deleteErrand, ())
-
-  let handleRefetch = promise => promise->Promise.then(refetch)->ignore
+  let (deleteErrandMutation, _) = useErrandMutation(deleteErrand)
 
   let handleUpdateLevelClick = e => {
     let name = ReactEvent.Mouse.currentTarget(e)["dataset"]["name"]
 
-    updateErrandLevelMutation(. {name: name, id: errand.id})->handleRefetch
+    updateErrandLevelMutation(. {name: name, id: errand.id})->ignore
   }
 
-  let handleDeleteClick = _ => deleteErrandMutation(. errand.id)->handleRefetch
+  let handleDeleteClick = _ => deleteErrandMutation(. errand.id)->ignore
 
   let handleChange = e => {
     let targetValue = ReactEvent.Form.target(e)["value"]
@@ -90,7 +99,7 @@ let make = (
       let value =
         e->Webapi.Dom.InputEvent.target->unsafeAsHtmlInputElement->Webapi.Dom.HtmlInputElement.value
 
-      updateErrandNameMutation(. {name: value, id: errand.id})->handleRefetch
+      updateErrandNameMutation(. {name: value, id: errand.id})->ignore
     }, 300)
 
     switch inputOption {
