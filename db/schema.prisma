@@ -22,7 +22,8 @@ model User {
   isVerified     Boolean   @default(false)
   tokens         Token[]
   sessions       Session[]
-  families       Family[]
+  family         Family?   @relation(fields: [familyId], references: [id])
+  familyId       Int?
 }
 
 model Session {

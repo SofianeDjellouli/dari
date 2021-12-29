@@ -13,7 +13,8 @@ Table User {
   isVerified Boolean [not null, default: false]
   tokens Token [not null]
   sessions Session [not null]
-  families Family [not null]
+  family Family
+  familyId Int
 }
 
 Table Session {
@@ -74,11 +75,6 @@ Table Family {
   errands Errand [not null]
 }
 
-Table FamilyToUser {
-  familiesId Int [ref: > Family.id]
-  usersId Int [ref: > User.id]
-}
-
 Enum TokenType {
   RESET_PASSWORD
 }
@@ -88,6 +84,8 @@ Enum ErrandLevelName {
   Lacking
   Missing
 }
+
+Ref: User.familyId > Family.id
 
 Ref: Session.userId > User.id
 
