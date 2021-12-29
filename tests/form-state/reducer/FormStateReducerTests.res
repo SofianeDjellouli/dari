@@ -9,9 +9,11 @@ test("Handles Change action", () => {
 
   let state = Belt.Map.String.fromArray(stateArray)
 
-  let action = SignupReducer.Change({name: "email", value: "myemail@gmail.com"})
+  let payload: FormState.changePayload = {name: "email", value: "myemail@gmail.com"}
 
-  let result = SignupReducer.reducer(state, action)
+  let action = #Change(payload)
+
+  let result = FormState.reducer(state, action)
 
   let expectedArray: FormState.stateArray = [
     ("email", {value: "myemail@gmail.com", error: ""}),
@@ -38,9 +40,9 @@ test("Handles SetState action", () => {
 
   let newState = Belt.Map.String.fromArray(stateArray)
 
-  let action = SignupReducer.SetState(newState)
+  let action = #SetState(newState)
 
-  let result = SignupReducer.reducer(state, action)
+  let result = FormState.reducer(state, action)
 
   assertMapEqual(result, newState)
 })

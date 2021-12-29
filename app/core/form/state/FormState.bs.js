@@ -40,6 +40,32 @@ function isValidForm(state) {
   })
 }
 
+function makeFormReducer(next, state, action) {
+  if (typeof action !== "object") {
+    return Curry._2(next, state, action)
+  }
+  var variant = action.NAME
+  if (variant === "SetState") {
+    return action.VAL
+  }
+  if (variant !== "Change") {
+    return Curry._2(next, state, action)
+  }
+  var match = action.VAL
+  return Belt_MapString.set(state, match.name, {
+    value: match.value,
+    error: "",
+  })
+}
+
+function identityReducer(state, param) {
+  return state
+}
+
+function reducer(state, action) {
+  return makeFormReducer(identityReducer, state, action)
+}
+
 var field = {
   value: "",
   error: "",
@@ -49,4 +75,7 @@ exports.field = field
 exports.mapFieldsToMutation = mapFieldsToMutation
 exports.makeValidate = makeValidate
 exports.isValidForm = isValidForm
+exports.makeFormReducer = makeFormReducer
+exports.identityReducer = identityReducer
+exports.reducer = reducer
 /* No side effect */

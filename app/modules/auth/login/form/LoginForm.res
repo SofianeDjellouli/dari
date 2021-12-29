@@ -9,7 +9,7 @@ external login: loginType = "default"
 let make = () => {
   let (loginMutation, data) = Blitz.ReactQuery.useMutation(~function=login, ())
 
-  let (state, dispatch) = React.useReducer(LoginReducer.reducer, LoginReducer.initialState)
+  let (state, dispatch) = React.useReducer(FormState.reducer, LoginReducer.initialState)
 
   let handleSubmit = (event: ReactEvent.Form.t) => {
     ReactEvent.Synthetic.preventDefault(event)
@@ -19,7 +19,7 @@ let make = () => {
     if FormState.isValidForm(validatedState) {
       FormState.mapFieldsToMutation(state, loginMutation)
     } else {
-      validatedState->SetState->dispatch
+      validatedState->#SetState->dispatch
     }
   }
 
@@ -30,7 +30,7 @@ let make = () => {
 
     let name = target["name"]
 
-    {name: name, value: value}->Change->dispatch
+    {name: name, value: value}->#Change->dispatch
   }
 
   let getField = field => Belt.Map.String.getWithDefault(state, field, FormState.field)

@@ -17,7 +17,7 @@ var signup = Signup
 function SignupForm(Props) {
   var match = Blitz.ReactQuery.useMutation(signup, undefined, undefined, undefined)
   var signupMutation = match[0]
-  var match$1 = React.useReducer(SignupReducer.reducer, SignupReducer.initialState)
+  var match$1 = React.useReducer(FormState.reducer, SignupReducer.initialState)
   var dispatch = match$1[1]
   var state = match$1[0]
   var handleSubmit = function ($$event) {
@@ -27,8 +27,8 @@ function SignupForm(Props) {
       return FormState.mapFieldsToMutation(state, signupMutation)
     } else {
       return Curry._1(dispatch, {
-        TAG: /* SetState */ 1,
-        _0: validatedState,
+        NAME: "SetState",
+        VAL: validatedState,
       })
     }
   }
@@ -37,9 +37,11 @@ function SignupForm(Props) {
     var value = $$event.value
     var name = $$event.name
     return Curry._1(dispatch, {
-      TAG: /* Change */ 0,
-      name: name,
-      value: value,
+      NAME: "Change",
+      VAL: {
+        name: name,
+        value: value,
+      },
     })
   }
   return React.createElement(

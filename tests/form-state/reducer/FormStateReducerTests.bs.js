@@ -3,7 +3,7 @@
 
 var Test = require("rescript-test/src/Test.bs.js")
 var Assert = require("../../assert/Assert.bs.js")
-var LoginReducer = require("../../../app/modules/auth/login/reducer/LoginReducer.bs.js")
+var FormState = require("../../../app/core/form/state/FormState.bs.js")
 var Belt_MapString = require("rescript/lib/js/belt_MapString.js")
 
 Test.test("Handles Change action", function (param) {
@@ -24,11 +24,15 @@ Test.test("Handles Change action", function (param) {
     ],
   ]
   var state = Belt_MapString.fromArray(stateArray)
-  var result = LoginReducer.reducer(state, {
-    TAG: /* Change */ 0,
+  var action_1 = {
     name: "email",
     value: "myemail@gmail.com",
-  })
+  }
+  var action = {
+    NAME: "Change",
+    VAL: action_1,
+  }
+  var result = FormState.reducer(state, action)
   var expectedArray = [
     [
       "email",
@@ -67,28 +71,12 @@ Test.test("Handles SetState action", function (param) {
     ],
   ]
   var state = Belt_MapString.fromArray(stateArray)
-  var newStateArray = [
-    [
-      "email",
-      {
-        value: "",
-        error: "required",
-      },
-    ],
-    [
-      "password",
-      {
-        value: "12345678",
-        error: "",
-      },
-    ],
-  ]
-  var newState = Belt_MapString.fromArray(newStateArray)
+  var newState = Belt_MapString.fromArray(stateArray)
   var action = {
-    TAG: /* SetState */ 1,
-    _0: newState,
+    NAME: "SetState",
+    VAL: newState,
   }
-  var result = LoginReducer.reducer(state, action)
+  var result = FormState.reducer(state, action)
   return Assert.assertMapEqual(result, newState)
 })
 

@@ -9,7 +9,7 @@ external signup: signupType = "default"
 let make = () => {
   let (signupMutation, data) = Blitz.ReactQuery.useMutation(~function=signup, ())
 
-  let (state, dispatch) = React.useReducer(SignupReducer.reducer, SignupReducer.initialState)
+  let (state, dispatch) = React.useReducer(FormState.reducer, SignupReducer.initialState)
 
   let handleSubmit = (event: ReactEvent.Form.t) => {
     ReactEvent.Synthetic.preventDefault(event)
@@ -19,7 +19,7 @@ let make = () => {
     if FormState.isValidForm(validatedState) {
       FormState.mapFieldsToMutation(state, signupMutation)
     } else {
-      validatedState->SetState->dispatch
+      validatedState->#SetState->dispatch
     }
   }
 
@@ -30,7 +30,7 @@ let make = () => {
 
     let name = event["name"]
 
-    {name: name, value: value}->Change->dispatch
+    {name: name, value: value}->#Change->dispatch
   }
 
   let getField = field => Belt.Map.String.getWithDefault(state, field, FormState.field)

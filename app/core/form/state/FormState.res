@@ -30,3 +30,20 @@ let makeValidate = (errorGetters: array<getError>, state: fieldState) =>
   })
 
 let isValidForm = state => state->Belt.Map.String.every((_, field) => field.error === "")
+
+type changePayload = {name: string, value: string}
+
+type action<'a> = [> #Change(changePayload) | #SetState(fieldState)] as 'a
+
+type nextFormReducer<'a> = (fieldState, action<'a>) => fieldState
+
+let makeFormReducer = (next: nextFormReducer<'a>, state: fieldState, action: action<[> ]>) =>
+  switch action {
+  | #Change({name, value}) => Belt.Map.String.set(state, name, {value: value, error: ""})
+  | #SetState(newState) => newState
+  | _ => next(state, action)
+  }
+
+let identityReducer = (state, _) => state
+
+let reducer = (state, action) => makeFormReducer(identityReducer, state, action)
