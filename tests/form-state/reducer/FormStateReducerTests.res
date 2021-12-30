@@ -38,7 +38,7 @@ test("Handles SetState action", () => {
     ("password", {value: "12345678", error: ""}),
   ]
 
-  let newState = Belt.Map.String.fromArray(stateArray)
+  let newState = Belt.Map.String.fromArray(newStateArray)
 
   let action = #SetState(newState)
 

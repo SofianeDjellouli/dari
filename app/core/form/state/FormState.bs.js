@@ -40,7 +40,7 @@ function isValidForm(state) {
   })
 }
 
-function makeFormReducer(next, state, action) {
+function makeReducer(next, state, action) {
   if (typeof action !== "object") {
     return Curry._2(next, state, action)
   }
@@ -62,8 +62,8 @@ function identityReducer(state, param) {
   return state
 }
 
-function reducer(state, action) {
-  return makeFormReducer(identityReducer, state, action)
+function reducer(param, param$1) {
+  return makeReducer(identityReducer, param, param$1)
 }
 
 var field = {
@@ -75,7 +75,7 @@ exports.field = field
 exports.mapFieldsToMutation = mapFieldsToMutation
 exports.makeValidate = makeValidate
 exports.isValidForm = isValidForm
-exports.makeFormReducer = makeFormReducer
+exports.makeReducer = makeReducer
 exports.identityReducer = identityReducer
 exports.reducer = reducer
 /* No side effect */

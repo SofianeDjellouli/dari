@@ -71,7 +71,23 @@ Test.test("Handles SetState action", function (param) {
     ],
   ]
   var state = Belt_MapString.fromArray(stateArray)
-  var newState = Belt_MapString.fromArray(stateArray)
+  var newStateArray = [
+    [
+      "email",
+      {
+        value: "",
+        error: "required",
+      },
+    ],
+    [
+      "password",
+      {
+        value: "12345678",
+        error: "",
+      },
+    ],
+  ]
+  var newState = Belt_MapString.fromArray(newStateArray)
   var action = {
     NAME: "SetState",
     VAL: newState,
